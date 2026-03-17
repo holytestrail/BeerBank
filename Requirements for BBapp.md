@@ -6,18 +6,6 @@ I used Job stories, not User stories, because the app has only one user role, an
 
 | **Epic** | **Job Story ID** | **Description** | **Stage** |
 | --- | --- | --- | --- |
-| Balance | JSB1 | When I open BB app, I want to **see the total number of exercises** So I can see how my little efforts have turned into cumulative impact with time. | MVP |
-|  | JSB2 | When I've finished an exercise session, I want to **add the number of exercises to the balance** So that the Money balance increases accordingly. | MVP |
-|  | JSB3 | When I've entered wrong exercise number, I want to **decrease the total** So that it stays correct. | MVP |
-|  | JSB4 | When I open BB app, I want to **see my Money balance** So that I know if I can afford a beer. | MVP |
-|  | JSB5 | When I've bought a beer, I want to **write off the relevant number from my Money balance** So that it stays correct. | MVP |
-|  | JSB6 | When I've written off incorrect amount of money, **I want to correct the MoneyBalance manually** So that my Money balance is not lost in vain.  | MVP |
-| Settings | JSS1 | When I evaluate my success and efforts, I want to **convert exercise number to Money balance at a specific rate** So that I can choose myself how challenging my excercise-to-beer path is. | MVP |
-| Authentication | JSA1 | When I'm using the BBapp, **I want to be logged in**So that I have secure access to my personal data | MVP |
-|  | JSA2 | When I'm asked to authenticate, **I want to sign in with my Google account**So I don't have to create a new user profile. | MVP |
-
-| **Epic** | **Job Story ID** | **Description** | **Stage** |
-| --- | --- | --- | --- |
 | Balance | JSB1 | When I open BB app,  I want to **see the total number of exercises** So I can see how my little efforts have turned into cumulative impact with time. | MVP |
 |  | JSB2 | When I've finished an exercise session, I want to **add the number of exercises to the balance** So that the Money balance increases accordingly. | MVP |
 |  | JSB3 | When I've entered wrong exercise number, I want to **decrease the total** So that it stays correct. | MVP |
@@ -34,7 +22,7 @@ I used Job stories, not User stories, because the app has only one user role, an
 | --- | --- | --- |
 | FR-JSA1-01 | The app shall keep the user logged in until the user logs out on purpose. | Given the user has logged in, When the user re-opened the app, Then they are logged in without having to authenticate again. |
 | FR-JSA1-02 | The app shall allow users to authenticate using a Google account. | Given the user clicks "Login with Google", When the user successfully authenticated, Then the system logs the user in AND displays the main app screen. |
-| FR-JSB1-01 | The app shall display the total number of exercises (ExTotal) done by the user from over the whole their usage history. <Br> UX: ExTotal shall be displayed on the Main screen. | Given the user has recorded excercises, When the main screen is open, Then ExTotal is displayed.  <br> Given the user has zero recorded exercises, When the main screen is open, Then ExTotal is displayed as “0”. <br> Given any added exercises are not synced, When the main screen is open, Then ExTotal is displayed according to the rule: <br> *ExTotal displayed = ExTotal from Server + Local unsynced number of exercises.* |
+| FR-JSB1-01 | The app shall display the total number of exercises (ExTotal) done by the user from over the whole their usage history. <Br> UX: ExTotal shall be displayed on the Main screen. | Given the user has recorded excercises, When the main screen is open, Then ExTotal is displayed. <br> <br> Given the user has zero recorded exercises, When the main screen is open, Then ExTotal is displayed as “0”. <br><br> Given any added exercises are not synced, When the main screen is open, Then ExTotal is displayed according to the rule: <br> *ExTotal displayed = ExTotal from Server + Local unsynced number of exercises.* |
 | FR-JSB4-01 | The app shall display current MoneyBalance. UX: MoneyBalance shall be displayed on the Main screen. | Given the user has MoneyBalance other than 0, when the Main screen is open, MoneyBalance is displayed. <br> Given the user’s MoneyBalance=0, when the Main screen is open, MoneyBalance is displayed as “0”.  <br> Given any added exercises are not synced, When the main screen is open, Then MoneyBalance is displayed according to the rule:  <br> *MoneyBalance displayed = MoneyBalance from Server + (Local unsynced number of exercises)*(Local Conversion rate)* |
 | FR-JSB2-01 | The app shall allow adding exercises, with the immediate changes to ExTotal and MoneyBalance (NFR-JSB2-01)  <br> UX: The user shall be able to add the number of exercise by tapping buttons with numbers on them. | Given the ExTotal and MoneyBalance are displayed, When the user tapped one of “add number” buttons, Then: a) ExTotal is updated by adding this number to the current ExTotal displayed; b) MoneyBalance is updated by adding (number of added exercises)*(conversion rate); c) Random MSG-ADD message is displayed.  <br> <br>  Alternative 1: <br> Given the ExTotal and MoneyBalance are displayed,, When the user tapped any “add number of exercises” buttons more than once within less than 500ms, only the first tap is processed. |
 | NFR-01 | When the user has updated the exercise number OR MoneyBalance, Then ExTotal displayed and MoneyBalance displayed must be updated with a maximum delay of 500ms. |  |
