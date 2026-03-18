@@ -7,12 +7,12 @@
 - Вид упражнения не играет роли: юзер может делать отжимания, приседания, что угодно другое - и вводит общее количество.
 
 ## Ссылки на документацию
-- Требования: [/docs/product/requirements.md](https://github.com/holytestrail/BeerBank/blob/main/Docs/Requirements%20for%20BBapp.md) 
-- 
+- Требования: https://raw.githubusercontent.com/holytestrail/BeerBank/refs/heads/main/Docs/Requirements%20for%20BBapp.md
+- Структура базы данных: https://raw.githubusercontent.com/holytestrail/BeerBank/refs/heads/main/Docs/Database%20Schema.md 
 ## Текущий статус
 - [x] DONE Составить требования, vision 
-- [ ] Составить структуру БД
-- [ ] Создать БД в Supabase
+- [x] Составить структуру БД
+- [x] Создать БД в Supabase
 - [ ] 
 
 ## Суть приложения (Vision)
