@@ -15,6 +15,7 @@
 - **Localization-ready**: All UI text is stored separately, not hard-coded. MVP language is Russian.
 
 
+
 ## Glossary
 
 - **Exercise** - Any single action, like one push-up or one squat.
