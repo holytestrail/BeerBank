@@ -29,7 +29,8 @@ Our app is for people who love beer but lack the motivation for regular workouts
 - [x] Составить структуру БД
 - [x] Создать БД в Supabase
 - [x] Согласовать стек фронтенда
-- [ ] Фронтенд: 1
+- [x] ПОдготовка Фронтенда: `Vite + React + Tailwind + shadcn/ui + Zustand + Dexie.js + Supabase client + vite-plugin-pwa — всё установлено и работает`
+- [ ] Подготовка Бэкенда - Supabase (PostgreSQL + Auth + REST)
 
 
 
