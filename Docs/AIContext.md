@@ -23,6 +23,9 @@ Our app is for people who love beer but lack the motivation for regular workouts
 - Backend: Supabase (PostgreSQL + Auth + REST)
 - Deploy: Vercel
 
+## Локальный репозиторий
+C:\BeerbankApp\BeerBankRepo
+
 
 ## Текущий статус
 - [x] DONE Составить требования, vision 
