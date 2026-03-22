@@ -23,8 +23,12 @@ Our app is for people who love beer but lack the motivation for regular workouts
 - Backend: Supabase (PostgreSQL + Auth + REST)
 - Deploy: Vercel
 
-## Локальный репозиторий
-C:\BeerbankApp\BeerBankRepo
+
+## Структура папок
+C:\beerbankApp\BeerbankRepo\
+├── Docs/
+├── app/          ← Vite + React код
+└── .git/
 
 
 ## Текущий статус
@@ -33,7 +37,8 @@ C:\BeerbankApp\BeerBankRepo
 - [x] Создать БД в Supabase
 - [x] Согласовать стек фронтенда
 - [x] ПОдготовка Фронтенда: `Vite + React + Tailwind + shadcn/ui + Zustand + Dexie.js + Supabase client + vite-plugin-pwa — всё установлено и работает`
-- [ ] Подготовка Бэкенда - Supabase (PostgreSQL + Auth + REST)
+- [x] Подготовка Бэкенда - Supabase (PostgreSQL + Auth + REST)
+- [ ] Подключение к фронтенду (API-методы я хочу написать сам)
 
 
 
