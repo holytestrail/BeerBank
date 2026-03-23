@@ -75,18 +75,18 @@
 
 # UI Messages
 
-| **Type**  | **Context**                | **ID**  | **Text**                                                                                                                    |
-| --------- | -------------------------- | ------- | --------------------------------------------------------------------------------------------------------------------------- |
-| MSG-ADD   | Exercise added             | ADD-1   | Excellent!                                                                                                                  |
-| MSG-ADD   | Exercise added             | ADD-2   | Well done!                                                                                                                  |
-| MSG-ADD   | Exercise added             | ADD-3   | Not bad!                                                                                                                    |
-| MSG-UI    | Manual data update success | MSG-01  | Data corrected                                                                                                              |
-| MSG-UI    | Manual data update success | MSG-02  | New conversion rate applied                                                                                                 |
-| MSG-UI    | Manual data update failure | MSG-03  | Not enough money :(                                                                                                         |
-| MSG-UI    | Manual data update failure | MSG-04  | Enter a whole number greater than 0                                                                                         |
-| MSG-UI    | Manual data update failure | MSG-05  | Enter a whole number                                                                                                        |
-| MSG-UI    | On first login             | MSG-06  | Let's start by setting your conversion rate — we'll use it to convert exercise into money. You can change it later anytime. |
-| MSG-UI    | Manual data update failure | MSG-07  | You cannot take away more than you have. If you're not a tax official, of course.                                           |
-| MSG-SPEND | Money spent                | SPEND-1 | Well done, you deserve that!                                                                                                |
-| MSG-SPEND | Money spent                | SPEND-2 | Enjoy!                                                                                                                      |
-| MSG-SPEND | Money spent                | SPEND-3 | You've earned this!                                                                                                         |
+| **Type**  | **Context**                | **ID**  | **Text**                                                                                                                           |
+| --------- | -------------------------- | ------- | ---------------------------------------------------------------------------------------------------------------------------------- |
+| MSG-ADD   | Exercise added             | ADD-1   | Excellent!                                                                                                                         |
+| MSG-ADD   | Exercise added             | ADD-2   | Well done!                                                                                                                         |
+| MSG-ADD   | Exercise added             | ADD-3   | Not bad!                                                                                                                           |
+| MSG-UI    | Manual data update success | MSG-01  | Data corrected                                                                                                                     |
+| MSG-UI    | Manual data update success | MSG-02  | New conversion rate applied                                                                                                        |
+| MSG-UI    | Manual data update failure | MSG-03  | Not enough money :(                                                                                                                |
+| MSG-UI    | Manual data update failure | MSG-04  | Enter a whole number greater than 0                                                                                                |
+| MSG-UI    | Manual data update failure | MSG-05  | Enter a whole number                                                                                                               |
+| MSG-UI    | On first login             | MSG-06  | Start by defining your conversion rate in SETTINGS — we'll use it to convert exercise into money. You can change it later anytime. |
+| MSG-UI    | Manual data update failure | MSG-07  | You cannot take away more than you have. If you're not a tax official, of course.                                                  |
+| MSG-SPEND | Money spent                | SPEND-1 | Well done, you deserve that!                                                                                                       |
+| MSG-SPEND | Money spent                | SPEND-2 | Enjoy!                                                                                                                             |
+| MSG-SPEND | Money spent                | SPEND-3 | You've earned this!                                                                                                                |

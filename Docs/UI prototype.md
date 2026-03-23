@@ -39,3 +39,7 @@ In curved brackets = values
 |                 |                                                                             |               |                           |                   |
 
 ![[UI proto V2.png]]
+
+
+(Not implemented yet: Balance renamed to credit)
+![[UI proto V3.png]]
