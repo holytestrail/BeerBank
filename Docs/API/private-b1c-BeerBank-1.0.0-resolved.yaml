@@ -1,0 +1,284 @@
+openapi: 3.0.0
+info:
+  title: BeerBank API
+  description: 'API for BeerBank app.  '
+  version: 1.0.0
+servers:
+- url: https://auzaezwlkxrksusuffcq.supabase.co/rest/v1
+security:
+- ApiKeyAuth: []
+- BearerAuth: []
+paths:
+  /users:
+    get:
+      summary: Get current user data
+      description: ""
+      responses:
+        "200":
+          description: User data
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/User"
+    post:
+      summary: Create user
+      description: Creates a new user after first login
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserPost"
+            example:
+              user_id: "{{user_id}}"
+              nickname: hophead
+        required: true
+      responses:
+        "201":
+          description: User created
+    patch:
+      summary: Update user
+      description: "Updates conversion_rate or balance, filtered by user_id"
+      parameters:
+      - name: user_id
+        in: query
+        description: Supabase eq filter
+        required: true
+        schema:
+          type: string
+        example: "eq.{{user_id}}"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserPatch"
+            example:
+              conversion_rate: 2
+        required: true
+      responses:
+        "200":
+          description: User updated
+  /exercise_events:
+    get:
+      summary: Get exercise events
+      description: Returns exercise sessions for statistics
+      operationId: ""
+      parameters:
+      - name: user_id
+        in: query
+        required: true
+        schema:
+          type: string
+        example: "eq.{{user_id}}"
+      - name: order
+        in: query
+        required: false
+        schema:
+          type: string
+        example: ex_time.desc
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: integer
+        example: 5
+      - name: select
+        in: query
+        required: false
+        schema:
+          type: string
+        example: "user_id,ex_time,ex_amount"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ExerciseEventStats"
+    post:
+      summary: Add exercise event
+      description: Logs a new exercise session
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ExerciseEvent"
+            example:
+              user_id: "{{user_id}}"
+              ex_amount: 10
+              ex_time: 2026-03-27T12:00:00Z
+              client_event_id: "{{client_event_id}}"
+        required: true
+      responses:
+        "201":
+          description: Exercise event added
+  /spend_events:
+    get:
+      summary: Get spend events
+      description: Returns spendings for statistics
+      parameters:
+      - name: user_id
+        in: query
+        required: true
+        schema:
+          type: string
+        example: "eq.{{user_id}}"
+      - name: order
+        in: query
+        required: false
+        schema:
+          type: string
+        example: spend_time.desc
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: integer
+        example: 5
+      - name: select
+        in: query
+        required: false
+        schema:
+          type: string
+        example: "user_id,spend_time,spend_amount"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/SpendEventStats"
+    post:
+      summary: Add spend event
+      description: Logs balance spending event
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SpendEvent"
+            example:
+              user_id: "{{user_id}}"
+              spend_amount: 50
+              spend_time: 2026-03-27T12:00:00Z
+              client_event_id: "{{client_event_id}}"
+        required: true
+      responses:
+        "201":
+          description: Spend event added
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        user_id:
+          type: string
+          format: uuid
+        nickname:
+          maxLength: 15
+          type: string
+        ex_total:
+          type: integer
+          default: 0
+        balance:
+          type: integer
+          default: 0
+        conversion_rate:
+          minimum: 1
+          type: integer
+          default: 1
+    UserPost:
+      required:
+      - user_id
+      type: object
+      properties:
+        user_id:
+          type: string
+          format: uuid
+        nickname:
+          maxLength: 15
+          type: string
+    UserPatch:
+      type: object
+      properties:
+        conversion_rate:
+          minimum: 1
+          type: integer
+        balance:
+          type: integer
+    ExerciseEvent:
+      required:
+      - client_event_id
+      - ex_amount
+      - ex_time
+      - user_id
+      type: object
+      properties:
+        user_id:
+          type: string
+          format: uuid
+        ex_amount:
+          minimum: 1
+          type: integer
+        ex_time:
+          type: string
+          format: date-time
+        client_event_id:
+          type: string
+          format: uuid
+    ExerciseEventStats:
+      type: object
+      properties:
+        user_id:
+          type: string
+          format: uuid
+        ex_time:
+          type: string
+          format: date-time
+        ex_amount:
+          minimum: 1
+          type: integer
+    SpendEvent:
+      required:
+      - client_event_id
+      - spend_amount
+      - spend_time
+      - user_id
+      type: object
+      properties:
+        user_id:
+          type: string
+          format: uuid
+        spend_amount:
+          minimum: 1
+          type: integer
+        spend_time:
+          type: string
+          format: date-time
+        client_event_id:
+          type: string
+          format: uuid
+    SpendEventStats:
+      type: object
+      properties:
+        user_id:
+          type: string
+          format: uuid
+        spend_time:
+          type: string
+          format: date-time
+        spend_amount:
+          minimum: 1
+          type: integer
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      name: apikey
+      in: header
+    BearerAuth:
+      type: http
+      scheme: bearer

@@ -38,7 +38,8 @@ C:\beerbankApp\BeerbankRepo\
 - [x] Согласовать стек фронтенда
 - [x] ПОдготовка Фронтенда: `Vite + React + Tailwind + shadcn/ui + Zustand + Dexie.js + Supabase client + vite-plugin-pwa — всё установлено и работает`
 - [x] Подготовка Бэкенда - Supabase (PostgreSQL + Auth + REST)
-- [ ] Подключение к фронтенду (API-методы я хочу написать сам)
+- [x] Подключение к фронтенду (API-методы я хочу написать сам)
+- [ ] 
 
 
 
@@ -119,4 +120,13 @@ C:\beerbankApp\BeerbankRepo\
 | **What you do** | Nothing — just test |
 | **What you get** | The app works without internet. Data is not lost when offline. No duplicates appear after sync. |
 | **How to check** | Run each scenario below: |
- 
+
+## API methods file
+
+![[private-b1c-BeerBank-1.0.0-resolved.yaml]]
+
+
+## UI prototype file
+
+![[beerbank-prototype-v2.html]]
+
