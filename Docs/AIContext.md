@@ -14,9 +14,15 @@ Our app is for people who love beer but lack the motivation for regular workouts
 **Step 2**: As a user, When I want to buy a beer, I check my Beer Credit. If I have enough dinars, I can buy a beer and decrease my Beer Credit accordingly. If I don’t have enough credit, I’m honest with myself and skip the beer. Next time, I make sure I do enough exercise in advance before going to a bar.
 
 ## Ссылки на документацию
-- Требования: https://raw.githubusercontent.com/holytestrail/BeerBank/refs/heads/main/Docs/Requirements%20for%20BBapp.md
-- Структура базы данных: https://raw.githubusercontent.com/holytestrail/BeerBank/refs/heads/main/Docs/Database%20Schema.md 
+- Требования: https://raw.githubusercontent.com/holytestrail/BeerBank/22dadb1261b75c9c5811b86c8f3c800795ef7a90/Docs/Requirements%20for%20BBapp.md
+  
+- Структура базы данных: https://raw.githubusercontent.com/holytestrail/BeerBank/22dadb1261b75c9c5811b86c8f3c800795ef7a90/Docs/Database%20Schema.md
+  
+- API methods file
+  https://raw.githubusercontent.com/holytestrail/BeerBank/22dadb1261b75c9c5811b86c8f3c800795ef7a90/Docs/API/private-b1c-BeerBank-1.0.0-resolved.yaml
 
+- UI prototype file
+  https://raw.githubusercontent.com/holytestrail/BeerBank/22dadb1261b75c9c5811b86c8f3c800795ef7a90/beerbank-prototype-v2.html
 ## Стек
 - Делаем PWA-приложение
 - Frontend: React + Vite + shadcn/ui + Tailwind + Zustand + Dexie.js + Supabase JS Client + vite-plugin-pwa
@@ -73,14 +79,14 @@ C:\beerbankApp\BeerbankRepo\
  
 ## Stage 3 — Local Logic (no server)
  
-| | |
-|---|---|
-| **Stack** | Zustand, Dexie.js |
-| **Where to test** | Locally in browser (`localhost:5173`). To check on phone: same WiFi network as computer. |
-| **What AI does** | Wires up all the logic: buttons work, balance updates instantly, conversion rate applies correctly, validation messages appear for wrong input. Everything runs locally — no server, no login. |
-| **What you do** | Run through all scenarios from the requirements manually |
-| **What you get** | A fully functional app — all features work, just without saving data to the server or requiring login |
-| **How to check** | Run each scenario below and confirm the result: |
+|                   |                                                                                                                                                                                                |
+| ----------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Stack**         | Zustand, Dexie.js                                                                                                                                                                              |
+| **Where to test** | Locally in browser (`localhost:5173`). To check on phone: same WiFi network as computer.                                                                                                       |
+| **What AI does**  | Wires up all the logic: buttons work, balance updates instantly, conversion rate applies correctly, validation messages appear for wrong input. Everything runs locally — no server, no login. |
+| **What you do**   | Run through all scenarios from the requirements manually                                                                                                                                       |
+| **What you get**  | A fully functional app — all features work, just without saving data to the server or requiring login                                                                                          |
+| **How to check**  | Run each scenario below and confirm the result:                                                                                                                                                |
  
 ---
  
@@ -99,14 +105,14 @@ C:\beerbankApp\BeerbankRepo\
  
 ## Stage 5 — Server Sync
  
-| | |
-|---|---|
-| **Stack** | Supabase JS Client |
-| **Where to test** | Deployed on Vercel (same link as Stage 4). |
-| **What AI does** | Connects the app to Supabase database: on open, pulls actual data from server; after each action, saves data to server |
-| **What you do** | Nothing — just test |
-| **What you get** | Data is stored in the cloud. The same data appears on any device where you log in. |
-| **How to check** | 1. Add exercises on your phone. 2. Open the app on a computer (or another browser) and log in with the same Google account. 3. The same ExTotal and MoneyBalance are shown. 4. Make a change on the computer — refresh on the phone — the change is reflected. |
+|                   |                                                                                                                                                                                                                                                                |
+| ----------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Stack**         | Supabase JS Client                                                                                                                                                                                                                                             |
+| **Where to test** | Deployed on Vercel (same link as Stage 4).                                                                                                                                                                                                                     |
+| **What AI does**  | Connects the app to Supabase database: on open, pulls actual data from server; after each action, saves data to server                                                                                                                                         |
+| **What you do**   | Nothing — just test                                                                                                                                                                                                                                            |
+| **What you get**  | Data is stored in the cloud. The same data appears on any device where you log in.                                                                                                                                                                             |
+| **How to check**  | 1. Add exercises on your phone. 2. Open the app on a computer (or another browser) and log in with the same Google account. 3. The same ExTotal and MoneyBalance are shown. 4. Make a change on the computer — refresh on the phone — the change is reflected. |
  
 ---
  
@@ -121,12 +127,5 @@ C:\beerbankApp\BeerbankRepo\
 | **What you get** | The app works without internet. Data is not lost when offline. No duplicates appear after sync. |
 | **How to check** | Run each scenario below: |
 
-## API methods file
 
-![[private-b1c-BeerBank-1.0.0-resolved.yaml]]
-
-
-## UI prototype file
-
-![[beerbank-prototype-v2.html]]
 
