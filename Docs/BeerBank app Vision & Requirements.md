@@ -1,11 +1,11 @@
 
 This is a pet project with a goal to practice my business system analyst skills:
 - Requirements preparation
-- Database development
-- API description
-- Project documentation
+- Database development (Supabase)
+- Rest API development and documentation (Swagger, Postman)
+- Project documentation (Obsidian, Github, Markdown)
 
-
+All other features have been realized via vibe coding. Claude rules.
 
 
 
@@ -22,16 +22,11 @@ Step 2: When I want to buy a beer, I check my Beer Credit. If I have enough dina
 
 
 
- - 
-
-
-## Assumptions
+## General Approach and Assumptions
 
 - **PWA**: The app shall be a PWA application. 
 - **Single device per user**: For MVP, we assume the app has a single user with a single device, so multi-device conflicts are not expected.
 - **Offline-first**: To ensure seamless user experience, the local app data is always precedent to server data. 
-- **Localization-ready**: All UI text is stored separately, not hard-coded.
-
 
 
 ## Glossary
@@ -63,13 +58,13 @@ Step 2: When I want to buy a beer, I check my Beer Credit. If I have enough dina
 |                | BAL3             | When I've added exercises by mistake, I want to **decrease the total** So that it stays correct.                                                                                            | MVP       |
 |                | BAL4             | When I open BB app, I want to **see my Money balance** So that I know if I can afford a beer.                                                                                               | MVP       |
 |                | BAL5             | When I've bought a beer, I want to **write off the relevant number from my Money balance** So that it stays correct.                                                                        | MVP       |
-|                | BAL6             | When I notice my Balance is incorrect, **I want to correct it manually** So that I know exactly how much "money" I have.                                                               | MVP       |
+|                | BAL6             | When I notice my Balance is incorrect, **I want to correct it manually** So that I know exactly how much "money" I have.                                                                    | MVP       |
 | Messages       | MES1             | When I enter any data or settings, **I want to receive confirmation UI messages** So that I know for sure the changes have been made.                                                       | MVP       |
 |                | MES2             | When I add exercises or spend money, **I want to receive encouraging messages** So that I feel my efforts are valued.                                                                       | MVP       |
 | Settings       | SET1             | When I evaluate my success and efforts, I want to **convert exercise number to Money balance at a specific rate** So that I can choose myself how challenging my excercise-to-beer path is. | MVP       |
 | Authentication | AUT1             | When I'm using the BBapp, **I want to be be able to log in and out** at my convenience, So that I have secure access to my personal data                                                    | MVP       |
 |                | AUT2             | When I'm asked to authenticate, **I want to sign in with my Google account** So I don't have to create a new user profile.                                                                  | MVP       |
-| Sync           | SYN1             | When I adjust ExTotal or Balance, **I want my adjustments to be reflected immediately** so that I instantly feel satisfied with my efforts and honesty.                                | MVP       |
+| Sync           | SYN1             | When I adjust ExTotal or Balance, **I want my adjustments to be reflected immediately** so that I instantly feel satisfied with my efforts and honesty.                                     | MVP       |
 |                |                  |                                                                                                                                                                                             |           |
 
 ## Requirements
