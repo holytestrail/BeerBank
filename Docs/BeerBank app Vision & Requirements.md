@@ -1,9 +1,27 @@
-## Notes on my analytic approach (TBD)
 
- - **Job stories, not User stories**:  I've taken the "Job story" approach to requirements, because the app has only one user role, and the context of actions is more important than the user type.
- - **FR, NFR, UI Messages** are organized separately.
- - **Localization-ready** approach is taken.
- - **Known gaps** are described (out of MVP scope).
+This is a pet project with a goal to practice my business system analyst skills:
+- Requirements preparation
+- Database development
+- API description
+- Project documentation
+
+
+
+
+
+## Product Vision
+
+BeerBank is an app for those who love beer and would be happy to improve their physical shape, but lack the motivation for regular workouts. Through gamification — exchanging exercises for the right to drink a certain amount of beer — we encourage them to add quick, simple exercises to their daily routine so they start moving their asses, even if it’s only a little.
+
+## App Usage Scenario
+
+Step 1: When I have a free minute, I do a few push-ups, squats, or other simple exercises. I add the number of repetitions to my BeerBank App, which converts them into Beer Credit according to the conversion rate I chose earlier. For example, 1 push-up = 2 Serbian dinars.
+
+Step 2: When I want to buy a beer, I check my Beer Credit. If I have enough dinars, I can buy a beer and decrease my Beer Credit accordingly. If I don’t have enough credit, I’m honest with myself and skip the beer. Next time, I make sure I do enough exercise in advance before going to a bar.
+
+
+
+
  - 
 
 
@@ -27,6 +45,15 @@
   Conversion rate is set by the user in accordance to how lazy ass they are. For example, 1 exercise = 5 money units.
 
 
+# Requirements
+
+### Notes on my approach (TBD)
+
+ - **Job stories, not User stories**:  I've taken the "Job story" approach to requirements, because the app has only one user role, and the context of actions is more important than the user type.
+ - **FR, NFR, and UI Messages** are organized separately.
+ - **Localization-ready** approach is taken (all UI copy is stored separately).
+ - **Known gaps** are described (as "out of MVP scope").
+ 
 ## Epics and Job stories
 
 | **Epic**       | **Job Story ID** | **Description**                                                                                                                                                                             | **Stage** |
@@ -90,3 +117,7 @@
 | MSG-SPEND | Money spent                | SPEND-1 | Well done, you deserve that!                                                                                                       |
 | MSG-SPEND | Money spent                | SPEND-2 | Enjoy!                                                                                                                             |
 | MSG-SPEND | Money spent                | SPEND-3 | You've earned this!                                                                                                                |
+|           |                            |         |                                                                                                                                    |
+
+
+
