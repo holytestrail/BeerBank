@@ -1,5 +1,8 @@
-﻿import { Settings, User, Beer, ArrowLeft } from 'lucide-react';
+import { Settings, User, Beer, ArrowLeft } from 'lucide-react';
 import { useEffect, useState } from 'react';
+import useAuthStore from './store/authStore';
+import LoginPage from './pages/LoginPage';
+import WelcomePage from './pages/WelcomePage.jsx';
 
 type Screen = 'main' | 'settings' | 'profile' | 'spend';
 type SpendEvent = { date: string; amount: number };
@@ -43,6 +46,9 @@ const getStringFromStorage = (key: string, fallback: string) => {
 };
 
 export default function App() {
+  const [hasWelcomed, setHasWelcomed] = useState(
+    () => typeof window !== 'undefined' && localStorage.getItem('beerbank_welcomed') === 'true'
+  );
   const [currentScreen, setCurrentScreen] = useState<Screen>('main');
   const [beerCredit, setBeerCredit] = useState<number>(() => getNumberFromStorage('beerCredit', 5));
   const [totalExercises, setTotalExercises] = useState<number>(() => getNumberFromStorage('totalExercises', 5));
@@ -180,10 +186,19 @@ export default function App() {
     showToast(MESSAGES.MSG_01);
   };
 
-  const handleLogout = () => {
-    showToast('Logged out');
-    setTimeout(() => setCurrentScreen('main'), 450);
-  };
+  const { user, loading } = useAuthStore();
+
+  if (!hasWelcomed) {
+    return <WelcomePage onContinue={() => setHasWelcomed(true)} />;
+  }
+
+  if (loading) {
+    return <div className="h-screen flex items-center justify-center text-amber-950">Loading...</div>;
+  }
+
+  if (!user) {
+    return <LoginPage />;
+  }
 
   return (
     <div className="relative h-screen w-full max-w-[412px] mx-auto overflow-hidden bg-gradient-to-b from-amber-400 via-amber-500 to-amber-600">
@@ -231,11 +246,7 @@ export default function App() {
         )}
 
         {currentScreen === 'profile' && (
-          <ProfileScreen
-            username={username}
-            onBack={() => setCurrentScreen('main')}
-            handleLogout={handleLogout}
-          />
+          <ProfileScreen onBack={() => setCurrentScreen('main')} />
         )}
 
         {currentScreen === 'spend' && (
@@ -393,13 +404,9 @@ function SettingsScreen({
   );
 }
 
-function ProfileScreen({ username, onBack, handleLogout }: {
-  username: string;
-  onBack: () => void;
-  handleLogout: () => void;
-}) {
+function ProfileScreen({ onBack }: { onBack: () => void }) {
   return (
-    <div className="h-full flex flex-col">
+    <div className="h-full flex flex-col overflow-y-auto">
       <header className="flex items-center px-5 pt-5 pb-4">
         <button onClick={onBack} className="w-12 h-12 rounded-full bg-white/90 backdrop-blur-sm shadow-lg flex items-center justify-center hover:bg-white transition-all active:scale-95" aria-label="Back">
           <ArrowLeft className="w-6 h-6 text-amber-900" />
@@ -407,12 +414,20 @@ function ProfileScreen({ username, onBack, handleLogout }: {
       </header>
       <div className="px-6">
         <h1 className="text-amber-950 mb-8">Profile</h1>
-        <div className="flex flex-col items-center px-6 pt-4">
-          <img src="https://via.placeholder.com/96x96?text=Avatar" className="w-24 h-24 rounded-full mb-4" alt="Avatar" />
-          <div className="mb-8">
-            <p className="text-xl text-amber-950 font-medium">{username}</p>
+        <div className="flex flex-col items-center">
+          <img
+            src="/BeerBank_icon.png"
+            alt=""
+            className="w-28 h-28 rounded-2xl shadow-lg object-contain bg-white/30"
+          />
+          <div className="w-full max-w-sm mt-8">
+            <p className="text-left text-base text-amber-950/90 leading-relaxed">
+              [Здесь будет текст 1]
+            </p>
+            <p className="text-left text-base text-amber-950/90 leading-relaxed mt-4">
+              [Здесь будет текст 2]
+            </p>
           </div>
-          <button onClick={handleLogout} className="bg-white/80 backdrop-blur-sm rounded-lg px-8 py-3 font-semibold text-amber-900 shadow-md hover:bg-white transition-all active:scale-95 text-lg">Log out</button>
         </div>
       </div>
     </div>
