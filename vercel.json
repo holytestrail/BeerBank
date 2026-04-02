@@ -1,6 +1,17 @@
 {
-    "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }],
-    "buildCommand": "cd app && npm install --legacy-peer-deps && npm run build",
-    "outputDirectory": "app/dist",
-    "installCommand": "echo skip"
-  }
+  "headers": [
+    {
+      "source": "/manifest.webmanifest",
+      "headers": [
+        { "key": "Content-Type", "value": "application/manifest+json" },
+        { "key": "Cache-Control", "value": "public, max-age=0, must-revalidate" }
+      ]
+    },
+    {
+      "source": "/sw.js",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=0, must-revalidate" }
+      ]
+    }
+  ]
+}
