@@ -1,7 +1,5 @@
-import { Settings, User, Beer, ArrowLeft } from 'lucide-react';
+﻿import { Settings, User, Beer, ArrowLeft } from 'lucide-react';
 import { useEffect, useState } from 'react';
-import useAuthStore from './store/authStore';
-import LoginPage from './pages/LoginPage';
 import WelcomePage from './pages/WelcomePage.jsx';
 
 type Screen = 'main' | 'settings' | 'profile' | 'spend';
@@ -186,18 +184,9 @@ export default function App() {
     showToast(MESSAGES.MSG_01);
   };
 
-  const { user, loading } = useAuthStore();
 
   if (!hasWelcomed) {
     return <WelcomePage onContinue={() => setHasWelcomed(true)} />;
-  }
-
-  if (loading) {
-    return <div className="h-screen flex items-center justify-center text-amber-950">Loading...</div>;
-  }
-
-  if (!user) {
-    return <LoginPage />;
   }
 
   return (
