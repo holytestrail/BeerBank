@@ -1,9 +1,10 @@
-﻿import { Settings, User, Beer, ArrowLeft } from 'lucide-react';
+import { Settings, User, Beer, ArrowLeft } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import WelcomePage from './pages/WelcomePage.jsx';
 
 type Screen = 'main' | 'settings' | 'profile' | 'spend';
 type SpendEvent = { date: string; amount: number };
+type InstallState = 'waiting' | 'ready' | 'accepted' | 'dismissed' | 'ios' | 'standalone' | 'unsupported';
 
 const MESSAGES = {
   ADD_1: 'Excellent!',
@@ -44,6 +45,15 @@ const getStringFromStorage = (key: string, fallback: string) => {
 };
 
 export default function App() {
+  const [installState, setInstallState] = useState<InstallState>(() => {
+    if (typeof window === 'undefined') return 'waiting';
+    if (window.matchMedia('(display-mode: standalone)').matches) return 'standalone';
+    const isIos = /iphone|ipad|ipod/.test(navigator.userAgent.toLowerCase());
+    if (isIos) return 'ios';
+    return 'waiting';
+  });
+  const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
+
   const [hasWelcomed, setHasWelcomed] = useState(
     () => typeof window !== 'undefined' && localStorage.getItem('beerbank_welcomed') === 'true'
   );
@@ -83,6 +93,25 @@ export default function App() {
 
   const [toast, setToast] = useState<string>('');
   const [toastVisible, setToastVisible] = useState<boolean>(false);
+
+  // PWA install prompt listener
+  useEffect(() => {
+    if (installState !== 'waiting') return;
+    const handler = (e: Event) => {
+      e.preventDefault();
+      setDeferredPrompt(e);
+      setInstallState('ready');
+    };
+    window.addEventListener('beforeinstallprompt', handler);
+    // Fallback: if no prompt after 5s, show "open in Chrome" instructions
+    const timeout = setTimeout(() => {
+      setInstallState('unsupported');
+    }, 5000);
+    return () => {
+      window.removeEventListener('beforeinstallprompt', handler);
+      clearTimeout(timeout);
+    };
+  }, [installState]);
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
@@ -184,6 +213,18 @@ export default function App() {
     showToast(MESSAGES.MSG_01);
   };
 
+  const handleInstall = async () => {
+    if (!deferredPrompt) return;
+    deferredPrompt.prompt();
+    const { outcome } = await deferredPrompt.userChoice;
+    setDeferredPrompt(null);
+    setInstallState(outcome === 'accepted' ? 'accepted' : 'dismissed');
+  };
+
+  // Show install screen if not running as installed PWA
+  if (installState !== 'standalone') {
+    return <InstallScreen installState={installState} onInstall={handleInstall} />;
+  }
 
   if (!hasWelcomed) {
     return <WelcomePage onContinue={() => setHasWelcomed(true)} />;
@@ -247,6 +288,75 @@ export default function App() {
             onBack={() => setCurrentScreen('main')}
             handleSpend={handleSpend}
           />
+        )}
+      </div>
+    </div>
+  );
+}
+
+function InstallScreen({ installState, onInstall }: {
+  installState: InstallState;
+  onInstall: () => void;
+}) {
+  return (
+    <div className="relative h-screen w-full max-w-[412px] mx-auto overflow-hidden bg-gradient-to-b from-amber-400 via-amber-500 to-amber-600 flex flex-col items-center justify-center px-8 text-center">
+      {/* Background bubbles */}
+      <div className="absolute inset-0 bg-white/20 backdrop-blur-sm"></div>
+      <div className="absolute top-24 left-8 w-20 h-20 rounded-full bg-white/25 blur-lg"></div>
+      <div className="absolute top-48 right-10 w-32 h-32 rounded-full bg-white/25 blur-xl"></div>
+      <div className="absolute bottom-40 left-20 w-24 h-24 rounded-full bg-white/25 blur-lg"></div>
+      <div className="absolute bottom-20 right-8 w-20 h-20 rounded-full bg-white/25 blur-lg"></div>
+
+      <div className="relative z-10 flex flex-col items-center w-full">
+        <img src="/BeerBank_icon.png" alt="BeerBank" className="w-24 h-24 rounded-2xl shadow-lg mb-6" />
+        <h1 className="text-3xl font-bold text-amber-950 mb-2">BeerBank</h1>
+
+        {installState === 'waiting' && (
+          <p className="text-amber-900/70 animate-pulse">Preparing download...</p>
+        )}
+
+        {installState === 'ready' && (
+          <button
+            onClick={onInstall}
+            className="w-full bg-amber-800 text-amber-100 text-xl font-semibold py-4 rounded-xl shadow-lg active:scale-95 transition-all hover:bg-amber-700"
+          >
+           Download BeerBank
+          </button>
+        )}
+
+        {installState === 'accepted' && (
+          <div className="bg-white/20 rounded-xl p-5">
+            <p className="text-amber-950 font-semibold text-lg mb-2">✅ Downloaded!</p>
+            <p className="text-amber-900/80">Open BeerBank from your home screen.</p>
+          </div>
+        )}
+
+        {installState === 'dismissed' && (
+          <div className="flex flex-col items-center gap-4 w-full">
+            <p className="text-amber-900/80">You can install it later from your browser menu.</p>
+            <button
+              onClick={onInstall}
+              className="w-full bg-amber-800 text-amber-100 text-lg font-semibold py-4 rounded-xl shadow-lg active:scale-95 transition-all hover:bg-amber-700"
+            >
+            Download BeerBank
+            </button>
+          </div>
+        )}
+
+        {installState === 'ios' && (
+          <div className="bg-white/20 rounded-xl p-5 text-left w-full">
+            <p className="font-semibold text-amber-950 mb-3">To download on iPhone:</p>
+            <p className="text-amber-900/90">1. Tap the <strong>Share</strong> button (□↑) in Safari</p>
+            <p className="text-amber-900/90 mt-2">2. Tap <strong>"Add to Home Screen"</strong></p>
+          </div>
+        )}
+
+        {installState === 'unsupported' && (
+          <div className="bg-white/20 rounded-xl p-5 text-left w-full">
+            <p className="font-semibold text-amber-950 mb-3">Hmm, we have a little problem:</p>
+            <p className="text-amber-900/90">To download BeerBank, open this page in <strong>Chrome</strong> on Android (not Incognito!), or <strong>Safari</strong> on iPhone — then follow the install prompt.</p>
+            <p className="text-amber-900/70 text-sm mt-3">Your current browser doesn't support PWA.</p>
+          </div>
         )}
       </div>
     </div>
@@ -458,17 +568,17 @@ function SpendScreen({
             <div className="flex-1 h-px bg-amber-900/30" />
           </div>
           <div className="mb-4">
-            <input 
-              type="text" 
+            <input
+              type="text"
               inputMode="numeric"
-              value={spendAmount} 
-              onChange={(e) => setSpendAmount(onlyDigits(e.target.value))} 
+              value={spendAmount}
+              onChange={(e) => setSpendAmount(onlyDigits(e.target.value))}
               onFocus={(e) => {
                 e.currentTarget.select();
                 setSpendAmount('');
               }}
-              placeholder="?" 
-              className="w-full text-8xl font-bold text-amber-950 tracking-tight text-center bg-transparent border-none outline-none" 
+              placeholder="?"
+              className="w-full text-8xl font-bold text-amber-950 tracking-tight text-center bg-transparent border-none outline-none"
             />
           </div>
           <button onClick={handleSpend} className="w-full bg-amber-600 hover:bg-amber-700 text-white text-xl font-semibold py-4 rounded-xl shadow-lg transition-all active:scale-95">Let's do it!</button>
