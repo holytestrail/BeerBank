@@ -318,7 +318,7 @@ function InstallScreen({ installState, onInstall }: {
         {installState === 'ready' && (
           <button
             onClick={onInstall}
-            className="w-full bg-amber-950 text-amber-100 text-xl font-semibold py-4 rounded-xl shadow-lg active:scale-95 transition-all hover:bg-amber-900"
+            className="w-full bg-amber-800 text-amber-100 text-xl font-semibold py-4 rounded-xl shadow-lg active:scale-95 transition-all hover:bg-amber-700"
           >
            Download BeerBank
           </button>
@@ -336,7 +336,7 @@ function InstallScreen({ installState, onInstall }: {
             <p className="text-amber-900/80">You can install it later from your browser menu.</p>
             <button
               onClick={onInstall}
-              className="w-full bg-amber-950 text-amber-100 text-lg font-semibold py-4 rounded-xl shadow-lg active:scale-95 transition-all hover:bg-amber-900"
+              className="w-full bg-amber-800 text-amber-100 text-lg font-semibold py-4 rounded-xl shadow-lg active:scale-95 transition-all hover:bg-amber-700"
             >
             Download BeerBank
             </button>
