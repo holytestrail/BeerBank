@@ -310,7 +310,6 @@ function InstallScreen({ installState, onInstall }: {
       <div className="relative z-10 flex flex-col items-center w-full">
         <img src="/BeerBank_icon.png" alt="BeerBank" className="w-24 h-24 rounded-2xl shadow-lg mb-6" />
         <h1 className="text-3xl font-bold text-amber-950 mb-2">BeerBank</h1>
-        <p className="text-amber-900/80 mb-10">Exchange exercises for beer credits</p>
 
         {installState === 'waiting' && (
           <p className="text-amber-900/70 animate-pulse">Preparing installation...</p>
@@ -354,9 +353,9 @@ function InstallScreen({ installState, onInstall }: {
 
         {installState === 'unsupported' && (
           <div className="bg-white/20 rounded-xl p-5 text-left w-full">
-            <p className="font-semibold text-amber-950 mb-3">📲 To install BeerBank:</p>
-            <p className="text-amber-900/90">Open this page in <strong>Chrome</strong> on Android, or <strong>Safari</strong> on iPhone — then follow the install prompt.</p>
-            <p className="text-amber-900/70 text-sm mt-3">Your current browser doesn't support PWA installation.</p>
+            <p className="font-semibold text-amber-950 mb-3">📲 To download BeerBank:</p>
+            <p className="text-amber-900/90">Open this page in <strong>Chrome</strong> on Android (not Incognito!), or <strong>Safari</strong> on iPhone — then follow the install prompt.</p>
+            <p className="text-amber-900/70 text-sm mt-3">Your current browser doesn't support PWA.</p>
           </div>
         )}
       </div>
