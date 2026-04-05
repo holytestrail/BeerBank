@@ -34,15 +34,27 @@ export default defineConfig({
         scope: '/',
         orientation: 'portrait',
         lang: 'ru',
-        related_applications: [
-          {
-            platform: 'webapp',
-            url: 'https://beerbank.vercel.app/manifest.webmanifest',
-          }
+        icons: [
+          { src: '/icon-192.png', sizes: '192x192', type: 'image/png', purpose: 'any' },
+          { src: '/icon-512.png', sizes: '512x512', type: 'image/png', purpose: 'any' },
+          { src: '/icon-512-maskable.png', sizes: '512x512', type: 'image/png', purpose: 'maskable' },
         ],
-        prefer_related_applications: false,
-        icons: [ ... ],
-        screenshots: [ ... ],
+        screenshots: [
+          {
+            src: '/screenshot-mobile.png',
+            sizes: '390x844',
+            type: 'image/png',
+            form_factor: 'narrow',
+            label: 'BeerBank — main screen',
+          },
+          {
+            src: '/screenshot-desktop.png',
+            sizes: '1280x800',
+            type: 'image/png',
+            form_factor: 'wide',
+            label: 'BeerBank — desktop',
+          },
+        ],
       },
     })
   ],

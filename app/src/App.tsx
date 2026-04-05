@@ -4,7 +4,7 @@ import WelcomePage from './pages/WelcomePage.jsx';
 
 type Screen = 'main' | 'settings' | 'profile' | 'spend';
 type SpendEvent = { date: string; amount: number };
-type InstallState = 'waiting' | 'ready' | 'accepted' | 'dismissed' | 'ios' | 'standalone' | 'unsupported' | 'installed';
+type InstallState = 'waiting' | 'ready' | 'accepted' | 'dismissed' | 'ios' | 'standalone' | 'unsupported';
 
 const MESSAGES = {
   ADD_1: 'Excellent!',
@@ -97,26 +97,16 @@ export default function App() {
   // PWA install prompt listener
   useEffect(() => {
     if (installState !== 'waiting') return;
-
     const handler = (e: Event) => {
       e.preventDefault();
       setDeferredPrompt(e);
       setInstallState('ready');
     };
     window.addEventListener('beforeinstallprompt', handler);
-
-    const timeout = setTimeout(async () => {
-      // Check if already installed via getInstalledRelatedApps
-      if ('getInstalledRelatedApps' in navigator) {
-        const apps = await (navigator as any).getInstalledRelatedApps();
-        if (apps.length > 0) {
-          setInstallState('installed');
-          return;
-        }
-      }
+    // Fallback: if no prompt after 5s, show "open in Chrome" instructions
+    const timeout = setTimeout(() => {
       setInstallState('unsupported');
     }, 5000);
-
     return () => {
       window.removeEventListener('beforeinstallprompt', handler);
       clearTimeout(timeout);
@@ -330,7 +320,7 @@ function InstallScreen({ installState, onInstall }: {
             onClick={onInstall}
             className="w-full bg-amber-800 text-amber-100 text-xl font-semibold py-4 rounded-xl shadow-lg active:scale-95 transition-all hover:bg-amber-700"
           >
-            Download BeerBank
+           Download BeerBank
           </button>
         )}
 
@@ -348,7 +338,7 @@ function InstallScreen({ installState, onInstall }: {
               onClick={onInstall}
               className="w-full bg-amber-800 text-amber-100 text-lg font-semibold py-4 rounded-xl shadow-lg active:scale-95 transition-all hover:bg-amber-700"
             >
-              Download BeerBank
+            Download BeerBank
             </button>
           </div>
         )}
@@ -358,13 +348,6 @@ function InstallScreen({ installState, onInstall }: {
             <p className="font-semibold text-amber-950 mb-3">To download on iPhone:</p>
             <p className="text-amber-900/90">1. Tap the <strong>Share</strong> button (□↑) in Safari</p>
             <p className="text-amber-900/90 mt-2">2. Tap <strong>"Add to Home Screen"</strong></p>
-          </div>
-        )}
-
-        {installState === 'installed' && (
-          <div className="bg-white/20 rounded-xl p-5 text-center w-full">
-            <p className="font-semibold text-amber-950 mb-2">✅ Already installed!</p>
-            <p className="text-amber-900/90">Open BeerBank from your home screen or Start menu.</p>
           </div>
         )}
 
