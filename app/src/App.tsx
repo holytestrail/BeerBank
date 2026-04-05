@@ -312,21 +312,21 @@ function InstallScreen({ installState, onInstall }: {
         <h1 className="text-3xl font-bold text-amber-950 mb-2">BeerBank</h1>
 
         {installState === 'waiting' && (
-          <p className="text-amber-900/70 animate-pulse">Preparing installation...</p>
+          <p className="text-amber-900/70 animate-pulse">Preparing download...</p>
         )}
 
         {installState === 'ready' && (
           <button
             onClick={onInstall}
-            className="w-full bg-amber-950 text-amber-100 text-lg font-semibold py-4 rounded-xl shadow-lg active:scale-95 transition-all hover:bg-amber-900"
+            className="w-full bg-amber-950 text-amber-100 text-xl font-semibold py-4 rounded-xl shadow-lg active:scale-95 transition-all hover:bg-amber-900"
           >
-            📲 Install BeerBank
+           Download BeerBank
           </button>
         )}
 
         {installState === 'accepted' && (
           <div className="bg-white/20 rounded-xl p-5">
-            <p className="text-amber-950 font-semibold text-lg mb-2">✅ Installed!</p>
+            <p className="text-amber-950 font-semibold text-lg mb-2">✅ Downloaded!</p>
             <p className="text-amber-900/80">Open BeerBank from your home screen.</p>
           </div>
         )}
@@ -338,14 +338,14 @@ function InstallScreen({ installState, onInstall }: {
               onClick={onInstall}
               className="w-full bg-amber-950 text-amber-100 text-lg font-semibold py-4 rounded-xl shadow-lg active:scale-95 transition-all hover:bg-amber-900"
             >
-              📲 Install BeerBank
+            Download BeerBank
             </button>
           </div>
         )}
 
         {installState === 'ios' && (
           <div className="bg-white/20 rounded-xl p-5 text-left w-full">
-            <p className="font-semibold text-amber-950 mb-3">To install on iPhone:</p>
+            <p className="font-semibold text-amber-950 mb-3">To download on iPhone:</p>
             <p className="text-amber-900/90">1. Tap the <strong>Share</strong> button (□↑) in Safari</p>
             <p className="text-amber-900/90 mt-2">2. Tap <strong>"Add to Home Screen"</strong></p>
           </div>
@@ -353,8 +353,8 @@ function InstallScreen({ installState, onInstall }: {
 
         {installState === 'unsupported' && (
           <div className="bg-white/20 rounded-xl p-5 text-left w-full">
-            <p className="font-semibold text-amber-950 mb-3">📲 To download BeerBank:</p>
-            <p className="text-amber-900/90">Open this page in <strong>Chrome</strong> on Android (not Incognito!), or <strong>Safari</strong> on iPhone — then follow the install prompt.</p>
+            <p className="font-semibold text-amber-950 mb-3">Hmm, we have a little problem:</p>
+            <p className="text-amber-900/90">To download BeerBank, open this page in <strong>Chrome</strong> on Android (not Incognito!), or <strong>Safari</strong> on iPhone — then follow the install prompt.</p>
             <p className="text-amber-900/70 text-sm mt-3">Your current browser doesn't support PWA.</p>
           </div>
         )}
