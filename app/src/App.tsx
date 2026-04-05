@@ -333,7 +333,7 @@ function InstallScreen({ installState, onInstall }: {
 
         {installState === 'dismissed' && (
           <div className="flex flex-col items-center gap-4 w-full">
-            <p className="text-amber-900/80">You can install it later from your browser menu.</p>
+            <p className="text-amber-900/80">No problem, install it later from your browser menu.</p>
             <button
               onClick={onInstall}
               className="w-full bg-amber-800 text-amber-100 text-lg font-semibold py-4 rounded-xl shadow-lg active:scale-95 transition-all hover:bg-amber-700"
