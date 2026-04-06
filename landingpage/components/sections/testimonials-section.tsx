@@ -62,6 +62,7 @@ export default function TestimonialsSection() {
           ))}
         </div>
       </div>
+      * all faces generated with 'this-person-does-not-exist.org'
     </section>
   )
 }
