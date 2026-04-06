@@ -10,7 +10,7 @@ export default function FooterSection() {
         </div>
 
         <p className="text-center text-background/70 mb-6">
-          Send me your feedback &amp; follow for more:
+          Send me your feedback:
         </p>
 
         {/* Contact links */}

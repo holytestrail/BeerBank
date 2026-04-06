@@ -64,7 +64,7 @@ export default function TryAppSection() {
             />
             <span className="text-sm leading-relaxed">
               By using the app, you give your consent to be addressed in creative ways, including, but not limited to,
-              &quot;lazy butt&quot;, &quot;miserable user&quot;, and so on, which is done not to harm you, but to make the BeerBank experience more enjoyable (not necessarily for you).
+              &quot;lazy butt&quot;, &quot;miserable loser&quot;, and so on, which is done not to harm you, but to make the BeerBank experience more enjoyable (not necessarily for you).
             </span>
           </label>
         </div>

@@ -13,7 +13,7 @@ export default function HeroSection() {
 
         {/* Headline */}
         <h1 className="text-2xl md:text-4xl font-bold leading-tight text-balance mb-4">
-          Enjoy beer without feeling like a lazy ass
+          Enjoy beer without feeling like a lazy ass!
         </h1>
 
         <p className="text-primary-foreground/80 text-lg mb-8">
