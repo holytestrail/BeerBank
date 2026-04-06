@@ -60,9 +60,9 @@ export default function TestimonialsSection() {
               </p>
             </div>
           ))}
+          * all faces generated with 'this-person-does-not-exist.org'
         </div>
       </div>
-      * all faces generated with 'this-person-does-not-exist.org'
     </section>
   )
 }
