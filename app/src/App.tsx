@@ -15,7 +15,7 @@ const MESSAGES = {
   MSG_03: 'Not enough money :(',
   MSG_04: 'Enter a whole number greater than 0',
   MSG_05: 'Enter a whole number',
-  MSG_07: 'You cannot take away more than you have. If you\'re not a tax official, of course.',
+  MSG_07: 'You cannot undo more than you did.',
 };
 
 const randomAddMessage = () => {
@@ -63,7 +63,7 @@ export default function App() {
   const [currentInput, setCurrentInput] = useState<number>(() => getNumberFromStorage('currentInput', 0));
   const [appliedConversionRate, setAppliedConversionRate] = useState<number>(() => getNumberFromStorage('appliedConversionRate', 1));
   const [conversionInput, setConversionInput] = useState<string>(() => getStringFromStorage('conversionInput', String(getNumberFromStorage('appliedConversionRate', 1))));
-  const [username, setUsername] = useState<string>(() => getStringFromStorage('username', 'JohnDoe'));
+  const [username] = useState<string>(() => getStringFromStorage('username', 'JohnDoe'));
   const [recentAdds, setRecentAdds] = useState<number[]>(() => {
     if (typeof window === 'undefined') return [];
     try {
@@ -222,7 +222,8 @@ export default function App() {
   };
 
   // Show install screen if not running as installed PWA
-  if (installState !== 'standalone') {
+   if (installState !== 'standalone') {
+  //  if (!import.meta.env.DEV && installState !== 'standalone') {
     return <InstallScreen installState={installState} onInstall={handleInstall} />;
   }
 
@@ -404,12 +405,12 @@ function MainScreen({
         </div>
       </section>
 
-      <section className="px-6 mt-8">
+      <section className="px-6 mt-4">
         <h2 className="text-amber-900/80 mb-2">Total exercises</h2>
-        <p className="text-6xl font-bold text-amber-950 tracking-tight">{totalExercises}</p>
+        <p className="text-4xl font-bold text-amber-950 tracking-tight">{totalExercises}</p>
       </section>
 
-      <section className="px-6 mt-10 flex-1">
+      <section className="px-6 mt-6 flex-1">
         <div className="flex items-center gap-3 mb-1">
           <div className="flex-1 h-px bg-amber-900/30" />
           <h2 className="text-amber-900/80 text-center">Add new session</h2>
@@ -562,7 +563,7 @@ function SpendScreen({
           <p className="text-6xl font-bold text-amber-950 tracking-tight">{beerCredit}</p>
         </section>
         <section className="mb-6">
-          <div className="flex items-center gap-3 mb-2">
+          <div className="flex items-center gap-3 mb-0">
             <div className="flex-1 h-px bg-amber-900/30" />
             <h2 className="text-amber-900/80 text-center">How much will you spend?</h2>
             <div className="flex-1 h-px bg-amber-900/30" />
