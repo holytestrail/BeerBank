@@ -1,10 +1,10 @@
 "use client"
 
-import { useState } from "react"
 import { Download } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { Checkbox } from "@/components/ui/checkbox"
 import Image from "next/image"
+import { useState } from "react"
+import { Checkbox } from "@/components/ui/checkbox"
 
 export default function TryAppSection() {
   const [consentChecked, setConsentChecked] = useState(false)
@@ -32,44 +32,22 @@ export default function TryAppSection() {
 
 
         {/* Download button */}
-        <Button
-          asChild
-          size="lg"
-          className="w-full text-base font-semibold mt-4 mb-4 bg-amber-100 text-amber-900 hover:bg-amber-200"
-        >
-          <a
-            href="https://beerbank.vercel.app"
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={(e) => {
-              if (!consentChecked) {
-                e.preventDefault()
-              }
-            }}
-            aria-disabled={!consentChecked}
+        <div className="mt-4 text-center">
+          <Button
+            asChild
+            size="lg"
+            className="w-auto text-base font-semibold mt-4 mb-4 bg-amber-100 text-amber-900 hover:bg-amber-200"
           >
-            <Download className="w-5 h-5 mr-2" />
-            Download BeerBank
-          </a>
-        </Button>
-
-
-        {/* Consent checkbox */}
-        <div className="bg-primary-foreground/10 rounded-xl p-4 mb-2">
-          <label className="flex items-start gap-3 cursor-pointer">
-            <Checkbox
-              checked={consentChecked}
-              onCheckedChange={(checked) => setConsentChecked(checked === true)}
-              className="mt-0.5 border-primary-foreground/50 data-[state=checked]:bg-primary-foreground data-[state=checked]:text-primary"
-            />
-            <span className="text-sm leading-relaxed">
-              By using the app, you give your consent to be addressed in creative ways, including, but not limited to,
-              &quot;lazy butt&quot;, &quot;miserable loser&quot;, and so on, which is done not to harm you, but to make the BeerBank experience more enjoyable (not necessarily for you).
-            </span>
-          </label>
+            <a
+              href="https://beerbank.vercel.app"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Download className="w-5 h-5 mr-2" />
+              Download BeerBank
+            </a>
+          </Button>
         </div>
-
-
       </div>
     </section>
   )

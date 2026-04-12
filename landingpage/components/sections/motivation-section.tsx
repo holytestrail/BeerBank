@@ -3,9 +3,9 @@ import { Button } from "@/components/ui/button"
 export default function MotivationSection() {
   return (
     <section className="py-12 px-6 md:py-20 bg-background">
-      <div className="max-w-xl mx-auto">
+      <div className="max-w-xl mx-auto text-center">
         <h2 className="text-xl md:text-2xl font-bold text-foreground mb-4 text-center">
-          Doing five push-ups is better than not doing fifty 💪
+          Doing five push-ups is better than not doing fifty💪
         </h2>
         <div className="text-muted-foreground leading-relaxed space-y-4 mb-8">
           <p>
@@ -17,7 +17,7 @@ export default function MotivationSection() {
         <Button
           asChild
           size="lg"
-          className="w-full md:w-auto text-base font-semibold"
+          className="w-auto md:w-auto text-base font-semibold"
         >
           <a href="#try-app">Try the freaking app already</a>
         </Button>

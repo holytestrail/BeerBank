@@ -1,4 +1,4 @@
-import { Settings, User, Beer, ArrowLeft } from 'lucide-react';
+﻿import { Settings, User, Beer, ArrowLeft } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import WelcomePage from './pages/WelcomePage.jsx';
 
@@ -222,10 +222,10 @@ export default function App() {
   };
 
   // Show install screen if not running as installed PWA
-   if (installState !== 'standalone') {
+  // if (installState !== 'standalone') {
   //  if (!import.meta.env.DEV && installState !== 'standalone') {
-    return <InstallScreen installState={installState} onInstall={handleInstall} />;
-  }
+  //  return <InstallScreen installState={installState} onInstall={handleInstall} />;
+  //}
 
   if (!hasWelcomed) {
     return <WelcomePage onContinue={() => setHasWelcomed(true)} />;
@@ -310,20 +310,45 @@ function InstallScreen({ installState, onInstall }: {
 
       <div className="relative z-10 flex flex-col items-center w-full">
         <img src="/BeerBank_icon.png" alt="BeerBank" className="w-24 h-24 rounded-2xl shadow-lg mb-6" />
-        <h1 className="text-3xl font-bold text-amber-950 mb-2">BeerBank</h1>
 
         {installState === 'waiting' && (
           <p className="text-amber-900/70 animate-pulse">Preparing download...</p>
         )}
 
+
+        {/* Download Consent checkbox */}
+        {installState === 'ready' && (
+          <div className="bg-amber-800/20 rounded-xl p-4 mb-2">
+            <label className="flex items-start gap-3 cursor-pointer">
+              <Checkbox
+                checked={consentChecked}
+                onCheckedChange={(checked) => setConsentChecked(checked === true)}
+                className="mt-0.5 border-amber-800/50 data-[state=checked]:bg-amber-800 data-[state=checked]:text-amber-100"
+              />
+              <span className="text-sm leading-relaxed text-amber-900">
+                By downloading the app, you confirm that you are of legal drinking age. You also give your consent to be addressed in creative ways, including, but not limited to,
+                &quot;lazy butt&quot;, &quot;miserable loser&quot;, and so on, which is done not to harm you, but to make the BeerBank experience more enjoyable (not necessarily for you).
+              </span>
+            </label>
+          </div>
+        )}
+
         {installState === 'ready' && (
           <button
             onClick={onInstall}
-            className="w-full bg-amber-800 text-amber-100 text-xl font-semibold py-4 rounded-xl shadow-lg active:scale-95 transition-all hover:bg-amber-700"
+            disabled={!consentChecked}
+            className="w-full bg-amber-800 text-amber-100 text-xl font-semibold py-4 rounded-xl shadow-lg active:scale-95 transition-all hover:bg-amber-700 disabled:opacity-50 disabled:cursor-not-allowed disabled:active:scale-100"
           >
-           Download BeerBank
+            Download BeerBank
           </button>
         )}
+
+
+
+
+
+
+
 
         {installState === 'accepted' && (
           <div className="bg-white/20 rounded-xl p-5">
@@ -355,7 +380,7 @@ function InstallScreen({ installState, onInstall }: {
         {installState === 'unsupported' && (
           <div className="bg-white/20 rounded-xl p-5 text-left w-full">
             <p className="font-semibold text-amber-950 mb-3">Hmm, a little technical issue:</p>
-            <p className="text-amber-900/90">To download BeerBank, open this page in Android <strong>Chrome</strong> (not Incognito) or <strong>Safari</strong> on iPhone — then follow the install prompt.</p>
+            <p className="text-amber-900/90">To download BeerBank, please open this page in Android <strong>Chrome</strong> (not Incognito) or <strong>Safari</strong> on iPhone — then follow the install prompt.</p>
             <p className="text-amber-900/90"><strong>Or maybe you already installed it?</strong> If so, open the app on your device.</p>
           </div>
         )}
@@ -469,9 +494,9 @@ function SettingsScreen({
         </button>
       </header>
       <div className="px-6">
-        <h1 className="text-3xl font-bold text-amber-950 mb-6">Settings</h1>
+        <h1 className="text-3xl text-amber-950 mb-6">Settings</h1>
         <section className="mb-8">
-          <h2 className="text-xl font-bold text-amber-950 mb-2">Conversion rate</h2>
+          <h2 className="text-xl text-amber-950 mb-2">Conversion rate</h2>
           <p className="text-base text-amber-900/70 mb-4">We don't know your local currency, so set your own rate based on your local beer prices and how lazy you feel</p>
           <p className="text-base text-amber-900/80 mb-3">1 exercise = <input
             type="text"
@@ -485,7 +510,7 @@ function SettingsScreen({
           <button onClick={applyRate} className="bg-white/80 backdrop-blur-sm rounded-lg px-6 py-2.5 font-semibold text-amber-900 shadow-md hover:bg-white transition-all active:scale-95">Apply new rate</button>
         </section>
         <section className="mb-6">
-          <h2 className="text-xl font-bold text-amber-950 mb-2">Beer credit correction</h2>
+          <h2 className="text-xl text-amber-950 mb-2">Beer credit correction</h2>
           <p className="text-base text-amber-900/80 mb-2">Current beer credit: {currentCredit}. To amend it,</p>
           <div className="flex items-center gap-2 mb-3">
             <input
@@ -513,19 +538,11 @@ function ProfileScreen({ onBack }: { onBack: () => void }) {
         </button>
       </header>
       <div className="px-6">
-        <h1 className="text-amber-950 mb-8">Profile</h1>
+        <h1 className="text-amber-950 text-3xl mb-3">Profile</h1>
         <div className="flex flex-col items-center">
-          <img
-            src="/BeerBank_icon.png"
-            alt=""
-            className="w-28 h-28 rounded-2xl shadow-lg object-contain bg-white/30"
-          />
           <div className="w-full max-w-sm mt-8">
             <p className="text-left text-base text-amber-950/90 leading-relaxed">
-              [Здесь будет текст 1]
-            </p>
-            <p className="text-left text-base text-amber-950/90 leading-relaxed mt-4">
-              [Здесь будет текст 2]
+              We'll add log in / log out features here later. Meanwhile, your personal profile is - the most talented person in the room (just don't tell anyone). 
             </p>
           </div>
         </div>
