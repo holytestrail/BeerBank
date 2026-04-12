@@ -222,10 +222,10 @@ export default function App() {
   };
 
   // Show install screen if not running as installed PWA
-  // if (installState !== 'standalone') {
-  //  if (!import.meta.env.DEV && installState !== 'standalone') {
-  //  return <InstallScreen installState={installState} onInstall={handleInstall} />;
-  //}
+   if (installState !== 'standalone') {
+    if (!import.meta.env.DEV && installState !== 'standalone') {
+    return <InstallScreen installState={installState} onInstall={handleInstall} />;
+  }
 
   if (!hasWelcomed) {
     return <WelcomePage onContinue={() => setHasWelcomed(true)} />;
