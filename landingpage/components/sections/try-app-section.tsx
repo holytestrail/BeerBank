@@ -13,7 +13,7 @@ export default function TryAppSection() {
     <section id="try-app" className="py-12 px-6 md:py-20 bg-primary text-primary-foreground">
       <div className="max-w-xl mx-auto">
         <h2 className="text-2xl md:text-3xl font-bold mb-8 text-center">
-          Get BeerBank on your phone! 📲
+          Get BeerBank<br></br>on your phone! 📲
         </h2>
 
         {/* App screenshots */}
