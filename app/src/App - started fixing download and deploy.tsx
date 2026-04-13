@@ -1,7 +1,6 @@
 ﻿import { Settings, User, Beer, ArrowLeft } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import WelcomePage from './pages/WelcomePage.jsx';
-import { Checkbox } from '@/components/ui/checkbox';
 
 type Screen = 'main' | 'settings' | 'profile' | 'spend';
 type SpendEvent = { date: string; amount: number };
@@ -227,6 +226,7 @@ export default function App() {
   };
 
   // Show install screen if not running as installed PWA
+   if (installState !== 'standalone') {
     if (!import.meta.env.DEV && installState !== 'standalone') {
     return <InstallScreen installState={installState} onInstall={handleInstall} />;
   }
@@ -302,8 +302,7 @@ if (!hasWelcomed) {
 function InstallScreen({ installState, onInstall }: {
   installState: InstallState;
   onInstall: () => void;
-}) {                                 
-  const [consentChecked, setConsentChecked] = useState(false); 
+}) {
   return (
     <div className="relative h-screen w-full max-w-[412px] mx-auto overflow-hidden bg-gradient-to-b from-amber-400 via-amber-500 to-amber-600 flex flex-col items-center justify-center px-8 text-center">
       {/* Background bubbles */}
