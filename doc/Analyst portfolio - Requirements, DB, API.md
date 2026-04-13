@@ -18,7 +18,7 @@ In this app-building project, I practiced:
 Download it from the landing page:
 [getbeerbank.vercel.app](https://getbeerbank.vercel.app/)
 
-![[img\app_screens.png]]
+![App screens](img/app_screens.png)
 
 ## App Usage Scenario
 
@@ -51,7 +51,7 @@ Conversion rate is set by the user in accordance to how lazy ass they are. For e
 - *Story map is a great tool to visually organize stories into epics and stages (only a part of map is shown).*
 - *I used Job stories, not User stories :The app has only one user role, and the context of actions is more important than the user type.*
 
-![[img\job_story_map.png]]
+![Part of job story map](img/job_story_map.png)
 
 ## Epics and Job stories
 
@@ -105,7 +105,7 @@ Conversion rate is set by the user in accordance to how lazy ass they are. For e
 
 Created in Draw.IO
 
-![[img\image.png]]
+![ER diagram](img/er_db_tables.png)
 ## Tables
 
 - **User**: Stores core user data and cached totals.
