@@ -1,6 +1,6 @@
 ﻿import { Settings, User, Beer, ArrowLeft } from 'lucide-react';
 import { useEffect, useState } from 'react';
-// import WelcomePage from './pages/WelcomePage.jsx';
+import WelcomePage from './pages/WelcomePage.jsx';
 
 type Screen = 'main' | 'settings' | 'profile' | 'spend';
 type SpendEvent = { date: string; amount: number };
@@ -54,9 +54,13 @@ export default function App() {
   });
   const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
 
-  const [hasWelcomed, setHasWelcomed] = useState(
-    () => typeof window !== 'undefined' && localStorage.getItem('beerbank_welcomed') === 'true'
-  );
+// Skip welcome screen
+//  const [hasWelcomed, setHasWelcomed] = useState(
+//    () => typeof window !== 'undefined' && localStorage.getItem('beerbank_welcomed') === 'true'
+//  );
+  const [hasWelcomed, setHasWelcomed] = useState(true)
+// *End skip welcome screen
+
   const [currentScreen, setCurrentScreen] = useState<Screen>('main');
   const [beerCredit, setBeerCredit] = useState<number>(() => getNumberFromStorage('beerCredit', 5));
   const [totalExercises, setTotalExercises] = useState<number>(() => getNumberFromStorage('totalExercises', 5));
@@ -227,9 +231,9 @@ export default function App() {
     return <InstallScreen installState={installState} onInstall={handleInstall} />;
   }
 
-//  if (!hasWelcomed) {
-//    return <WelcomePage onContinue={() => setHasWelcomed(true)} />;
-//  }
+if (!hasWelcomed) {
+    return <WelcomePage onContinue={() => setHasWelcomed(true)} />;
+  }
 
   return (
     <div className="relative h-screen w-full max-w-[412px] mx-auto overflow-hidden bg-gradient-to-b from-amber-400 via-amber-500 to-amber-600">
