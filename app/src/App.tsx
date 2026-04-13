@@ -63,8 +63,8 @@ export default function App() {
 // *End skip welcome screen
 
   const [currentScreen, setCurrentScreen] = useState<Screen>('main');
-  const [beerCredit, setBeerCredit] = useState<number>(() => getNumberFromStorage('beerCredit', 5));
-  const [totalExercises, setTotalExercises] = useState<number>(() => getNumberFromStorage('totalExercises', 5));
+  const [beerCredit, setBeerCredit] = useState<number>(() => getNumberFromStorage('beerCredit', 0));
+  const [totalExercises, setTotalExercises] = useState<number>(() => getNumberFromStorage('totalExercises', 0));
   const [currentInput, setCurrentInput] = useState<number>(() => getNumberFromStorage('currentInput', 0));
   const [appliedConversionRate, setAppliedConversionRate] = useState<number>(() => getNumberFromStorage('appliedConversionRate', 1));
   const [conversionInput, setConversionInput] = useState<string>(() => getStringFromStorage('conversionInput', String(getNumberFromStorage('appliedConversionRate', 1))));
