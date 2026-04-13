@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button"
 import Image from "next/image"
 import { useState } from "react"
 import { Checkbox } from "@/components/ui/checkbox"
+import { track } from '@vercel/analytics';
 
 export default function TryAppSection() {
   const [consentChecked, setConsentChecked] = useState(false)
@@ -42,6 +43,7 @@ export default function TryAppSection() {
               href="https://beerbank.vercel.app"
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => track('go_to_app')}
             >
               <Download className="w-5 h-5 mr-2" />
               Download BeerBank
