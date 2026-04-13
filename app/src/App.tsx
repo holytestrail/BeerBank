@@ -2,6 +2,7 @@
 import { useEffect, useState } from 'react';
 import WelcomePage from './pages/WelcomePage.jsx';
 import { Checkbox } from '@/components/ui/checkbox';
+import { Analytics } from "@vercel/analytics/next"
 
 
 type Screen = 'main' | 'settings' | 'profile' | 'spend';
