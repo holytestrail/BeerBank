@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import WelcomePage from './pages/WelcomePage.jsx';
 import { Checkbox } from '@/components/ui/checkbox';
 
+
 type Screen = 'main' | 'settings' | 'profile' | 'spend';
 type SpendEvent = { date: string; amount: number };
 type InstallState = 'waiting' | 'ready' | 'accepted' | 'dismissed' | 'ios' | 'standalone' | 'unsupported';

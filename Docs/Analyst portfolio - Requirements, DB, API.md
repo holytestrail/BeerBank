@@ -1,73 +1,74 @@
+> *By Pavel Linitsky , [https://www.linkedin.com/in/linitsky/](https://www.linkedin.com/in/linitsky/)*
 
-This is a pet project with a goal to practice my business system analyst skills:
-- Requirements preparation
-- Database development (Supabase)
-- Rest API development and documentation (Swagger, Postman)
-- Project documentation (Obsidian, Github, Markdown)
+In this app-building project, I practiced: 
 
-All other features have been realized via vibe coding (VSCode + Cursor)
+- Requirements management
+- Database development (ER diagrams, Supabase)
+- API endpoints (Swagger, Postman)
+- Project documentation (Obsidian, Github, Markdown, Miro, DrawIO, Notion)
+- AI vibe coding (VS Code, Cursor)
 
-## Product Vision
+# Basic Project Info
 
-BeerBank is an app for those who love beer and would be happy to improve their physical shape, but lack the motivation for regular workouts. Through gamification — exchanging exercises for the right to drink a certain amount of beer — we encourage them to add quick, simple exercises to their daily routine so they start moving their asses, even if it’s only a little.
+## Product Idea & Vision
+
+**BeerBank** is an app for those who love beer and would like to improve their physical shape, but lack the motivation for regular workouts. Through gamification, we encourage them to add simple exercises to their daily life so they start moving their asses, even if it’s only a little.
+
+Download it here!
+[getbeerbank.vercel.app](https://getbeerbank.vercel.app/)
+
+![[app_screens.png]]
 
 ## App Usage Scenario
 
-Step 1: When I have a free minute, I do a few push-ups, squats, or other simple exercises. I add the number of repetitions to my BeerBank App, which converts them into Beer Credit according to the conversion rate I chose earlier. For example, 1 push-up = 2 Serbian dinars.
+**Step 1**: When I have a free minute, I do a few push-ups, squats, or other simple exercises. I add the number of repetitions to my BeerBank App, which increases my Beer Credit.
 
-Step 2: When I want to buy a beer, I check my Beer Credit. If I have enough dinars, I can buy a beer and decrease my Beer Credit accordingly. If I don’t have enough credit, I’m honest with myself and skip the beer. Next time, I make sure I do enough exercise in advance before going to a bar.
+**Step 2**: When I want to buy a beer, I check my Beer Credit. If I have enough credit, I can buy a beer and decrease my Beer Credit accordingly. If I don’t have enough credit, I’m honest with myself and skip the beer. Next time, I make sure I do enough exercise in advance before going to a bar.
 
-## Stack
+## General Agreements
 
-- Frontend: React + Vite + shadcn/ui + Tailwind + Zustand + Dexie.js + Supabase JS Client + vite-plugin-pwa
-- Backend: Supabase (PostgreSQL + Auth + REST)
-- Deploy: Vercel
-
-
-## General Approach and Assumptions
-
-- **PWA**: The app shall be a PWA application. 
+- **PWA**: The app shall be a PWA application.
 - **Single device per user**: For MVP, we assume the app has a single user with a single device, so multi-device conflicts are not expected.
-- **Offline-first**: To ensure seamless user experience, the local app data is always precedent to server data. 
+- **Offline-first**: To ensure seamless user experience, the local app data is always precedent to server data.
+- **Localization-ready** approach (all UI copy is stored separately; will be implemented after MVP).
 
-
-## Glossary
+## Project Glossary
 
 - **Exercise** - Any single action, like one push-up or one squat.
 - **Session** - A set of exercises done in a row and added to the app as a single number.
 - **ExTotal** - The total amount of exercises done by the user over the whole app usage period.
 - **Balance** - The current amount of money units available to user. Increased automatically when exercises are added. Note that "money" in BBapp does not refer to any specific currency; It is assumed that it represents the user's local currency.
-- **Conversion Rate** - The coefficient used to convert added exercises to money: 
-  `Added Money = Added Exercises * Conversion Rate.`  
-  Conversion rate is set by the user in accordance to how lazy ass they are. For example, 1 exercise = 5 money units.
+- **Conversion Rate** - The coefficient used to convert added exercises to money:`Added Money = Added Exercises * Conversion Rate.`
+Conversion rate is set by the user in accordance to how lazy ass they are. For example, 1 exercise = 5 money units.
 
+---
 
 # Requirements
 
-### Notes on my approach (TBD)
+## Job Story Map
 
- - **Job stories, not User stories**:  I've taken the "Job story" approach to requirements, because the app has only one user role, and the context of actions is more important than the user type.
- - **FR, NFR, and UI Messages** are organized separately.
- - **Localization-ready** approach is taken (all UI copy is stored separately).
- - **Known gaps** are described (as "out of MVP scope").
- 
+- *Story map is a great tool to visually organize stories into epics and stages (only a part of map is shown).*
+- *I used Job stories, not User stories :The app has only one user role, and the context of actions is more important than the user type.*
+
+![job_story_map.png](job_story_map.png)
+
 ## Epics and Job stories
 
-| **Epic**       | **Job Story ID** | **Description**                                                                                                                                                                             | **Stage** |
-| -------------- | ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------- |
-| Balance        | BAL1             | When I open BB app, I want to **see the total number of exercises** So I can see how my little efforts have turned into cumulative impact with time.                                        | MVP       |
-|                | BAL2             | When I've finished an exercise session, I want to **add the number of exercises to the balance** So that the Money balance increases accordingly.                                           | MVP       |
-|                | BAL3             | When I've added exercises by mistake, I want to **decrease the total** So that it stays correct.                                                                                            | MVP       |
-|                | BAL4             | When I open BB app, I want to **see my Money balance** So that I know if I can afford a beer.                                                                                               | MVP       |
-|                | BAL5             | When I've bought a beer, I want to **write off the relevant number from my Money balance** So that it stays correct.                                                                        | MVP       |
-|                | BAL6             | When I notice my Balance is incorrect, **I want to correct it manually** So that I know exactly how much "money" I have.                                                                    | MVP       |
-| Messages       | MES1             | When I enter any data or settings, **I want to receive confirmation UI messages** So that I know for sure the changes have been made.                                                       | MVP       |
-|                | MES2             | When I add exercises or spend money, **I want to receive encouraging messages** So that I feel my efforts are valued.                                                                       | MVP       |
-| Settings       | SET1             | When I evaluate my success and efforts, I want to **convert exercise number to Money balance at a specific rate** So that I can choose myself how challenging my excercise-to-beer path is. | MVP       |
-| Authentication | AUT1             | When I'm using the BBapp, **I want to be be able to log in and out** at my convenience, So that I have secure access to my personal data                                                    | MVP       |
-|                | AUT2             | When I'm asked to authenticate, **I want to sign in with my Google account** So I don't have to create a new user profile.                                                                  | MVP       |
-| Sync           | SYN1             | When I adjust ExTotal or Balance, **I want my adjustments to be reflected immediately** so that I instantly feel satisfied with my efforts and honesty.                                     | MVP       |
-|                |                  |                                                                                                                                                                                             |           |
+| **Epic** | **Job Story ID** | **Description** | **Stage** |
+| --- | --- | --- | --- |
+| Balance | BAL1 | When I open BB app, I want to **see the total number of exercises** So I can see how my little efforts have turned into cumulative impact with time. | MVP |
+|  | BAL2 | When I've finished an exercise session, I want to **add the number of exercises to the balance** So that the Money balance increases accordingly. | MVP |
+|  | BAL3 | When I've added exercises by mistake, I want to **decrease the total** So that it stays correct. | MVP |
+|  | BAL4 | When I open BB app, I want to **see my Money balance** So that I know if I can afford a beer. | MVP |
+|  | BAL5 | When I've bought a beer, I want to **write off the relevant number from my Money balance** So that it stays correct. | MVP |
+|  | BAL6 | When I notice my Balance is incorrect, **I want to correct it manually** So that I know exactly how much "money" I have. | MVP |
+| Messages | MES1 | When I enter any data or settings, **I want to receive confirmation UI messages** So that I know for sure the changes have been made. | MVP |
+|  | MES2 | When I add exercises or spend money, **I want to receive encouraging messages** So that I feel my efforts are valued. | MVP |
+| Settings | SET1 | When I evaluate my success and efforts, I want to **convert exercise number to Money balance at a specific rate** So that I can choose myself how challenging my excercise-to-beer path is. | MVP |
+| Authentication | AUT1 | When I'm using the BBapp, **I want to be be able to log in and out** at my convenience, So that I have secure access to my personal data | MVP |
+|  | AUT2 | When I'm asked to authenticate, **I want to sign in with my Google account** So I don't have to create a new user profile. | MVP |
+| Sync | SYN1 | When I adjust ExTotal or Balance, **I want my adjustments to be reflected immediately** so that I instantly feel satisfied with my efforts and honesty. | MVP |
+|  |  |  |  |
 
 ## Requirements
 
@@ -97,24 +98,62 @@ Step 2: When I want to buy a beer, I check my Beer Credit. If I have enough dina
 | NFR-04                     | **Localization-Ready**:<br>All UI strings, labels, and messages shall be stored in a dedicated localization file. Hard-coding UI text is not permitted. MVP supports Russian language only.                                                                        |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
 |                            |                                                                                                                                                                                                                                                                    |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
 
-# UI Messages
+# Database Structure
 
-| **Type**  | **Context**                | **ID**  | **Text**                                                                                                                           |
-| --------- | -------------------------- | ------- | ---------------------------------------------------------------------------------------------------------------------------------- |
-| MSG-ADD   | Exercise added             | ADD-1   | Excellent!                                                                                                                         |
-| MSG-ADD   | Exercise added             | ADD-2   | Well done!                                                                                                                         |
-| MSG-ADD   | Exercise added             | ADD-3   | Not bad!                                                                                                                           |
-| MSG-UI    | Manual data update success | MSG-01  | Data corrected                                                                                                                     |
-| MSG-UI    | Manual data update success | MSG-02  | New conversion rate applied                                                                                                        |
-| MSG-UI    | Manual data update failure | MSG-03  | Not enough money :(                                                                                                                |
-| MSG-UI    | Manual data update failure | MSG-04  | Enter a whole number greater than 0                                                                                                |
-| MSG-UI    | Manual data update failure | MSG-05  | Enter a whole number                                                                                                               |
-| MSG-UI    | On first login             | MSG-06  | Start by defining your conversion rate in SETTINGS — we'll use it to convert exercise into money. You can change it later anytime. |
-| MSG-UI    | Manual data update failure | MSG-07  | You cannot take away more than you have. If you're not a tax official, of course.                                                  |
-| MSG-SPEND | Money spent                | SPEND-1 | Well done, you deserve that!                                                                                                       |
-| MSG-SPEND | Money spent                | SPEND-2 | Enjoy!                                                                                                                             |
-| MSG-SPEND | Money spent                | SPEND-3 | You've earned this!                                                                                                                |
-|           |                            |         |                                                                                                                                    |
+## ER diagram
 
+Created in Draw.IO
 
+![image.png](er_db_tables.png)
+## Tables
 
+- **User**: Stores core user data and cached totals.
+- **ExerciseEvent**: Stores each exercise logging event for statistics and balance calculation.
+- **SpendEvent**: Stores each spend event for statistics and balance calculation.
+
+**users**
+
+| Column | Type | Constraints | Description |
+| --- | --- | --- | --- |
+| user_id | UUID | PK, default gen_random_uuid() | Unique user ID |
+| nickname | VARCHAR(15) | NOT NULL | Display name for future activities, like leaderboards (not in MVP) |
+| ex_total | INTEGER | NOT NULL, default 0 | Cached total of all exercises logged |
+| balance | INTEGER | NOT NULL, default 0 | Current beer credit balance |
+| conversion_rate | SMALLINT | NOT NULL, default 1, CHECK >= 1 | Exercise-to-money conversion rate |
+
+**exercise_events**
+
+| Column | Type | Constraints | Description |
+| --- | --- | --- | --- |
+| ex_event_id | UUID | PK, default gen_random_uuid() | Unique event ID |
+| user_id | UUID | FK → User.UserId, ON DELETE CASCADE | User ID |
+| ex_time | TIMESTAMPTZ | NOT NULL, default now() | Timestamp of the session |
+| ex_amount | SMALLINT | NOT NULL | Number of exercises |
+| client_event_id | UUID | NOT NULL, UNIQUE | Client-generated ID for offline deduplication |
+
+**spend_events**
+
+| Column | Type | Constraints | Description |
+| --- | --- | --- | --- |
+| spend_event_id | UUID | PK, default gen_random_uuid() | Unique event ID |
+| user_id | UUID | FK → User.UserId, ON DELETE CASCADE | User ID |
+| spend_time | TIMESTAMPTZ | NOT NULL, default now() | Timestamp of the spend |
+| spend_amount | SMALLINT | NOT NULL, CHECK >= 1 | Amount of money spent |
+| client_event_id | UUID | NOT NULL, UNIQUE | Client-generated ID for offline deduplication |
+
+---
+
+# API Endpoints
+
+- *Full API specification was created in Swagger.*
+- *API integration is tested and fully functional (Postman / Supabase), yet not implemented in MVP.*
+
+| Method | Path | Description | Requirement |
+| --- | --- | --- | --- |
+| GET | /users | Get current user data | FR-BAL1.01, FR-BAL4.01 |
+| POST | /users | Create user on first login | FR-AUT1.01 |
+| PATCH | /users | Update conversion rate or balance | FR-SET1-01, FR-BAL6.01 |
+| POST | /exercise_events | Log an exercise session | FR-BAL2.01 |
+| GET | /exercise_events | Get recent exercise sessions | FR-BAL1.01 |
+| POST | /spend_events | Log a beer purchase | FR-BAL5.01 |
+| GET | /spend_events | Get recent spend events | FR-BAL4.01 |
