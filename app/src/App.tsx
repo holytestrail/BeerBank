@@ -11,12 +11,20 @@ const MESSAGES = {
   ADD_1: 'Excellent!',
   ADD_2: 'Well done!',
   ADD_3: 'Not bad!',
+  SPEND_1: 'Well done, you deserve that!',  
+  SPEND_2: 'Enjoy!',                         
+  SPEND_3: "You've earned this!",
   MSG_01: 'Data corrected',
   MSG_02: 'New conversion rate applied',
   MSG_03: 'Not enough money :(',
   MSG_04: 'Enter a whole number greater than 0',
   MSG_05: 'Enter a whole number',
   MSG_07: 'You cannot undo more than you did.',
+};
+
+const randomSpendMessage = () => {
+  const options = [MESSAGES.SPEND_1, MESSAGES.SPEND_2, MESSAGES.SPEND_3];
+  return options[Math.floor(Math.random() * options.length)];
 };
 
 const randomAddMessage = () => {
@@ -193,7 +201,7 @@ export default function App() {
     const now = new Date().toISOString().split('T')[0];
     setRecentSpends((prev) => [{ date: now, amount: toInt(parsed) }, ...prev].slice(0, 5));
     setSpendAmount('');
-    showToast(MESSAGES.ADD_2);
+    showToast(randomSpendMessage());
   };
 
   const applyRate = () => {
