@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import WelcomePage from './pages/WelcomePage.jsx';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Analytics } from "@vercel/analytics/next"
+import { I18nProvider } from "./components/I18nProvider";
 
 
 type Screen = 'main' | 'settings' | 'profile' | 'spend';
@@ -246,6 +247,7 @@ if (!hasWelcomed) {
   }
 
   return (
+    <I18nProvider>
     <div className="relative h-screen w-full max-w-[412px] mx-auto overflow-hidden bg-gradient-to-b from-amber-400 via-amber-500 to-amber-600">
       <div className="absolute inset-0 bg-white/20 backdrop-blur-sm"></div>
       <div className="absolute top-24 left-8 w-20 h-20 rounded-full bg-white/25 blur-lg"></div>
@@ -306,6 +308,7 @@ if (!hasWelcomed) {
         )}
       </div>
     </div>
+    </I18nProvider>
   );
 }
 

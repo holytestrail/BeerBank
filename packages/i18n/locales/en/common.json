@@ -1,0 +1,11 @@
+{
+  "buttons": {
+    "submit": "Submit",
+    "cancel": "Cancel",
+    "save": "Save",
+    "close": "Close"
+  },
+  "errors": {
+    "generic": "Something went wrong"
+  }
+}
