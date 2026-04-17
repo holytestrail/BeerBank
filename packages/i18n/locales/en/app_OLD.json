@@ -1,0 +1,16 @@
+{
+  "messages": {
+    "add_1": "Excellent!",
+    "add_2": "Well done!",
+    "add_3": "Not bad!",
+    "spend_1": "Well done, you deserve that!",
+    "spend_2": "Enjoy!",
+    "spend_3": "You have earned this!",
+    "msg_01": "Data corrected",
+    "msg_02": "New conversion rate applied",
+    "msg_03": "Not enough money :(",
+    "msg_04": "Enter a whole number greater than 0",
+    "msg_05": "Enter a whole number",
+    "msg_07": "You cannot undo more than you did."
+  }
+}

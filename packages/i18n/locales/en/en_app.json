@@ -34,7 +34,7 @@
     "unsupported_hint": "<strong>Or maybe you already installed it?</strong> If so, open the app on your device."
   },
   "main": {
-    "beer_credit": "Your beer credit",
+    "beer_credit": "11Your beer credit",
     "beer_time_button": "Beer time!",
     "total_exercises": "Total exercises",
     "add_session": "Add new session",
@@ -44,13 +44,12 @@
   "settings": {
     "title": "Settings",
     "conversion_title": "Conversion rate",
-    "conversion_description": "We don't know your local currency, so set your own rate based on your local beer prices and how lazy you feel.",
+    "conversion_description": "We don't know your local currency, so set your own rate based on your local beer prices and how lazy you feel",
     "conversion_label": "1 exercise =",
-    "conversion_money": " money",
+    "conversion_money": "money",
     "apply_rate": "Apply new rate",
     "correction_title": "Beer credit correction",
     "correction_current": "Current beer credit:",
-    "correction_current_2": "To change it,",
     "correction_placeholder": "type in the new balance",
     "apply_correction": "Apply new credit",
     "language_title": "Language"

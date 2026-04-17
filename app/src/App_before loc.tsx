@@ -295,9 +295,8 @@ if (!hasWelcomed) {
 function InstallScreen({ installState, onInstall }: {
   installState: InstallState;
   onInstall: () => void;
-}) {
-  const { t } = useTranslation('app');
-  const [consentChecked, setConsentChecked] = useState(false);
+}) {                                 
+  const [consentChecked, setConsentChecked] = useState(false); 
   return (
     <div className="relative h-screen w-full max-w-[412px] mx-auto overflow-hidden bg-gradient-to-b from-amber-400 via-amber-500 to-amber-600 flex flex-col items-center justify-center px-8 text-center">
       {/* Background bubbles */}
@@ -311,8 +310,9 @@ function InstallScreen({ installState, onInstall }: {
         <img src="/BeerBank_icon.png" alt="BeerBank" className="w-24 h-24 rounded-2xl shadow-lg mb-6" />
 
         {installState === 'waiting' && (
-          <p className="text-amber-900/70 animate-pulse">{t('install.preparing')}</p>
+          <p className="text-amber-900/70 animate-pulse">Preparing download...</p>
         )}
+
 
         {/* Download Consent checkbox */}
         {installState === 'ready' && (
@@ -324,7 +324,8 @@ function InstallScreen({ installState, onInstall }: {
                 className="mt-0.5 border-amber-800/50 data-[state=checked]:bg-amber-800 data-[state=checked]:text-amber-100"
               />
               <span className="text-sm leading-relaxed text-amber-900">
-                {t('install.consent')}
+                By downloading the app, you confirm that you are of legal drinking age. You also give your consent to be addressed in creative ways, including, but not limited to,
+                &quot;lazy butt&quot;, &quot;miserable loser&quot;, and so on, which is done not to harm you, but to make the BeerBank experience more enjoyable (not necessarily for you).
               </span>
             </label>
           </div>
@@ -336,42 +337,49 @@ function InstallScreen({ installState, onInstall }: {
             disabled={!consentChecked}
             className="w-full bg-amber-800 text-amber-100 text-xl font-semibold py-4 rounded-xl shadow-lg active:scale-95 transition-all hover:bg-amber-700 disabled:opacity-50 disabled:cursor-not-allowed disabled:active:scale-100"
           >
-            {t('install.download_button')}
+            Download BeerBank
           </button>
         )}
 
+
+
+
+
+
+
+
         {installState === 'accepted' && (
           <div className="bg-white/20 rounded-xl p-5">
-            <p className="text-amber-950 font-semibold text-lg mb-2">{t('install.accepted_title')}</p>
-            <p className="text-amber-900/80">{t('install.accepted_body')}</p>
+            <p className="text-amber-950 font-semibold text-lg mb-2">✅ Downloaded!</p>
+            <p className="text-amber-900/80">Open BeerBank from your home screen.</p>
           </div>
         )}
 
         {installState === 'dismissed' && (
           <div className="flex flex-col items-center gap-4 w-full">
-            <p className="text-amber-900/80">{t('install.dismissed')}</p>
+            <p className="text-amber-900/80">You cancelled the installation - no problem, install it later from your browser menu (or look for the download icon in the address bar).</p>
             <button
               onClick={onInstall}
               className="w-full bg-amber-800 text-amber-100 text-lg font-semibold py-4 rounded-xl shadow-lg active:scale-95 transition-all hover:bg-amber-700"
             >
-              {t('install.download_button')}
+            Download BeerBank
             </button>
           </div>
         )}
 
         {installState === 'ios' && (
           <div className="bg-white/20 rounded-xl p-5 text-left w-full">
-            <p className="font-semibold text-amber-950 mb-3">{t('install.ios_title')}</p>
-            <p className="text-amber-900/90" dangerouslySetInnerHTML={{ __html: t('install.ios_step1') }} />
-            <p className="text-amber-900/90 mt-2" dangerouslySetInnerHTML={{ __html: t('install.ios_step2') }} />
+            <p className="font-semibold text-amber-950 mb-3">To download on iPhone:</p>
+            <p className="text-amber-900/90">1. Tap the <strong>Share</strong> button (□↑) in Safari</p>
+            <p className="text-amber-900/90 mt-2">2. Tap <strong>"Add to Home Screen"</strong></p>
           </div>
         )}
 
         {installState === 'unsupported' && (
           <div className="bg-white/20 rounded-xl p-5 text-left w-full">
-            <p className="font-semibold text-amber-950 mb-3">{t('install.unsupported_title')}</p>
-            <p className="text-amber-900/90" dangerouslySetInnerHTML={{ __html: t('install.unsupported_body') }} />
-            <p className="text-amber-900/90" dangerouslySetInnerHTML={{ __html: t('install.unsupported_hint') }} />
+            <p className="font-semibold text-amber-950 mb-3">Hmm, a little technical issue:</p>
+            <p className="text-amber-900/90">To download BeerBank, please open this page in Android <strong>Chrome</strong> (not Incognito) or <strong>Safari</strong> on iPhone — then follow the install prompt.</p>
+            <p className="text-amber-900/90"><strong>Or maybe you already installed it?</strong> If so, open the app on your device.</p>
           </div>
         )}
       </div>
@@ -396,40 +404,39 @@ function MainScreen({
   handleAdd: () => void;
   onNavigate: (screen: Screen) => void;
 }) {
-  const { t } = useTranslation('app');
   return (
     <div className="h-full flex flex-col">
       <header className="flex items-center justify-between px-5 pt-5 pb-4">
-        <button onClick={() => onNavigate('profile')} className="w-12 h-12 rounded-full bg-white/90 backdrop-blur-sm shadow-lg flex items-center justify-center hover:bg-white transition-all active:scale-95" aria-label={t('aria.profile')}>
+        <button onClick={() => onNavigate('profile')} className="w-12 h-12 rounded-full bg-white/90 backdrop-blur-sm shadow-lg flex items-center justify-center hover:bg-white transition-all active:scale-95" aria-label="Profile">
           <User className="w-6 h-6 text-amber-900" />
         </button>
-        <button onClick={() => onNavigate('settings')} className="w-12 h-12 rounded-full bg-white/90 backdrop-blur-sm shadow-lg flex items-center justify-center hover:bg-white transition-all active:scale-95" aria-label={t('aria.settings')}>
+        <button onClick={() => onNavigate('settings')} className="w-12 h-12 rounded-full bg-white/90 backdrop-blur-sm shadow-lg flex items-center justify-center hover:bg-white transition-all active:scale-95" aria-label="Settings">
           <Settings className="w-6 h-6 text-amber-900" />
         </button>
       </header>
 
       <section className="px-6 mt-2">
-        <h1 className="text-amber-900/80">{t('main.beer_credit')}</h1>
+        <h1 className="text-amber-900/80">Your beer credit</h1>
         <div className="flex items-center gap-3">
           <div className="flex-1">
-            <p className="text-8xl font-bold text-amber-950 tracking-tight pb-2">{beerCredit}</p>
+            <p className="text-8xl font-bold text-amber-950 tracking-tight">{beerCredit}</p>
           </div>
-          <button onClick={() => onNavigate('spend')} className="bg-white/90 backdrop-blur-sm rounded-2xl shadow-lg px-5 py-4 hover:bg-white transition-all active:scale-95 min-w-[110px]" aria-label={t('aria.spend')}>
-            <Beer className="w-9 h-9 text-amber-600 mx-auto mt-1" />
-            <span className="block text-lg font-medium text-amber-900">{t('main.beer_time_button')}</span>
+          <button onClick={() => onNavigate('spend')} className="bg-white/90 backdrop-blur-sm rounded-2xl shadow-lg px-5 py-5 hover:bg-white transition-all active:scale-95 min-w-[110px]" aria-label="Spend">
+            <Beer className="w-9 h-9 text-amber-600 mx-auto" />
+            <span className="block text-lg font-medium text-amber-900">Beer time!</span>
           </button>
         </div>
       </section>
 
       <section className="px-6 mt-4">
-        <h2 className="text-amber-900/80 mb-2">{t('main.total_exercises')}</h2>
+        <h2 className="text-amber-900/80 mb-2">Total exercises</h2>
         <p className="text-4xl font-bold text-amber-950 tracking-tight">{totalExercises}</p>
       </section>
 
       <section className="px-6 mt-6 flex-1">
         <div className="flex items-center gap-3 mb-1">
           <div className="flex-1 h-px bg-amber-900/30" />
-          <h2 className="text-amber-900/80 text-center">{t('main.add_session')}</h2>
+          <h2 className="text-amber-900/80 text-center">Add new session</h2>
           <div className="flex-1 h-px bg-amber-900/30" />
         </div>
         <div className="flex gap-3">
@@ -447,11 +454,11 @@ function MainScreen({
                 <button key={btn.label} onClick={() => adjustInput(btn.value)} className="text-lg bg-white/80 backdrop-blur-sm rounded-lg py-3 font-semibold text-amber-900 shadow-md hover:bg-white transition-all active:scale-95">{btn.label}</button>
               ))}
             </div>
-            <button onClick={handleAdd} className="w-full bg-amber-600 hover:bg-amber-700 text-white text-xl font-semibold py-4 rounded-xl shadow-lg transition-all active:scale-95">{t('main.add_button')}</button>
+            <button onClick={handleAdd} className="w-full bg-amber-600 hover:bg-amber-700 text-white text-xl font-semibold py-4 rounded-xl shadow-lg transition-all active:scale-95">Add</button>
           </div>
         </div>
         {recentAdds.length > 0 ? (
-          <div className="mt-2 px-2 text-base text-amber-900/60 font-medium">{t('main.last_added')} {recentAdds.slice().reverse().map(formatSigned).join(', ')}</div>
+          <div className="mt-2 px-2 text-base text-amber-900/60 font-medium">Last added: {recentAdds.slice().reverse().map(formatSigned).join(', ')}</div>
         ) : null}
       </section>
     </div>
@@ -479,20 +486,19 @@ function SettingsScreen({
   applyCorrection: () => void;
   i18n: any;
 }) {
-  const { t } = useTranslation('app');
   return (
     <div className="h-full flex flex-col overflow-y-auto">
       <header className="flex items-center px-5 pt-5 pb-4">
-        <button onClick={onBack} className="w-12 h-12 rounded-full bg-white/90 backdrop-blur-sm shadow-lg flex items-center justify-center hover:bg-white transition-all active:scale-95" aria-label={t('aria.back')}>
+        <button onClick={onBack} className="w-12 h-12 rounded-full bg-white/90 backdrop-blur-sm shadow-lg flex items-center justify-center hover:bg-white transition-all active:scale-95" aria-label="Back">
           <ArrowLeft className="w-6 h-6 text-amber-900" />
         </button>
       </header>
       <div className="px-6">
-        <h1 className="text-3xl text-amber-950 mb-6">{t('settings.title')}</h1>
+        <h1 className="text-3xl text-amber-950 mb-6">Settings</h1>
         <section className="mb-8">
-          <h2 className="text-xl text-amber-950 mb-2">{t('settings.conversion_title')}</h2>
-          <p className="text-base text-amber-900/70 mb-4">{t('settings.conversion_description')}</p>
-          <p className="text-base text-amber-900/80 mb-3">{t('settings.conversion_label')} <input
+          <h2 className="text-xl text-amber-950 mb-2">Conversion rate</h2>
+          <p className="text-base text-amber-900/70 mb-4">We don't know your local currency, so set your own rate based on your local beer prices and how lazy you feel</p>
+          <p className="text-base text-amber-900/80 mb-3">1 exercise = <input
             type="text"
             inputMode="numeric"
             value={conversionInput}
@@ -500,26 +506,26 @@ function SettingsScreen({
             onFocus={() => conversionInput === '0' && setConversionInput('')}
             placeholder="1"
             className="inline-block w-20 px-2 py-1 bg-amber-200/60 border border-amber-400/50 rounded text-amber-950 text-center"
-          /> {t('settings.conversion_money')}</p>
-          <button onClick={applyRate} className="bg-white/80 backdrop-blur-sm rounded-lg px-6 py-2.5 font-semibold text-amber-900 shadow-md hover:bg-white transition-all active:scale-95">{t('settings.apply_rate')}</button>
+          /> money</p>
+          <button onClick={applyRate} className="bg-white/80 backdrop-blur-sm rounded-lg px-6 py-2.5 font-semibold text-amber-900 shadow-md hover:bg-white transition-all active:scale-95">Apply new rate</button>
         </section>
         <section className="mb-6">
-          <h2 className="text-xl text-amber-950 mb-2">{t('settings.correction_title')}</h2>
-          <p className="text-base text-amber-900/80 mb-2">{t('settings.correction_current')} {currentCredit}. {t('settings.correction_current_2')}</p>
+          <h2 className="text-xl text-amber-950 mb-2">Beer credit correction</h2>
+          <p className="text-base text-amber-900/80 mb-2">Current beer credit: {currentCredit}. To amend it,</p>
           <div className="flex items-center gap-2 mb-3">
             <input
               type="text"
               inputMode="numeric"
               value={balanceCorrectionInput}
               onChange={(e) => setBalanceCorrectionInput(onlyDigits(e.target.value))}
-              placeholder={t('settings.correction_placeholder')}
+              placeholder="type in the new balance"
               className="flex-1 px-2 py-1 bg-amber-200/60 border border-amber-400/50 rounded text-amber-950 text-center text-base"
             />
           </div>
-          <button onClick={applyCorrection} className="bg-white/80 backdrop-blur-sm rounded-lg px-6 py-2.5 font-semibold text-amber-900 shadow-md hover:bg-white transition-all active:scale-95">{t('settings.apply_correction')}</button>
+          <button onClick={applyCorrection} className="bg-white/80 backdrop-blur-sm rounded-lg px-6 py-2.5 font-semibold text-amber-900 shadow-md hover:bg-white transition-all active:scale-95">Apply new credit</button>
         </section>
         <section className="mb-8">
-          <h2 className="text-xl text-amber-950 mb-2">{t('settings.language_title')}</h2>
+          <h2 className="text-xl text-amber-950 mb-2">Language</h2>
           <div className="relative inline-block">
             <select
               value={i18n.language}
@@ -538,20 +544,19 @@ function SettingsScreen({
 }
 
 function ProfileScreen({ onBack }: { onBack: () => void }) {
-  const { t } = useTranslation('app');
   return (
     <div className="h-full flex flex-col overflow-y-auto">
       <header className="flex items-center px-5 pt-5 pb-4">
-        <button onClick={onBack} className="w-12 h-12 rounded-full bg-white/90 backdrop-blur-sm shadow-lg flex items-center justify-center hover:bg-white transition-all active:scale-95" aria-label={t('aria.back')}>
+        <button onClick={onBack} className="w-12 h-12 rounded-full bg-white/90 backdrop-blur-sm shadow-lg flex items-center justify-center hover:bg-white transition-all active:scale-95" aria-label="Back">
           <ArrowLeft className="w-6 h-6 text-amber-900" />
         </button>
       </header>
       <div className="px-6">
-        <h1 className="text-amber-950 text-3xl mb-3">{t('profile.title')}</h1>
+        <h1 className="text-amber-950 text-3xl mb-3">Profile</h1>
         <div className="flex flex-col items-center">
           <div className="w-full max-w-sm mt-8">
             <p className="text-left text-base text-amber-950/90 leading-relaxed">
-              {t('profile.placeholder')}
+              We'll add log in / log out features here later. Meanwhile, your personal profile is - the most talented person in the room (just don't tell anyone). 
             </p>
           </div>
         </div>
@@ -575,24 +580,23 @@ function SpendScreen({
   onBack: () => void;
   handleSpend: () => void;
 }) {
-  const { t } = useTranslation('app');
   return (
     <div className="h-full flex flex-col overflow-y-auto">
       <header className="flex items-center px-5 pt-5 pb-4">
-        <button onClick={onBack} className="w-12 h-12 rounded-full bg-white/90 backdrop-blur-sm shadow-lg flex items-center justify-center hover:bg-white transition-all active:scale-95" aria-label={t('aria.back')}>
+        <button onClick={onBack} className="w-12 h-12 rounded-full bg-white/90 backdrop-blur-sm shadow-lg flex items-center justify-center hover:bg-white transition-all active:scale-95" aria-label="Back">
           <ArrowLeft className="w-6 h-6 text-amber-900" />
         </button>
       </header>
       <div className="px-6">
-        <h1 className="text-3xl font-bold text-amber-900 mb-8 text-center">{t('spend.title')}</h1>
+        <h1 className="text-3xl font-bold text-amber-900 mb-8 text-center">It's beer time!</h1>
         <section className="mb-12">
-          <h2 className="text-xl text-amber-900/80 mb-1">{t('spend.your_credit')}</h2>
+          <h2 className="text-xl text-amber-900/80 mb-1">Your credit</h2>
           <p className="text-6xl font-bold text-amber-950 tracking-tight">{beerCredit}</p>
         </section>
         <section className="mb-6">
           <div className="flex items-center gap-3 mb-0">
             <div className="flex-1 h-px bg-amber-900/30" />
-            <h2 className="text-amber-900/80 text-center">{t('spend.how_much')}</h2>
+            <h2 className="text-amber-900/80 text-center">How much will you spend?</h2>
             <div className="flex-1 h-px bg-amber-900/30" />
           </div>
           <div className="mb-4">
@@ -609,11 +613,11 @@ function SpendScreen({
               className="w-full text-8xl font-bold text-amber-950 tracking-tight text-center bg-transparent border-none outline-none"
             />
           </div>
-          <button onClick={handleSpend} className="w-full bg-amber-600 hover:bg-amber-700 text-white text-xl font-semibold py-4 rounded-xl shadow-lg transition-all active:scale-95">{t('spend.confirm_button')}</button>
+          <button onClick={handleSpend} className="w-full bg-amber-600 hover:bg-amber-700 text-white text-xl font-semibold py-4 rounded-xl shadow-lg transition-all active:scale-95">Let's do it!</button>
         </section>
         {recentSpends.length > 0 ? (
           <section>
-            <h2 className="text-base text-amber-900/80 mb-3">{t('spend.recently_spent')}</h2>
+            <h2 className="text-base text-amber-900/80 mb-3">You've recently spent:</h2>
             <div className="space-y-2">
               {recentSpends.slice().reverse().map((spend, idx) => (
                 <div key={idx} className="flex justify-between text-sm text-amber-900/70">

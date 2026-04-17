@@ -1,1 +1,69 @@
-{}
+﻿{
+  "messages": {
+    "add_1": "Отлично!",
+    "add_2": "Просто блеск!",
+    "add_3": "Восхитительно!",
+    "spend_1": "Награда нашла героя!",
+    "spend_2": "Наслаждайтесь!",
+    "spend_3": "Вы это заработали!",
+    "msg_01": "Баланс исправлен",
+    "msg_02": "Новый курс применен",
+    "msg_03": "Недостаточно денег :(",
+    "msg_04": "Введите целое число больше 0",
+    "msg_05": "Введите ЦЕЛОЕ число",
+    "msg_07": "Нельзя отменить больше, чем сделали"
+  },
+  "aria": {
+    "profile": "Профиль",
+    "settings": "Настройки",
+    "spend": "Списание",
+    "back": "Назад"
+  },
+  "install": {
+    "preparing": "Preparing download...",
+    "consent": "By downloading the app, you confirm that you are of legal drinking age. You also give your consent to be addressed in creative ways, including, but not limited to, \"lazy butt\", \"miserable loser\", and so on, which is done not to harm you, but to make the BeerBank experience more enjoyable (not necessarily for you).",
+    "download_button": "Download BeerBank",
+    "accepted_title": "✅ Downloaded!",
+    "accepted_body": "Open BeerBank from your home screen.",
+    "dismissed": "You cancelled the installation - no problem, install it later from your browser menu (or look for the download icon in the address bar).",
+    "ios_title": "To download on iPhone:",
+    "ios_step1": "1. Tap the <strong>Share</strong> button (□↑) in Safari",
+    "ios_step2": "2. Tap <strong>\"Add to Home Screen\"</strong>",
+    "unsupported_title": "Hmm, a little technical issue:",
+    "unsupported_body": "To download BeerBank, please open this page in Android <strong>Chrome</strong> (not Incognito) or <strong>Safari</strong> on iPhone — then follow the install prompt.",
+    "unsupported_hint": "<strong>Or maybe you already installed it?</strong> If so, open the app on your device."
+  },
+  "main": {
+    "beer_credit": "Баланс на пиво:",
+    "beer_time_button": "Пора!",
+    "total_exercises": "Всего упражнений:",
+    "add_session": "Сколько сделали сейчас?",
+    "add_button": "Добавить",
+    "last_added": "Последние добавления:"
+  },
+  "settings": {
+    "title": "Настройки",
+    "conversion_title": "Курс обмена",
+    "conversion_description": "Введите, сколько рублей (долларов, тугриков — что у вас там?) начислять за каждое упражнение.",
+    "conversion_label": "1 упражнение =",
+    "conversion_money": " в вашей валюте",
+    "apply_rate": "Применить новый курс",
+    "correction_title": "Исправление баланса",
+    "correction_current": "На вашем счету:",
+    "correction_current_2": "Если хотите исправить,",
+    "correction_placeholder": "введите новый баланс",
+    "apply_correction": "Применить новый баланс",
+    "language_title": "Язык"
+  },
+  "profile": {
+    "title": "Профиль",
+    "placeholder": "В следующей версии приложения здесь появится ваш профиль. А пока достаточно знать, что вы — звезда, талантище и радость всего человечества."
+  },
+  "spend": {
+    "title": "Пора отдохнуть!",
+    "your_credit": "Ваш баланс",
+    "how_much": "Сколько потратим?",
+    "confirm_button": "Погнали!",
+    "recently_spent": "Последние списания:"
+  }
+}
