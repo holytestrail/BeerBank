@@ -59,11 +59,24 @@
     "title": "Profile",
     "placeholder": "We'll add log in / log out features here later. Meanwhile, your personal profile is - the most talented person in the room (just don't tell anyone)."
   },
+
   "spend": {
     "title": "It's beer time!",
     "your_credit": "Your credit",
     "how_much": "How much will you spend?",
     "confirm_button": "Let's do it!",
     "recently_spent": "You've recently spent:"
+  },
+  "help": {
+    "title": "How to use BeerBank",
+    "intro": "Gamify your fitness: no hard workouts, just do random exercises and exchange them for beer!",
+    "h_1": "1. Do a few exercises",
+    "text_1": "When you have a moment, do a few push-ups or squats, whatever works. Even 3 or 5 will do.",
+    "h_2": "2. Log them in BeerBank",
+    "text_2": "On the main screen, enter the number of exercises and tap *Add*. Your Beer Credit will grow.",
+    "h_3": "3. When you buy a beer, write off the money you spent",
+    "text_3": "Not enough credit? Skip that beer! Next time, do more push-ups beforehand, you lazy butt!",
+    "h_4": "4. Don't forget to set your conversion rate in Settings",
+    "text_4": "Beer in my country costs 400 dinars. I'm a superhero — and want to do 100 push-ups for every beer I buy. I set the conversion rate to 4. Now, for every push-up, my Beer Credit increases by 4."
   }
 }

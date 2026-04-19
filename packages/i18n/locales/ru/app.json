@@ -1,69 +1,82 @@
 ﻿{
   "messages": {
     "add_1": "Отлично!",
-    "add_2": "Просто блеск!",
-    "add_3": "Восхитительно!",
-    "spend_1": "Награда нашла героя!",
-    "spend_2": "Наслаждайтесь!",
-    "spend_3": "Вы это заработали!",
+    "add_2": "Молодец!",
+    "add_3": "Так держать!",
+    "spend_1": "Твоя заслуженная награда!",
+    "spend_2": "Постарались — отдыхаем!",
+    "spend_3": "Честно заработано!",
     "msg_01": "Баланс исправлен",
     "msg_02": "Новый курс применен",
-    "msg_03": "Недостаточно денег :(",
-    "msg_04": "Введите целое число больше 0",
-    "msg_05": "Введите ЦЕЛОЕ число",
-    "msg_07": "Нельзя отменить больше, чем сделали"
+    "msg_03": "Не хватает денег :(",
+    "msg_04": "Введи целое число больше 0",
+    "msg_05": "Добавить НОЛЬ. Гениально.",
+    "msg_07": "Нельзя отменить больше, чем сделано"
   },
   "aria": {
     "profile": "Профиль",
     "settings": "Настройки",
     "spend": "Списание",
-    "back": "Назад"
+    "back": "Назад",
+    "help": "Помощь"
   },
   "install": {
-    "preparing": "Preparing download...",
-    "consent": "By downloading the app, you confirm that you are of legal drinking age. You also give your consent to be addressed in creative ways, including, but not limited to, \"lazy butt\", \"miserable loser\", and so on, which is done not to harm you, but to make the BeerBank experience more enjoyable (not necessarily for you).",
-    "download_button": "Download BeerBank",
-    "accepted_title": "✅ Downloaded!",
-    "accepted_body": "Open BeerBank from your home screen.",
-    "dismissed": "You cancelled the installation - no problem, install it later from your browser menu (or look for the download icon in the address bar).",
-    "ios_title": "To download on iPhone:",
-    "ios_step1": "1. Tap the <strong>Share</strong> button (□↑) in Safari",
-    "ios_step2": "2. Tap <strong>\"Add to Home Screen\"</strong>",
-    "unsupported_title": "Hmm, a little technical issue:",
-    "unsupported_body": "To download BeerBank, please open this page in Android <strong>Chrome</strong> (not Incognito) or <strong>Safari</strong> on iPhone — then follow the install prompt.",
-    "unsupported_hint": "<strong>Or maybe you already installed it?</strong> If so, open the app on your device."
+    "preparing": "Один момент...",
+    "consent": "«Устанавливая BeerBank, я подтверждаю, что имею законное право употреблять алкоголь. А также даю согласие, чтобы приложение называло меня разными словами типа «ленивая задница», «позор мирового спорта» и т.п.» — не с целью оскорблений, а чтобы приложение было интереснее (как минимум для его создателей)",
+    "download_button": "Скачать BeerBank",
+    "accepted_title": "✅ BeerBank установлен",
+    "accepted_body": "На главном экране должна появиться иконка.",
+    "dismissed": "Установка отменена. Ее можно возобновить в любой момент: найди «установить» в меню браузера или значок установки в адресной строке.",
+    "ios_title": "Для установки на iPhone:",
+    "ios_step1": "1. Нажми кнопку <strong>Share</strong> (□↑) в Safari",
+    "ios_step2": "2. Намжи <strong>\"Add to Home Screen\"</strong>",
+    "unsupported_title": "Небольшие технические шоколадки:",
+    "unsupported_body": "Чтобы установить BeerBank, открой эту страницу в <strong>Chrome</strong> (не инкогнито!) или <strong>Safari</strong>.",
+    "unsupported_hint": "Если приложение уже установлено, запусти его на телефоне (иконка на главном экране)."
   },
   "main": {
-    "beer_credit": "Баланс на пиво:",
+    "beer_credit": "Баланс на пиво",
     "beer_time_button": "Пора!",
-    "total_exercises": "Всего упражнений:",
-    "add_session": "Сколько сделали сейчас?",
+    "total_exercises": "Сделано упражнений",
+    "add_session": "Сколько добавить?",
     "add_button": "Добавить",
-    "last_added": "Последние добавления:"
+    "last_added": "Последние:"
   },
   "settings": {
     "title": "Настройки",
     "conversion_title": "Курс обмена",
-    "conversion_description": "Введите, сколько рублей (долларов, тугриков — что у вас там?) начислять за каждое упражнение.",
-    "conversion_label": "1 упражнение =",
-    "conversion_money": " в вашей валюте",
+    "conversion_description": "Сколько рублей (долларов, тугриков — что у вас там) начислять за каждое упражнение?",
+    "conversion_label": "",
+    "conversion_money": "",
     "apply_rate": "Применить новый курс",
     "correction_title": "Исправление баланса",
-    "correction_current": "На вашем счету:",
-    "correction_current_2": "Если хотите исправить,",
-    "correction_placeholder": "введите новый баланс",
+    "correction_current": "На твоем счету:",
+    "correction_current_2": "Чтобы исправить,",
+    "correction_placeholder": "введи новый баланс",
     "apply_correction": "Применить новый баланс",
-    "language_title": "Язык"
+    "language_title": "Язык / Language"
   },
   "profile": {
     "title": "Профиль",
-    "placeholder": "В следующей версии приложения здесь появится ваш профиль. А пока достаточно знать, что вы — звезда, талантище и радость всего человечества."
+    "placeholder": "В следующей версии приложения здесь появится твой профиль. А пока достаточно знать, что ты — звезда, талантище и радость всего человечества."
   },
   "spend": {
-    "title": "Пора отдохнуть!",
-    "your_credit": "Ваш баланс",
+    "title": "🥳 Пора по пиву! 🍺",
+    "your_credit": "Твой баланс",
     "how_much": "Сколько потратим?",
     "confirm_button": "Погнали!",
     "recently_spent": "Последние списания:"
+  },
+  "help": {
+    "title": "Как работает BeerBank",
+    "intro": "Лень заниматься спортом? Копи отжимания и обменивай их на пиво!",
+    "h_1": "1. Сделай пару упражнений",
+    "text_1": "Когда есть минутка, сделай несколько отжиманий, приседаний — без разницы. Хотя бы три или пять.",
+    "h_2": "2. Запиши их в BeerBank",
+    "text_2": "Добавь упражнения на главном экране. Баланс на пиво вырастет (ура)",
+    "h_3": "3. Когда покупаешь пиво, спиши деньги со счета",
+    "text_3": "Не хватает денег — не покупаешь, все должно быть по-честному! В следующий раз шевели булками заранее и накопи баланс.",
+    "h_4": "4. Не забудь выставить обменный курс в настройках",
+    "text_4": "Допустим, пиво стоит 100 рублей. Я герой и хочу за каждую банку пива отжиматься 50 раз. Я ставлю курс «2»: теперь за каждое отжимание баланс увеличивается на 2 рубля."
   }
 }

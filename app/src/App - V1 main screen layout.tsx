@@ -1,4 +1,4 @@
-﻿import { Settings, User, Beer, ArrowLeft, CircleQuestionMark  } from 'lucide-react';
+﻿import { Settings, User, Beer, ArrowLeft } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import WelcomePage from './pages/WelcomePage.jsx';
 import { Checkbox } from '@/components/ui/checkbox';
@@ -276,10 +276,6 @@ if (!hasWelcomed) {
           <ProfileScreen onBack={() => setCurrentScreen('main')} />
         )}
 
-        {currentScreen === 'help' && (
-          <HelpScreen onBack={() => setCurrentScreen('main')} />
-        )}
-
         {currentScreen === 'spend' && (
           <SpendScreen
             beerCredit={beerCredit}
@@ -404,25 +400,19 @@ function MainScreen({
   return (
     <div className="h-full flex flex-col">
       <header className="flex items-center justify-between px-5 pt-5 pb-4">
-        <button onClick={() => onNavigate('help')} className="w-12 h-12 rounded-full bg-white/90 backdrop-blur-sm shadow-lg flex items-center justify-center hover:bg-white transition-all active:scale-95" aria-label={t('aria.help')}>
-          <CircleQuestionMark className="w-6 h-6 text-amber-900" />
+        <button onClick={() => onNavigate('profile')} className="w-12 h-12 rounded-full bg-white/90 backdrop-blur-sm shadow-lg flex items-center justify-center hover:bg-white transition-all active:scale-95" aria-label={t('aria.profile')}>
+          <User className="w-6 h-6 text-amber-900" />
         </button>
         <button onClick={() => onNavigate('settings')} className="w-12 h-12 rounded-full bg-white/90 backdrop-blur-sm shadow-lg flex items-center justify-center hover:bg-white transition-all active:scale-95" aria-label={t('aria.settings')}>
           <Settings className="w-6 h-6 text-amber-900" />
         </button>
       </header>
 
-{/* Beer credit */}
-
       <section className="px-6 mt-2">
-        <div className="flex items-center gap-3 mb-1">
-          <div className="flex-1 h-px bg-amber-900/30" />
-           <h2 className="text-amber-900/80 text-center">{t('main.beer_credit')}</h2>
-          <div className="flex-1 h-px bg-amber-900/30" />
-        </div>
+        <h1 className="text-amber-900/80">{t('main.beer_credit')}</h1>
         <div className="flex items-center gap-3">
           <div className="flex-1">
-            <p className="text-8xl text-center font-bold text-amber-950 tracking-tight pb-2">{beerCredit}</p>
+            <p className="text-8xl font-bold text-amber-950 tracking-tight pb-2">{beerCredit}</p>
           </div>
           <button onClick={() => onNavigate('spend')} className="bg-white/90 backdrop-blur-sm rounded-2xl shadow-lg px-5 py-4 hover:bg-white transition-all active:scale-95 min-w-[110px]" aria-label={t('aria.spend')}>
             <Beer className="w-9 h-9 text-amber-600 mx-auto mt-1" />
@@ -431,32 +421,21 @@ function MainScreen({
         </div>
       </section>
 
-
-{/* Total exercises */}
-
-      <section className="px-6 mt-6">
-        <div className="flex items-center gap-3 mb-1">
-          <div className="flex-1 h-px bg-amber-900/30" />
-           <h2 className="text-amber-900/80 text-base text-center">{t('main.total_exercises')}</h2>
-          <div className="flex-1 h-px bg-amber-900/30" />
-        </div>
-        <div className="flex-1">
-          <p className="text-6xl text-center font-bold text-amber-950 tracking-tight pb-2">{totalExercises}</p>
-        </div>
+      <section className="px-6 mt-4">
+        <h2 className="text-amber-900/80 mb-2">{t('main.total_exercises')}</h2>
+        <p className="text-4xl font-bold text-amber-950 tracking-tight">{totalExercises}</p>
       </section>
 
-{/* Add session */}
-
-      <section className="px-6 mt-6">
+      <section className="px-6 mt-6 flex-1">
         <div className="flex items-center gap-3 mb-1">
           <div className="flex-1 h-px bg-amber-900/30" />
-          <h2 className="text-amber-900/80 text-base text-center">{t('main.add_session')}</h2>
+          <h2 className="text-amber-900/80 text-center">{t('main.add_session')}</h2>
           <div className="flex-1 h-px bg-amber-900/30" />
         </div>
         <div className="flex gap-3">
           <div className="flex-1">
             <div className="mb-4">
-              <p className="text-6xl font-bold text-amber-950 tracking-tight text-center">{currentInput}</p>
+              <p className="text-8xl font-bold text-amber-950 tracking-tight text-center">{currentInput}</p>
             </div>
             <div className="grid grid-cols-3 gap-2 mb-4">
               {[{ label: '+1', value: 1 }, { label: '+5', value: 5 }, { label: '+10', value: 10 }].map((btn) => (
@@ -503,6 +482,7 @@ function SettingsScreen({
   i18n: any;
 }) {
   const { t } = useTranslation('app');
+
   return (
     <div className="h-full flex flex-col overflow-y-auto">
       <header className="flex items-center px-5 pt-5 pb-4">
@@ -513,10 +493,10 @@ function SettingsScreen({
       <div className="px-6">
         <h1 className="text-3xl text-amber-950 mb-6">{t('settings.title')}</h1>
 
-{/* Set conversion rate */}
+        {/* Set conversion rate */}
 
         <section className="mb-8">
-          <h2 className="text-lg text-amber-900 mb-2">{t('settings.conversion_title')}</h2>
+          <h2 className="text-lg text-amber-950 mb-2">{t('settings.conversion_title')}</h2>
           <p className="text-sm text-amber-900/70 mb-4">{t('settings.conversion_description')}</p>
           <p className="text-sm text-amber-900/80 mb-3">{t('settings.conversion_label')} <input
             type="text"
@@ -530,10 +510,10 @@ function SettingsScreen({
           <button onClick={applyRate} className="bg-white/80 backdrop-blur-sm rounded-lg px-6 py-2.5 font-semibold text-amber-900 shadow-md hover:bg-white transition-all active:scale-95">{t('settings.apply_rate')}</button>
         </section>
 
-{/* Set new beer credit */}
+        {/* Set new beer credit */}
 
         <section className="mb-6">
-          <h2 className="text-lg text-amber-900 mb-2">{t('settings.correction_title')}</h2>
+          <h2 className="text-lg text-amber-950 mb-2">{t('settings.correction_title')}</h2>
           <p className="text-sm text-amber-900/80 mb-2">{t('settings.correction_current')} {currentCredit}. {t('settings.correction_current_2')}</p>
           <div className="flex items-center gap-2 mb-3">
             <input
@@ -548,10 +528,10 @@ function SettingsScreen({
           <button onClick={applyCorrection} className="bg-white/80 backdrop-blur-sm rounded-lg px-6 py-2.5 font-semibold text-amber-900 shadow-md hover:bg-white transition-all active:scale-95">{t('settings.apply_correction')}</button>
         </section>
 
-{/* Set language */}
+        {/* Set language */}
 
         <section className="mb-8">
-          <h2 className="text-lg text-amber-900 mb-2">{t('settings.language_title')}</h2>         
+          <h2 className="text-xl text-amber-950 mb-2">{t('settings.language_title')}</h2>
           <div className="relative inline-block">
             <select
               value={i18n.language}
@@ -568,8 +548,6 @@ function SettingsScreen({
     </div>
   );
 }
-
-{/* Profile screen */}
 
 function ProfileScreen({ onBack }: { onBack: () => void }) {
   const { t } = useTranslation('app');
@@ -594,48 +572,6 @@ function ProfileScreen({ onBack }: { onBack: () => void }) {
   );
 }
 
-
-{/* Help screen */}
-
-function HelpScreen({ onBack }: { onBack: () => void }) {
-  const { t } = useTranslation('app');
-  return (
-    <div className="h-full flex flex-col overflow-y-auto">
-      <header className="flex items-center px-5 pt-5 pb-4">
-        <button onClick={onBack} className="w-12 h-12 rounded-full bg-white/90 backdrop-blur-sm shadow-lg flex items-center justify-center hover:bg-white transition-all active:scale-95" aria-label={t('aria.back')}>
-          <ArrowLeft className="w-6 h-6 text-amber-900" />
-        </button>
-      </header>
-      <div className="px-6">
-        <h1 className="text-amber-900 text-3xl mb-3">{t('help.title')}</h1>
-        <p className="text-left text-base text-amber-900/90 leading-relaxed">
-          {t('help.intro')}
-        </p>
-        <h2 className="text-amber-900 text-lg mt-3">{t('help.h_1')}</h2>
-        <p className="text-left text-base text-amber-900/90 leading-relaxed">
-          {t('help.text_1')}
-        </p>
-        <h2 className="text-amber-900 text-lg mt-3">{t('help.h_2')}</h2>
-        <p className="text-left text-base text-amber-900/90 leading-relaxed">
-          {t('help.text_2')}
-        </p>
-        <h2 className="text-amber-900 text-lg mt-3">{t('help.h_3')}</h2>
-        <p className="text-left text-base text-amber-900/90 leading-relaxed">
-          {t('help.text_3')}
-        </p>
-        <h2 className="text-amber-900 text-lg mt-3">{t('help.h_4')}</h2>
-        <p className="text-left text-base text-amber-900/90 leading-relaxed">
-          {t('help.text_4')}
-        </p>
-        
-      </div> 
-    </div>
-  );
-}
-
-
-{/* Spend screen */}
-
 function SpendScreen({
   beerCredit,
   spendAmount,
@@ -659,21 +595,11 @@ function SpendScreen({
           <ArrowLeft className="w-6 h-6 text-amber-900" />
         </button>
       </header>
-
-
       <div className="px-6">
-        
         <h1 className="text-3xl font-bold text-amber-900 mb-8 text-center">{t('spend.title')}</h1>
         <section className="mb-12">
-
-    {/* Spend screen Balance */}          
- 
-          <div className="flex items-center gap-3 mb-1">
-            <div className="flex-1 h-px bg-amber-900/30" />
-            <h2 className="text-amber-900/80 text-center">{t('spend.your_credit')}</h2>
-            <div className="flex-1 h-px bg-amber-900/30" />
-          </div>
-          <p className="text-6xl font-bold text-center text-amber-950 tracking-tight">{beerCredit}</p>
+          <h2 className="text-xl text-amber-900/80 mb-1">{t('spend.your_credit')}</h2>
+          <p className="text-6xl font-bold text-amber-950 tracking-tight">{beerCredit}</p>
         </section>
         <section className="mb-6">
           <div className="flex items-center gap-3 mb-0">
