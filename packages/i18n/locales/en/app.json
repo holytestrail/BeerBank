@@ -44,14 +44,15 @@
   "settings": {
     "title": "Settings",
     "conversion_title": "Conversion rate",
-    "conversion_description": "We don't know your local currency, so set your own rate based on your local beer prices and how lazy you feel.",
-    "conversion_label": "1 exercise =",
-    "conversion_money": " money",
+    "conversion_final_rate_1": "You get ",
+    "conversion_final_rate_2": " money for each exercise. To change the rate, enter:",
+    "conversion_beer_price": "How much does one beer cost?",
+    "conversion_ex_for_beer": "How many exercises will you do for one beer?",
     "apply_rate": "Apply new rate",
     "correction_title": "Beer credit correction",
     "correction_current": "Current beer credit:",
     "correction_current_2": "To change it,",
-    "correction_placeholder": "type in the new balance",
+    "correction_placeholder": "type in the new credit",
     "apply_correction": "Apply new credit",
     "language_title": "Language"
   },
@@ -61,14 +62,14 @@
   },
 
   "spend": {
-    "title": "It's beer time!",
+    "title": "🥳 It's beer time! 🍺",
     "your_credit": "Your credit",
     "how_much": "How much will you spend?",
     "confirm_button": "Let's do it!",
     "recently_spent": "You've recently spent:"
   },
   "help": {
-    "title": "How to use BeerBank",
+    "title": "How BeerBank helps you get (a little) stronger",
     "intro": "Gamify your fitness: no hard workouts, just do random exercises and exchange them for beer!",
     "h_1": "1. Do a few exercises",
     "text_1": "When you have a moment, do a few push-ups or squats, whatever works. Even 3 or 5 will do.",
@@ -76,7 +77,8 @@
     "text_2": "On the main screen, enter the number of exercises and tap *Add*. Your Beer Credit will grow.",
     "h_3": "3. When you buy a beer, write off the money you spent",
     "text_3": "Not enough credit? Skip that beer! Next time, do more push-ups beforehand, you lazy butt!",
-    "h_4": "4. Don't forget to set your conversion rate in Settings",
-    "text_4": "Beer in my country costs 400 dinars. I'm a superhero — and want to do 100 push-ups for every beer I buy. I set the conversion rate to 4. Now, for every push-up, my Beer Credit increases by 4."
+    "h_4": "4. Don't forget to set your conversion rate!",
+    "text_4": "Find it in Settings, it's easy.",
+    "final": "Doing only 3 push-ups is better than doing nothing at all!"
   }
 }

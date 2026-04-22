@@ -56,7 +56,13 @@ export default function App() {
   const [beerCredit, setBeerCredit] = useState<number>(() => getNumberFromStorage('beerCredit', 0));
   const [totalExercises, setTotalExercises] = useState<number>(() => getNumberFromStorage('totalExercises', 0));
   const [currentInput, setCurrentInput] = useState<number>(() => getNumberFromStorage('currentInput', 0));
-  const [appliedConversionRate, setAppliedConversionRate] = useState<number>(() => getNumberFromStorage('appliedConversionRate', 1));
+  const [appliedConversionRate, setAppliedConversionRate] = useState<number>(() => {
+  const raw = window.localStorage.getItem('appliedConversionRate');
+  const parsed = Number(raw);
+  return isNaN(parsed) ? 1 : parsed;
+        });
+  const [beerPriceInput, setBeerPriceInput] = useState<string>(() => getStringFromStorage('beerPriceInput', '1'));
+  const [exForBeerInput, setExForBeerInput] = useState<string>(() => getStringFromStorage('exForBeerInput', '1'));
   const [conversionInput, setConversionInput] = useState<string>(() => getStringFromStorage('conversionInput', String(getNumberFromStorage('appliedConversionRate', 1))));
   const [username] = useState<string>(() => getStringFromStorage('username', 'JohnDoe'));
   const [recentAdds, setRecentAdds] = useState<number[]>(() => {
@@ -113,15 +119,17 @@ export default function App() {
     window.localStorage.setItem('beerCredit', String(toInt(beerCredit)));
     window.localStorage.setItem('totalExercises', String(toInt(totalExercises)));
     window.localStorage.setItem('currentInput', String(toInt(currentInput)));
-    window.localStorage.setItem('appliedConversionRate', String(toInt(appliedConversionRate)));
+    window.localStorage.setItem('appliedConversionRate', String(appliedConversionRate));
     window.localStorage.setItem('conversionInput', conversionInput);
+    window.localStorage.setItem('beerPriceInput', beerPriceInput);
+    window.localStorage.setItem('exForBeerInput', exForBeerInput);
     window.localStorage.setItem('username', username);
     window.localStorage.setItem('recentAdds', JSON.stringify(recentAdds.map((v) => toInt(v)).slice(0, 5)));
     window.localStorage.setItem('recentSpends', JSON.stringify(recentSpends.map((item) => ({ date: item.date, amount: toInt(item.amount) })).slice(0, 5)));
     window.localStorage.setItem('spendAmount', spendAmount);
     window.localStorage.setItem('balanceCorrectionInput', balanceCorrectionInput);
     window.localStorage.setItem('currentScreen', currentScreen);
-  }, [beerCredit, totalExercises, currentInput, appliedConversionRate, conversionInput, username, recentAdds, recentSpends, spendAmount, balanceCorrectionInput, currentScreen]);
+  }, [beerCredit, totalExercises, currentInput, appliedConversionRate, conversionInput, username, recentAdds, recentSpends, spendAmount, balanceCorrectionInput, currentScreen, beerPriceInput, exForBeerInput]);
 
   useEffect(() => {
     const storedScreen = getStringFromStorage('currentScreen', 'main') as Screen;
@@ -186,16 +194,24 @@ export default function App() {
     showToast(randomSpendMessage());
   };
 
-  const applyRate = () => {
-    const parsed = Number(conversionInput);
-    if (conversionInput.trim() === '' || !isNaturalNumber(parsed)) {
-      showToast(t('messages.msg_04'));
-      return;
-    }
-    setAppliedConversionRate(toInt(parsed));
-    setConversionInput(String(toInt(parsed)));
-    showToast(t('messages.msg_02'));
+
+const applyRate = () => {
+  const price = Number(beerPriceInput);
+  const exCount = Number(exForBeerInput);
+
+  if (beerPriceInput.trim() === '' || !isNaturalNumber(price) ||
+      exForBeerInput.trim() === '' || !isNaturalNumber(exCount)) {
+    showToast(t('messages.msg_04'));
+    return;
+  }
+
+  const conversionRate = Math.max(0.01, Math.round((price / exCount) * 100) / 100);
+  setAppliedConversionRate(conversionRate);
+  setBeerPriceInput(String(price));
+  setExForBeerInput(String(exCount));
+  showToast(t('messages.msg_02'));
   };
+
 
   const applyCorrection = () => {
     const parsed = Number(balanceCorrectionInput);
@@ -261,7 +277,12 @@ if (!hasWelcomed) {
         {currentScreen === 'settings' && (
           <SettingsScreen
             conversionInput={conversionInput}
+            appliedConversionRate={appliedConversionRate}
             setConversionInput={setConversionInput}
+            beerPriceInput={beerPriceInput}          
+            setBeerPriceInput={setBeerPriceInput}    
+            exForBeerInput={exForBeerInput}          
+            setExForBeerInput={setExForBeerInput}     
             balanceCorrectionInput={balanceCorrectionInput}
             setBalanceCorrectionInput={setBalanceCorrectionInput}
             currentCredit={beerCredit}
@@ -484,6 +505,11 @@ function MainScreen({
 function SettingsScreen({
   conversionInput,
   setConversionInput,
+  appliedConversionRate,
+  beerPriceInput,  
+  setBeerPriceInput, 
+  exForBeerInput,   
+  setExForBeerInput,    
   balanceCorrectionInput,
   setBalanceCorrectionInput,
   currentCredit,
@@ -492,8 +518,13 @@ function SettingsScreen({
   applyCorrection,
   i18n,
 }: {
+  appliedConversionRate: number; 
   conversionInput: string;
   setConversionInput: (value: string) => void;
+  beerPriceInput: string;                        
+  setBeerPriceInput: (value: string) => void;   
+  exForBeerInput: string;                        
+  setExForBeerInput: (value: string) => void;    
   balanceCorrectionInput: string;
   setBalanceCorrectionInput: (value: string) => void;
   currentCredit: number;
@@ -511,23 +542,36 @@ function SettingsScreen({
         </button>
       </header>
       <div className="px-6">
-        <h1 className="text-3xl text-amber-950 mb-6">{t('settings.title')}</h1>
+        <h1 className="text-3xl text-amber-900 mb-6">{t('settings.title')}</h1>
 
 {/* Set conversion rate */}
 
         <section className="mb-8">
           <h2 className="text-lg text-amber-900 mb-2">{t('settings.conversion_title')}</h2>
-          <p className="text-sm text-amber-900/70 mb-4">{t('settings.conversion_description')}</p>
-          <p className="text-sm text-amber-900/80 mb-3">{t('settings.conversion_label')} <input
-            type="text"
-            inputMode="numeric"
-            value={conversionInput}
-            onChange={(e) => setConversionInput(onlyDigits(e.target.value))}
-            onFocus={() => conversionInput === '0' && setConversionInput('')}
-            placeholder="1"
-            className="inline-block w-20 px-2 py-1 bg-amber-200/60 border border-amber-400/50 rounded text-amber-950 text-center"
-          /> {t('settings.conversion_money')}</p>
-          <button onClick={applyRate} className="bg-white/80 backdrop-blur-sm rounded-lg px-6 py-2.5 font-semibold text-amber-900 shadow-md hover:bg-white transition-all active:scale-95">{t('settings.apply_rate')}</button>
+          <p className="text-sm text-amber-900/70 mb-1">{t('settings.conversion_final_rate_1')}<b>{appliedConversionRate}</b>{t('settings.conversion_final_rate_2')}</p>
+          <p className="text-sm text-amber-900/70 mb-1">{t('settings.conversion_beer_price')}&ensp;
+           <input
+              type="text"
+              inputMode="numeric"
+              value={beerPriceInput}
+              onChange={(e) => setBeerPriceInput(onlyDigits(e.target.value))}
+              onFocus={() => beerPriceInput === '1' && setBeerPriceInput('')}
+              placeholder="1"
+              className="inline-block w-20 px-1 bg-amber-200/60 border border-amber-400/50 rounded text-amber-950 text-center"
+            />
+          </p>
+          <p className="text-sm text-amber-900/70 mb-2">{t('settings.conversion_ex_for_beer')}&ensp;
+            <input
+              type="text"
+              inputMode="numeric"
+              value={exForBeerInput}
+              onChange={(e) => setExForBeerInput(onlyDigits(e.target.value))}
+              onFocus={() => exForBeerInput === '1' && setExForBeerInput('')}
+              placeholder="1"
+              className="inline-block w-20 px-1 bg-amber-200/60 border border-amber-400/50 rounded text-amber-950 text-center"
+            />
+          </p>
+          <button onClick={applyRate} className="text-sm bg-white/80 backdrop-blur-sm rounded-lg px-6 py-2.5 font-semibold text-amber-900 shadow-md hover:bg-white transition-all active:scale-95">{t('settings.apply_rate')}</button>
         </section>
 
 {/* Set new beer credit */}
@@ -542,10 +586,10 @@ function SettingsScreen({
               value={balanceCorrectionInput}
               onChange={(e) => setBalanceCorrectionInput(onlyDigits(e.target.value))}
               placeholder={t('settings.correction_placeholder')}
-              className="flex-1 px-2 py-1 bg-amber-200/60 border border-amber-400/50 rounded text-amber-950 text-center text-base"
+              className="w-auto px-2 py-1 bg-amber-200/60 border border-amber-400/50 rounded text-amber-900 text-center text-sm"
             />
           </div>
-          <button onClick={applyCorrection} className="bg-white/80 backdrop-blur-sm rounded-lg px-6 py-2.5 font-semibold text-amber-900 shadow-md hover:bg-white transition-all active:scale-95">{t('settings.apply_correction')}</button>
+          <button onClick={applyCorrection} className="text-sm bg-white/80 backdrop-blur-sm rounded-lg px-6 py-2.5 font-semibold text-amber-900 shadow-md hover:bg-white transition-all active:scale-95">{t('settings.apply_correction')}</button>
         </section>
 
 {/* Set language */}
@@ -556,7 +600,7 @@ function SettingsScreen({
             <select
               value={i18n.language}
               onChange={(e) => i18n.changeLanguage(e.target.value)}
-              className="appearance-none bg-white/80 backdrop-blur-sm rounded-lg px-6 py-2.5 pr-10 font-semibold text-amber-900 shadow-md hover:bg-white transition-all cursor-pointer outline-none"
+              className="appearance-none bg-white/80 backdrop-blur-sm rounded-lg px-6 py-2.5 pr-10 font-semibold text-amber-900 text-sm shadow-md hover:bg-white transition-all cursor-pointer outline-none"
             >
               <option value="en">English</option>
               <option value="ru">Русский</option>
@@ -607,7 +651,7 @@ function HelpScreen({ onBack }: { onBack: () => void }) {
         </button>
       </header>
       <div className="px-6">
-        <h1 className="text-amber-900 text-3xl mb-3">{t('help.title')}</h1>
+        <h1 className="text-amber-900 text-xl mb-3">{t('help.title')}</h1>
         <p className="text-left text-base text-amber-900/90 leading-relaxed">
           {t('help.intro')}
         </p>
@@ -627,7 +671,7 @@ function HelpScreen({ onBack }: { onBack: () => void }) {
         <p className="text-left text-base text-amber-900/90 leading-relaxed">
           {t('help.text_4')}
         </p>
-        
+        <h2 className="mb-4 text-center text-balance text-amber-900 text-lg mt-3">{t('help.final')}</h2>
       </div> 
     </div>
   );
