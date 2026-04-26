@@ -57,10 +57,9 @@ export default function App() {
   const [totalExercises, setTotalExercises] = useState<number>(() => getNumberFromStorage('totalExercises', 0));
   const [currentInput, setCurrentInput] = useState<number>(() => getNumberFromStorage('currentInput', 0));
   const [appliedConversionRate, setAppliedConversionRate] = useState<number>(() => {
-  const raw = window.localStorage.getItem('appliedConversionRate');
-  const parsed = Number(raw);
-  return isNaN(parsed) ? 1 : parsed;
-        });
+  const value = Number(localStorage.getItem('appliedConversionRate'));
+    return value > 0 ? value : 1;
+    });
   const [beerPriceInput, setBeerPriceInput] = useState<string>(() => getStringFromStorage('beerPriceInput', '1'));
   const [exForBeerInput, setExForBeerInput] = useState<string>(() => getStringFromStorage('exForBeerInput', '1'));
   const [conversionInput, setConversionInput] = useState<string>(() => getStringFromStorage('conversionInput', String(getNumberFromStorage('appliedConversionRate', 1))));
