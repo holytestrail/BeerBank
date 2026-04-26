@@ -1,1 +1,99 @@
-{}
+{
+  "age_gate": {
+    "image_alt": "BeerBank logo - beer mug with dumbbell foam",
+    "checkbox_label": "I confirm that I am of <strong>legal drinking age</strong> in my country of residence AND I am not a moron who doesn't know how to <strong>drink responsibly</strong>.",
+    "enter_button": "Enter BeerBank"
+    },
+
+  "hero": {
+    "logo": "BeerBank:",
+    "title": "Enjoy beer without feeling like a lazy ass!",
+    "subtitle": "The exercise-to-beer tracker that makes fitness fun 🍺",
+    "try_button": "Try this amazing app"
+    },
+
+  "intro": {
+    "heading": "So, you love beer but don't have regular workouts",
+    "p1": "You're just like me. I know sport is important, but have no <s>willpower</s> time to go to the gym.",
+    "p2": "However, I drink beer when I go to a bar quiz (love them both - quizzes and beer). So I thought - why not gamify the motivation part?"
+  },
+
+  "how_it_works": {
+    "heading": "BeerBank helps you add A LITTLE motion to your daily life",
+    "steps": {
+      "0": {
+        "title": "Step 1: Do a few quick exercises",
+        "description": "Do several push-ups (3, or 5, or even 1) when you have a minute during your day (or squats, or any other quick exercise). Come on, you always have a minute!"
+      },
+      "1": {
+        "title": "Step 2: Log it in BeerBank",
+        "description": "Add the number of exercises and see your Beer credit grow. You can choose how much credit you get for one exercise."
+      },
+      "2": {
+        "title": "Step 3: Write off your Beer credit",
+        "description": "When you buy a beer, write off the beer price from your credit."
+      },
+      "3": {
+        "title": "Step 4: No credit? No beer!",
+        "description": "Out of credit? Be honest and skip that beer :( Next time, don't be a loser and move your butt more often to earn your drink!"
+      }
+    }
+  },
+
+  "motivation": {
+    "heading": "Doing five push-ups is better than not doing fifty💪",
+    "body": "Too lazy for 5 push-ups? Do 1 or 2. Too hard to do a push-up from the floor? Put your hands on a wall or table. Do a squat, raise a leg, nod your head. Do at least something: we all know regular workouts are better, but <strong>moving your ass a little is better than nothing at all</strong>.",
+    "cta_button": "Try the freaking app already"
+  },
+
+  "try_app": {
+    "heading": "Get BeerBank on your phone! 📲",
+    "image_alt": "BeerBank app screens",
+    "no_install": "No installation needed",
+    "no_install_description": "Just download and it will appear as a regular app (it's a PWA, if you know what it means)",
+    "download_button": "Download BeerBank"
+  },
+
+  "testimonials": {
+    "heading": "Just look what these never-existing people* never said about BeerBank!",
+    "footnote": "* all faces generated with 'this-person-does-not-exist.org'",
+    "0": {
+      "quote": "BeerBank is fun! Pure motivation! Even my hamster does push-ups with me!",
+      "name": "Jeffrey",
+      "title": "Sandwich Alignment Expert"
+    },
+    "1": {
+      "quote": "Let's be honest: I'll never go to the gym. With BeerBank, I do at least a few squats a day!",
+      "name": "Pierre",
+      "title": "Lightbulb Replacement Consultant"
+    },
+    "2": {
+      "quote": "I don't know BeerBank. Never tried it, never will.",
+      "name": "Some unknown asshole",
+      "title": ""
+    }
+  },
+
+  "future": {
+    "heading": "In future releases, we plan...",
+    "features": {
+      "0": "Adding regional and world leaderboards (who did the most push-ups and who bought the most beer)",
+      "1": "Adding AI advisor on which beer is worthy of your miserable sport efforts",
+      "2": "Making a built-in iPhone feature, if they agree of course: we can call it CiderBank (badoom-tsss)",
+      "3": "Jokes apart - the full online integration is ready, so stay tuned for more (follow me on LinkedIn)"
+    }
+  },
+
+  "final_banner": {
+    "heading": "Make your tiny training sessions a habit, with the help of BeerBank",
+    "cta_button": "Try it out"
+  },
+
+  "footer": {
+    "copyright": "(c) BeerBank, 2026",
+    "feedback": "Send me your feedback:",
+    "email_link": "Via email",
+    "linkedin_link": "Via LinkedIn",
+    "tagline": "Made with questionable motivation choices"
+  }
+}
