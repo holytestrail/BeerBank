@@ -1,0 +1,84 @@
+{
+  "messages": {
+    "add_1": "Excellent!",
+    "add_2": "Well done!",
+    "add_3": "Not bad!",
+    "spend_1": "Well done, you deserve that!",
+    "spend_2": "Enjoy!",
+    "spend_3": "You've earned this!",
+    "msg_01": "Data corrected",
+    "msg_02": "New conversion rate applied",
+    "msg_03": "Not enough money :(",
+    "msg_04": "Enter a whole number greater than 0",
+    "msg_05": "Enter a whole number",
+    "msg_07": "You cannot undo more than you did."
+  },
+  "aria": {
+    "profile": "Profile",
+    "settings": "Settings",
+    "spend": "Spend",
+    "back": "Back"
+  },
+  "install": {
+    "preparing": "Preparing download...",
+    "consent": "By downloading the app, you confirm that you are of legal drinking age. You also give your consent to be addressed in creative ways, including, but not limited to, \"lazy butt\", \"miserable loser\", and so on, which is done not to harm you, but to make the BeerBank experience more enjoyable (not necessarily for you).",
+    "download_button": "Download BeerBank",
+    "accepted_title": "✅ Downloaded!",
+    "accepted_body": "Open BeerBank from your home screen.",
+    "dismissed": "You cancelled the installation - no problem, install it later from your browser menu (or look for the download icon in the address bar).",
+    "ios_title": "To download on iPhone:",
+    "ios_step1": "1. Tap the <strong>Share</strong> button (□↑) in Safari",
+    "ios_step2": "2. Tap <strong>\"Add to Home Screen\"</strong>",
+    "unsupported_title": "Hmm, a little technical issue:",
+    "unsupported_body": "To download BeerBank, please open this page in Android <strong>Chrome</strong> (not Incognito) or <strong>Safari</strong> on iPhone — then follow the install prompt.",
+    "unsupported_hint": "<strong>Or maybe you already installed it?</strong> If so, open the app on your device."
+  },
+  "main": {
+    "beer_credit": "Your beer credit",
+    "beer_time_button": "Beer time!",
+    "total_exercises": "Total exercises",
+    "add_session": "Add new session",
+    "add_button": "Add",
+    "last_added": "Last added:"
+  },
+  "settings": {
+    "title": "Settings",
+    "conversion_title": "Conversion rate",
+    "conversion_final_rate_1": "You get ",
+    "conversion_final_rate_2": " money for each exercise. To change the rate, enter:",
+    "conversion_beer_price": "How much does one beer cost?",
+    "conversion_ex_for_beer": "How many exercises will you do for one beer?",
+    "apply_rate": "Apply new rate",
+    "correction_title": "Beer credit correction",
+    "correction_current": "Current beer credit:",
+    "correction_current_2": "To change it,",
+    "correction_placeholder": "type in the new credit",
+    "apply_correction": "Apply new credit",
+    "language_title": "Language"
+  },
+  "profile": {
+    "title": "Profile",
+    "placeholder": "We'll add log in / log out features here later. Meanwhile, your personal profile is - the most talented person in the room (just don't tell anyone)."
+  },
+
+  "spend": {
+    "title": "🥳 It's beer time! 🍺",
+    "your_credit": "Your credit",
+    "how_much": "How much will you spend?",
+    "confirm_button": "Let's do it!",
+    "recently_spent": "You've recently spent:"
+  },
+  "help": {
+    "title": "How BeerBank helps you get (a little) stronger",
+    "intro": "Gamify your fitness: no hard workouts, just do random exercises and exchange them for beer!",
+    "h_1": "1. Do a few exercises",
+    "text_1": "When you have a moment, do a few push-ups or squats, whatever works. Even 3 or 5 will do.",
+    "h_2": "2. Log them in BeerBank",
+    "text_2": "On the main screen, enter the number of exercises and tap *Add*. Your Beer Credit will grow.",
+    "h_3": "3. When you buy a beer, write off the money you spent",
+    "text_3": "Not enough credit? Skip that beer! Next time, do more push-ups beforehand, you lazy butt!",
+    "h_4": "4. Don't forget to set your conversion rate!",
+    "text_4": "Find it in Settings, it's easy.",
+    "final": "Doing only 3 push-ups is better than doing nothing at all!"
+  }
+}

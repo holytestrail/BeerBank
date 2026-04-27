@@ -1,32 +1,36 @@
 import Image from "next/image"
+import { useTranslation } from 'react-i18next'
 
-const testimonials = [
+
+
+export default function TestimonialsSection() {
+  const { t, i18n } = useTranslation('landing');
+  const testimonials = [
   {
-    quote: "BeerBank is fun! Pure motivation! Even my hamster does push-ups with me!",
-    name: "Jeffrey",
-    title: "Sandwich Alignment Expert",
+    quote: t("testimonials.0.quote"),
+    name: t("testimonials.0.name"),
+    title: t("testimonials.0.title"),
     image: "/testimonial-1.jpeg"
   },
   {
-    quote: "Let's be honest: I'll never go to the gym. With BeerBank, I do at least a few squats a day!",
-    name: "Pierre",
-    title: "Lightbulb Replacement Consultant",
+    quote: t("testimonials.1.quote"),
+    name: t("testimonials.1.name"),
+    title: t("testimonials.1.title"),
     image: "/testimonial-2.jpeg"
   },
   {
-    quote: "I don't know BeerBank. Never tried it, never will.",
-    name: "Some unknown asshole",
-    title: "",
+    quote: t("testimonials.2.quote"),
+    name: t("testimonials.2.name"),
+    title: t("testimonials.2.title"),
     image: "/testimonial-3.jpeg"
   }
 ]
 
-export default function TestimonialsSection() {
   return (
     <section className="py-12 px-6 md:py-20 bg-secondary">
       <div className="max-w-xl mx-auto">
         <h2 className="text-xl md:text-2xl font-bold text-foreground mb-8 text-center text-balance">
-          Just look what these never-existing people* never said about BeerBank!
+          {t("testimonials.heading")}
         </h2>
 
         {/* Testimonial cards */}
@@ -49,7 +53,7 @@ export default function TestimonialsSection() {
 
               {/* Quote and attribution */}
               <p className="text-foreground text-center leading-relaxed mb-3 italic">
-                &quot;{testimonial.quote}&quot;
+                {testimonial.quote}
               </p>
               <p className="text-sm text-center">
                 <span className="text-muted-foreground">&mdash; </span>
@@ -60,7 +64,7 @@ export default function TestimonialsSection() {
               </p>
             </div>
           ))}
-          <p className="text-sm">* all faces generated with 'this-person-does-not-exist.org'</p>
+          <p className="text-sm">{t("testimonials.footnote")}</p>
         </div>
       </div>
     </section>

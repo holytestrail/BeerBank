@@ -1,38 +1,15 @@
-﻿import { Settings, User, Beer, ArrowLeft } from 'lucide-react';
+﻿import { Settings, User, Beer, ArrowLeft, CircleQuestionMark  } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import WelcomePage from './pages/WelcomePage.jsx';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Analytics } from "@vercel/analytics/next"
+import { I18nProvider } from "./components/I18nProvider";
+import { useTranslation } from 'react-i18next';
 
 
 type Screen = 'main' | 'settings' | 'profile' | 'spend';
 type SpendEvent = { date: string; amount: number };
 type InstallState = 'waiting' | 'ready' | 'accepted' | 'dismissed' | 'ios' | 'standalone' | 'unsupported';
-
-const MESSAGES = {
-  ADD_1: 'Excellent!',
-  ADD_2: 'Well done!',
-  ADD_3: 'Not bad!',
-  SPEND_1: 'Well done, you deserve that!',  
-  SPEND_2: 'Enjoy!',                         
-  SPEND_3: "You've earned this!",
-  MSG_01: 'Data corrected',
-  MSG_02: 'New conversion rate applied',
-  MSG_03: 'Not enough money :(',
-  MSG_04: 'Enter a whole number greater than 0',
-  MSG_05: 'Enter a whole number',
-  MSG_07: 'You cannot undo more than you did.',
-};
-
-const randomSpendMessage = () => {
-  const options = [MESSAGES.SPEND_1, MESSAGES.SPEND_2, MESSAGES.SPEND_3];
-  return options[Math.floor(Math.random() * options.length)];
-};
-
-const randomAddMessage = () => {
-  const options = [MESSAGES.ADD_1, MESSAGES.ADD_2, MESSAGES.ADD_3];
-  return options[Math.floor(Math.random() * options.length)];
-};
 
 const isNaturalNumber = (value: number) => Number.isInteger(value) && value > 0;
 const isWholeNumber = (value: number) => Number.isInteger(value) && value >= 0;
@@ -56,6 +33,9 @@ const getStringFromStorage = (key: string, fallback: string) => {
 };
 
 export default function App() {
+  const { t, i18n } = useTranslation('app');
+  const randomAddMessage = () => t(`messages.add_${Math.floor(Math.random() * 3) + 1}`);
+  const randomSpendMessage = () => t(`messages.spend_${Math.floor(Math.random() * 3) + 1}`);
   const [installState, setInstallState] = useState<InstallState>(() => {
     if (typeof window === 'undefined') return 'waiting';
     if (window.matchMedia('(display-mode: standalone)').matches) return 'standalone';
@@ -76,7 +56,12 @@ export default function App() {
   const [beerCredit, setBeerCredit] = useState<number>(() => getNumberFromStorage('beerCredit', 0));
   const [totalExercises, setTotalExercises] = useState<number>(() => getNumberFromStorage('totalExercises', 0));
   const [currentInput, setCurrentInput] = useState<number>(() => getNumberFromStorage('currentInput', 0));
-  const [appliedConversionRate, setAppliedConversionRate] = useState<number>(() => getNumberFromStorage('appliedConversionRate', 1));
+  const [appliedConversionRate, setAppliedConversionRate] = useState<number>(() => {
+  const value = Number(localStorage.getItem('appliedConversionRate'));
+    return value > 0 ? value : 1;
+    });
+  const [beerPriceInput, setBeerPriceInput] = useState<string>(() => getStringFromStorage('beerPriceInput', '1'));
+  const [exForBeerInput, setExForBeerInput] = useState<string>(() => getStringFromStorage('exForBeerInput', '1'));
   const [conversionInput, setConversionInput] = useState<string>(() => getStringFromStorage('conversionInput', String(getNumberFromStorage('appliedConversionRate', 1))));
   const [username] = useState<string>(() => getStringFromStorage('username', 'JohnDoe'));
   const [recentAdds, setRecentAdds] = useState<number[]>(() => {
@@ -133,15 +118,17 @@ export default function App() {
     window.localStorage.setItem('beerCredit', String(toInt(beerCredit)));
     window.localStorage.setItem('totalExercises', String(toInt(totalExercises)));
     window.localStorage.setItem('currentInput', String(toInt(currentInput)));
-    window.localStorage.setItem('appliedConversionRate', String(toInt(appliedConversionRate)));
+    window.localStorage.setItem('appliedConversionRate', String(appliedConversionRate));
     window.localStorage.setItem('conversionInput', conversionInput);
+    window.localStorage.setItem('beerPriceInput', beerPriceInput);
+    window.localStorage.setItem('exForBeerInput', exForBeerInput);
     window.localStorage.setItem('username', username);
     window.localStorage.setItem('recentAdds', JSON.stringify(recentAdds.map((v) => toInt(v)).slice(0, 5)));
     window.localStorage.setItem('recentSpends', JSON.stringify(recentSpends.map((item) => ({ date: item.date, amount: toInt(item.amount) })).slice(0, 5)));
     window.localStorage.setItem('spendAmount', spendAmount);
     window.localStorage.setItem('balanceCorrectionInput', balanceCorrectionInput);
     window.localStorage.setItem('currentScreen', currentScreen);
-  }, [beerCredit, totalExercises, currentInput, appliedConversionRate, conversionInput, username, recentAdds, recentSpends, spendAmount, balanceCorrectionInput, currentScreen]);
+  }, [beerCredit, totalExercises, currentInput, appliedConversionRate, conversionInput, username, recentAdds, recentSpends, spendAmount, balanceCorrectionInput, currentScreen, beerPriceInput, exForBeerInput]);
 
   useEffect(() => {
     const storedScreen = getStringFromStorage('currentScreen', 'main') as Screen;
@@ -163,12 +150,12 @@ export default function App() {
   const handleAdd = () => {
     const toAdd = toInt(currentInput);
     if (toAdd === 0) {
-      showToast(MESSAGES.MSG_05);
+      showToast(t('messages.msg_05'));
       return;
     }
 
     if (toAdd < 0 && Math.abs(toAdd) > totalExercises) {
-      showToast(MESSAGES.MSG_07);
+      showToast(t('messages.msg_07'));
       return;
     }
 
@@ -188,12 +175,12 @@ export default function App() {
   const handleSpend = () => {
     const parsed = Number(spendAmount);
     if (!isNaturalNumber(parsed)) {
-      showToast(MESSAGES.MSG_04);
+      showToast(t('messages.msg_04'));
       return;
     }
 
     if (parsed > beerCredit) {
-      showToast(MESSAGES.MSG_03);
+      showToast(t('messages.msg_03'));
       return;
     }
 
@@ -206,26 +193,34 @@ export default function App() {
     showToast(randomSpendMessage());
   };
 
-  const applyRate = () => {
-    const parsed = Number(conversionInput);
-    if (conversionInput.trim() === '' || !isNaturalNumber(parsed)) {
-      showToast(MESSAGES.MSG_04);
-      return;
-    }
-    setAppliedConversionRate(toInt(parsed));
-    setConversionInput(String(toInt(parsed)));
-    showToast(MESSAGES.MSG_02);
+
+const applyRate = () => {
+  const price = Number(beerPriceInput);
+  const exCount = Number(exForBeerInput);
+
+  if (beerPriceInput.trim() === '' || !isNaturalNumber(price) ||
+      exForBeerInput.trim() === '' || !isNaturalNumber(exCount)) {
+    showToast(t('messages.msg_04'));
+    return;
+  }
+
+  const conversionRate = Math.max(0.01, Math.round((price / exCount) * 100) / 100);
+  setAppliedConversionRate(conversionRate);
+  setBeerPriceInput(String(price));
+  setExForBeerInput(String(exCount));
+  showToast(t('messages.msg_02'));
   };
+
 
   const applyCorrection = () => {
     const parsed = Number(balanceCorrectionInput);
     if (balanceCorrectionInput.trim() === '' || !isWholeNumber(parsed)) {
-      showToast(MESSAGES.MSG_04);
+      showToast(t('messages.msg_04'));
       return;
     }
     setBeerCredit(toInt(parsed));
     setBalanceCorrectionInput('');
-    showToast(MESSAGES.MSG_01);
+    showToast(t('messages.msg_01'));
   };
 
   const handleInstall = async () => {
@@ -246,6 +241,7 @@ if (!hasWelcomed) {
   }
 
   return (
+    <I18nProvider>
     <div className="relative h-screen w-full max-w-[412px] mx-auto overflow-hidden bg-gradient-to-b from-amber-400 via-amber-500 to-amber-600">
       <div className="absolute inset-0 bg-white/20 backdrop-blur-sm"></div>
       <div className="absolute top-24 left-8 w-20 h-20 rounded-full bg-white/25 blur-lg"></div>
@@ -280,18 +276,28 @@ if (!hasWelcomed) {
         {currentScreen === 'settings' && (
           <SettingsScreen
             conversionInput={conversionInput}
+            appliedConversionRate={appliedConversionRate}
             setConversionInput={setConversionInput}
+            beerPriceInput={beerPriceInput}          
+            setBeerPriceInput={setBeerPriceInput}    
+            exForBeerInput={exForBeerInput}          
+            setExForBeerInput={setExForBeerInput}     
             balanceCorrectionInput={balanceCorrectionInput}
             setBalanceCorrectionInput={setBalanceCorrectionInput}
             currentCredit={beerCredit}
             onBack={() => setCurrentScreen('main')}
             applyRate={applyRate}
             applyCorrection={applyCorrection}
+            i18n={i18n}
           />
         )}
 
         {currentScreen === 'profile' && (
           <ProfileScreen onBack={() => setCurrentScreen('main')} />
+        )}
+
+        {currentScreen === 'help' && (
+          <HelpScreen onBack={() => setCurrentScreen('main')} />
         )}
 
         {currentScreen === 'spend' && (
@@ -306,14 +312,16 @@ if (!hasWelcomed) {
         )}
       </div>
     </div>
+    </I18nProvider>
   );
 }
 
 function InstallScreen({ installState, onInstall }: {
   installState: InstallState;
   onInstall: () => void;
-}) {                                 
-  const [consentChecked, setConsentChecked] = useState(false); 
+}) {
+  const { t } = useTranslation('app');
+  const [consentChecked, setConsentChecked] = useState(false);
   return (
     <div className="relative h-screen w-full max-w-[412px] mx-auto overflow-hidden bg-gradient-to-b from-amber-400 via-amber-500 to-amber-600 flex flex-col items-center justify-center px-8 text-center">
       {/* Background bubbles */}
@@ -327,9 +335,8 @@ function InstallScreen({ installState, onInstall }: {
         <img src="/BeerBank_icon.png" alt="BeerBank" className="w-24 h-24 rounded-2xl shadow-lg mb-6" />
 
         {installState === 'waiting' && (
-          <p className="text-amber-900/70 animate-pulse">Preparing download...</p>
+          <p className="text-amber-900/70 animate-pulse">{t('install.preparing')}</p>
         )}
-
 
         {/* Download Consent checkbox */}
         {installState === 'ready' && (
@@ -341,8 +348,7 @@ function InstallScreen({ installState, onInstall }: {
                 className="mt-0.5 border-amber-800/50 data-[state=checked]:bg-amber-800 data-[state=checked]:text-amber-100"
               />
               <span className="text-sm leading-relaxed text-amber-900">
-                By downloading the app, you confirm that you are of legal drinking age. You also give your consent to be addressed in creative ways, including, but not limited to,
-                &quot;lazy butt&quot;, &quot;miserable loser&quot;, and so on, which is done not to harm you, but to make the BeerBank experience more enjoyable (not necessarily for you).
+                {t('install.consent')}
               </span>
             </label>
           </div>
@@ -354,49 +360,42 @@ function InstallScreen({ installState, onInstall }: {
             disabled={!consentChecked}
             className="w-full bg-amber-800 text-amber-100 text-xl font-semibold py-4 rounded-xl shadow-lg active:scale-95 transition-all hover:bg-amber-700 disabled:opacity-50 disabled:cursor-not-allowed disabled:active:scale-100"
           >
-            Download BeerBank
+            {t('install.download_button')}
           </button>
         )}
 
-
-
-
-
-
-
-
         {installState === 'accepted' && (
           <div className="bg-white/20 rounded-xl p-5">
-            <p className="text-amber-950 font-semibold text-lg mb-2">✅ Downloaded!</p>
-            <p className="text-amber-900/80">Open BeerBank from your home screen.</p>
+            <p className="text-amber-950 font-semibold text-lg mb-2">{t('install.accepted_title')}</p>
+            <p className="text-amber-900/80">{t('install.accepted_body')}</p>
           </div>
         )}
 
         {installState === 'dismissed' && (
           <div className="flex flex-col items-center gap-4 w-full">
-            <p className="text-amber-900/80">You cancelled the installation - no problem, install it later from your browser menu (or look for the download icon in the address bar).</p>
+            <p className="text-amber-900/80">{t('install.dismissed')}</p>
             <button
               onClick={onInstall}
               className="w-full bg-amber-800 text-amber-100 text-lg font-semibold py-4 rounded-xl shadow-lg active:scale-95 transition-all hover:bg-amber-700"
             >
-            Download BeerBank
+              {t('install.download_button')}
             </button>
           </div>
         )}
 
         {installState === 'ios' && (
           <div className="bg-white/20 rounded-xl p-5 text-left w-full">
-            <p className="font-semibold text-amber-950 mb-3">To download on iPhone:</p>
-            <p className="text-amber-900/90">1. Tap the <strong>Share</strong> button (□↑) in Safari</p>
-            <p className="text-amber-900/90 mt-2">2. Tap <strong>"Add to Home Screen"</strong></p>
+            <p className="font-semibold text-amber-950 mb-3">{t('install.ios_title')}</p>
+            <p className="text-amber-900/90" dangerouslySetInnerHTML={{ __html: t('install.ios_step1') }} />
+            <p className="text-amber-900/90 mt-2" dangerouslySetInnerHTML={{ __html: t('install.ios_step2') }} />
           </div>
         )}
 
         {installState === 'unsupported' && (
           <div className="bg-white/20 rounded-xl p-5 text-left w-full">
-            <p className="font-semibold text-amber-950 mb-3">Hmm, a little technical issue:</p>
-            <p className="text-amber-900/90">To download BeerBank, please open this page in Android <strong>Chrome</strong> (not Incognito) or <strong>Safari</strong> on iPhone — then follow the install prompt.</p>
-            <p className="text-amber-900/90"><strong>Or maybe you already installed it?</strong> If so, open the app on your device.</p>
+            <p className="font-semibold text-amber-950 mb-3">{t('install.unsupported_title')}</p>
+            <p className="text-amber-900/90" dangerouslySetInnerHTML={{ __html: t('install.unsupported_body') }} />
+            <p className="text-amber-900/90" dangerouslySetInnerHTML={{ __html: t('install.unsupported_hint') }} />
           </div>
         )}
       </div>
@@ -421,45 +420,63 @@ function MainScreen({
   handleAdd: () => void;
   onNavigate: (screen: Screen) => void;
 }) {
+  const { t } = useTranslation('app');
   return (
     <div className="h-full flex flex-col">
       <header className="flex items-center justify-between px-5 pt-5 pb-4">
-        <button onClick={() => onNavigate('profile')} className="w-12 h-12 rounded-full bg-white/90 backdrop-blur-sm shadow-lg flex items-center justify-center hover:bg-white transition-all active:scale-95" aria-label="Profile">
-          <User className="w-6 h-6 text-amber-900" />
+        <button onClick={() => onNavigate('help')} className="w-12 h-12 rounded-full bg-white/90 backdrop-blur-sm shadow-lg flex items-center justify-center hover:bg-white transition-all active:scale-95" aria-label={t('aria.help')}>
+          <CircleQuestionMark className="w-6 h-6 text-amber-900" />
         </button>
-        <button onClick={() => onNavigate('settings')} className="w-12 h-12 rounded-full bg-white/90 backdrop-blur-sm shadow-lg flex items-center justify-center hover:bg-white transition-all active:scale-95" aria-label="Settings">
+        <button onClick={() => onNavigate('settings')} className="w-12 h-12 rounded-full bg-white/90 backdrop-blur-sm shadow-lg flex items-center justify-center hover:bg-white transition-all active:scale-95" aria-label={t('aria.settings')}>
           <Settings className="w-6 h-6 text-amber-900" />
         </button>
       </header>
 
+{/* Beer credit */}
+
       <section className="px-6 mt-2">
-        <h1 className="text-amber-900/80">Your beer credit</h1>
+        <div className="flex items-center gap-3 mb-1">
+          <div className="flex-1 h-px bg-amber-900/30" />
+           <h2 className="text-amber-900/80 text-center">{t('main.beer_credit')}</h2>
+          <div className="flex-1 h-px bg-amber-900/30" />
+        </div>
         <div className="flex items-center gap-3">
           <div className="flex-1">
-            <p className="text-8xl font-bold text-amber-950 tracking-tight">{beerCredit}</p>
+            <p className="text-8xl text-center font-bold text-amber-950 tracking-tight pb-2">{beerCredit}</p>
           </div>
-          <button onClick={() => onNavigate('spend')} className="bg-white/90 backdrop-blur-sm rounded-2xl shadow-lg px-5 py-5 hover:bg-white transition-all active:scale-95 min-w-[110px]" aria-label="Spend">
-            <Beer className="w-9 h-9 text-amber-600 mx-auto" />
-            <span className="block text-lg font-medium text-amber-900">Beer time!</span>
+          <button onClick={() => onNavigate('spend')} className="bg-white/90 backdrop-blur-sm rounded-2xl shadow-lg px-5 py-4 hover:bg-white transition-all active:scale-95 min-w-[110px]" aria-label={t('aria.spend')}>
+            <Beer className="w-9 h-9 text-amber-600 mx-auto mt-1" />
+            <span className="block text-lg font-medium text-amber-900">{t('main.beer_time_button')}</span>
           </button>
         </div>
       </section>
 
-      <section className="px-6 mt-4">
-        <h2 className="text-amber-900/80 mb-2">Total exercises</h2>
-        <p className="text-4xl font-bold text-amber-950 tracking-tight">{totalExercises}</p>
-      </section>
 
-      <section className="px-6 mt-6 flex-1">
+{/* Total exercises */}
+
+      <section className="px-6 mt-6">
         <div className="flex items-center gap-3 mb-1">
           <div className="flex-1 h-px bg-amber-900/30" />
-          <h2 className="text-amber-900/80 text-center">Add new session</h2>
+           <h2 className="text-amber-900/80 text-base text-center">{t('main.total_exercises')}</h2>
+          <div className="flex-1 h-px bg-amber-900/30" />
+        </div>
+        <div className="flex-1">
+          <p className="text-6xl text-center font-bold text-amber-950 tracking-tight pb-2">{totalExercises}</p>
+        </div>
+      </section>
+
+{/* Add session */}
+
+      <section className="px-6 mt-6">
+        <div className="flex items-center gap-3 mb-1">
+          <div className="flex-1 h-px bg-amber-900/30" />
+          <h2 className="text-amber-900/80 text-base text-center">{t('main.add_session')}</h2>
           <div className="flex-1 h-px bg-amber-900/30" />
         </div>
         <div className="flex gap-3">
           <div className="flex-1">
             <div className="mb-4">
-              <p className="text-8xl font-bold text-amber-950 tracking-tight text-center">{currentInput}</p>
+              <p className="text-6xl font-bold text-amber-950 tracking-tight text-center">{currentInput}</p>
             </div>
             <div className="grid grid-cols-3 gap-2 mb-4">
               {[{ label: '+1', value: 1 }, { label: '+5', value: 5 }, { label: '+10', value: 10 }].map((btn) => (
@@ -471,93 +488,147 @@ function MainScreen({
                 <button key={btn.label} onClick={() => adjustInput(btn.value)} className="text-lg bg-white/80 backdrop-blur-sm rounded-lg py-3 font-semibold text-amber-900 shadow-md hover:bg-white transition-all active:scale-95">{btn.label}</button>
               ))}
             </div>
-            <button onClick={handleAdd} className="w-full bg-amber-600 hover:bg-amber-700 text-white text-xl font-semibold py-4 rounded-xl shadow-lg transition-all active:scale-95">Add</button>
+            <button onClick={handleAdd} className="w-full bg-amber-600 hover:bg-amber-700 text-white text-xl font-semibold py-4 rounded-xl shadow-lg transition-all active:scale-95">{t('main.add_button')}</button>
           </div>
         </div>
         {recentAdds.length > 0 ? (
-          <div className="mt-2 px-2 text-base text-amber-900/60 font-medium">Last added: {recentAdds.slice().reverse().map(formatSigned).join(', ')}</div>
+          <div className="mt-2 px-2 text-base text-amber-900/60 font-medium">{t('main.last_added')} {recentAdds.slice().reverse().map(formatSigned).join(', ')}</div>
         ) : null}
       </section>
     </div>
   );
 }
 
+// Settings screen
+
 function SettingsScreen({
   conversionInput,
   setConversionInput,
+  appliedConversionRate,
+  beerPriceInput,  
+  setBeerPriceInput, 
+  exForBeerInput,   
+  setExForBeerInput,    
   balanceCorrectionInput,
   setBalanceCorrectionInput,
   currentCredit,
   onBack,
   applyRate,
   applyCorrection,
+  i18n,
 }: {
+  appliedConversionRate: number; 
   conversionInput: string;
   setConversionInput: (value: string) => void;
+  beerPriceInput: string;                        
+  setBeerPriceInput: (value: string) => void;   
+  exForBeerInput: string;                        
+  setExForBeerInput: (value: string) => void;    
   balanceCorrectionInput: string;
   setBalanceCorrectionInput: (value: string) => void;
   currentCredit: number;
   onBack: () => void;
   applyRate: () => void;
   applyCorrection: () => void;
+  i18n: any;
 }) {
+  const { t } = useTranslation('app');
   return (
     <div className="h-full flex flex-col overflow-y-auto">
       <header className="flex items-center px-5 pt-5 pb-4">
-        <button onClick={onBack} className="w-12 h-12 rounded-full bg-white/90 backdrop-blur-sm shadow-lg flex items-center justify-center hover:bg-white transition-all active:scale-95" aria-label="Back">
+        <button onClick={onBack} className="w-12 h-12 rounded-full bg-white/90 backdrop-blur-sm shadow-lg flex items-center justify-center hover:bg-white transition-all active:scale-95" aria-label={t('aria.back')}>
           <ArrowLeft className="w-6 h-6 text-amber-900" />
         </button>
       </header>
       <div className="px-6">
-        <h1 className="text-3xl text-amber-950 mb-6">Settings</h1>
+        <h1 className="text-3xl text-amber-900 mb-6">{t('settings.title')}</h1>
+
+{/* Set conversion rate */}
+
         <section className="mb-8">
-          <h2 className="text-xl text-amber-950 mb-2">Conversion rate</h2>
-          <p className="text-base text-amber-900/70 mb-4">We don't know your local currency, so set your own rate based on your local beer prices and how lazy you feel</p>
-          <p className="text-base text-amber-900/80 mb-3">1 exercise = <input
-            type="text"
-            inputMode="numeric"
-            value={conversionInput}
-            onChange={(e) => setConversionInput(onlyDigits(e.target.value))}
-            onFocus={() => conversionInput === '0' && setConversionInput('')}
-            placeholder="1"
-            className="inline-block w-20 px-2 py-1 bg-amber-200/60 border border-amber-400/50 rounded text-amber-950 text-center"
-          /> money</p>
-          <button onClick={applyRate} className="bg-white/80 backdrop-blur-sm rounded-lg px-6 py-2.5 font-semibold text-amber-900 shadow-md hover:bg-white transition-all active:scale-95">Apply new rate</button>
+          <h2 className="text-lg text-amber-900 mb-2">{t('settings.conversion_title')}</h2>
+          <p className="text-sm text-amber-900/70 mb-1">{t('settings.conversion_final_rate_1')}<b>{appliedConversionRate}</b>{t('settings.conversion_final_rate_2')}</p>
+          <p className="text-sm text-amber-900/70 mb-1">{t('settings.conversion_beer_price')}&ensp;
+           <input
+              type="text"
+              inputMode="numeric"
+              value={beerPriceInput}
+              onChange={(e) => setBeerPriceInput(onlyDigits(e.target.value))}
+              onFocus={() => beerPriceInput === '1' && setBeerPriceInput('')}
+              placeholder="1"
+              className="inline-block w-20 px-1 bg-amber-200/60 border border-amber-400/50 rounded text-amber-950 text-center"
+            />
+          </p>
+          <p className="text-sm text-amber-900/70 mb-2">{t('settings.conversion_ex_for_beer')}&ensp;
+            <input
+              type="text"
+              inputMode="numeric"
+              value={exForBeerInput}
+              onChange={(e) => setExForBeerInput(onlyDigits(e.target.value))}
+              onFocus={() => exForBeerInput === '1' && setExForBeerInput('')}
+              placeholder="1"
+              className="inline-block w-20 px-1 bg-amber-200/60 border border-amber-400/50 rounded text-amber-950 text-center"
+            />
+          </p>
+          <button onClick={applyRate} className="text-sm bg-white/80 backdrop-blur-sm rounded-lg px-6 py-2.5 font-semibold text-amber-900 shadow-md hover:bg-white transition-all active:scale-95">{t('settings.apply_rate')}</button>
         </section>
+
+{/* Set new beer credit */}
+
         <section className="mb-6">
-          <h2 className="text-xl text-amber-950 mb-2">Beer credit correction</h2>
-          <p className="text-base text-amber-900/80 mb-2">Current beer credit: {currentCredit}. To amend it,</p>
+          <h2 className="text-lg text-amber-900 mb-2">{t('settings.correction_title')}</h2>
+          <p className="text-sm text-amber-900/80 mb-2">{t('settings.correction_current')} {currentCredit}. {t('settings.correction_current_2')}</p>
           <div className="flex items-center gap-2 mb-3">
             <input
               type="text"
               inputMode="numeric"
               value={balanceCorrectionInput}
               onChange={(e) => setBalanceCorrectionInput(onlyDigits(e.target.value))}
-              placeholder="type in the new balance"
-              className="flex-1 px-2 py-1 bg-amber-200/60 border border-amber-400/50 rounded text-amber-950 text-center text-base"
+              placeholder={t('settings.correction_placeholder')}
+              className="w-auto px-2 py-1 bg-amber-200/60 border border-amber-400/50 rounded text-amber-900 text-center text-sm"
             />
           </div>
-          <button onClick={applyCorrection} className="bg-white/80 backdrop-blur-sm rounded-lg px-6 py-2.5 font-semibold text-amber-900 shadow-md hover:bg-white transition-all active:scale-95">Apply new credit</button>
+          <button onClick={applyCorrection} className="text-sm bg-white/80 backdrop-blur-sm rounded-lg px-6 py-2.5 font-semibold text-amber-900 shadow-md hover:bg-white transition-all active:scale-95">{t('settings.apply_correction')}</button>
+        </section>
+
+{/* Set language */}
+
+        <section className="mb-8">
+          <h2 className="text-lg text-amber-900 mb-2">{t('settings.language_title')}</h2>         
+          <div className="relative inline-block">
+            <select
+              value={i18n.language}
+              onChange={(e) => i18n.changeLanguage(e.target.value)}
+              className="appearance-none bg-white/80 backdrop-blur-sm rounded-lg px-6 py-2.5 pr-10 font-semibold text-amber-900 text-sm shadow-md hover:bg-white transition-all cursor-pointer outline-none"
+            >
+              <option value="en">English</option>
+              <option value="ru">Русский</option>
+            </select>
+            <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-amber-900">▾</span>
+          </div>
         </section>
       </div>
     </div>
   );
 }
 
+{/* Profile screen */}
+
 function ProfileScreen({ onBack }: { onBack: () => void }) {
+  const { t } = useTranslation('app');
   return (
     <div className="h-full flex flex-col overflow-y-auto">
       <header className="flex items-center px-5 pt-5 pb-4">
-        <button onClick={onBack} className="w-12 h-12 rounded-full bg-white/90 backdrop-blur-sm shadow-lg flex items-center justify-center hover:bg-white transition-all active:scale-95" aria-label="Back">
+        <button onClick={onBack} className="w-12 h-12 rounded-full bg-white/90 backdrop-blur-sm shadow-lg flex items-center justify-center hover:bg-white transition-all active:scale-95" aria-label={t('aria.back')}>
           <ArrowLeft className="w-6 h-6 text-amber-900" />
         </button>
       </header>
       <div className="px-6">
-        <h1 className="text-amber-950 text-3xl mb-3">Profile</h1>
+        <h1 className="text-amber-950 text-3xl mb-3">{t('profile.title')}</h1>
         <div className="flex flex-col items-center">
           <div className="w-full max-w-sm mt-8">
             <p className="text-left text-base text-amber-950/90 leading-relaxed">
-              We'll add log in / log out features here later. Meanwhile, your personal profile is - the most talented person in the room (just don't tell anyone). 
+              {t('profile.placeholder')}
             </p>
           </div>
         </div>
@@ -565,6 +636,48 @@ function ProfileScreen({ onBack }: { onBack: () => void }) {
     </div>
   );
 }
+
+
+{/* Help screen */}
+
+function HelpScreen({ onBack }: { onBack: () => void }) {
+  const { t } = useTranslation('app');
+  return (
+    <div className="h-full flex flex-col overflow-y-auto">
+      <header className="flex items-center px-5 pt-5 pb-4">
+        <button onClick={onBack} className="w-12 h-12 rounded-full bg-white/90 backdrop-blur-sm shadow-lg flex items-center justify-center hover:bg-white transition-all active:scale-95" aria-label={t('aria.back')}>
+          <ArrowLeft className="w-6 h-6 text-amber-900" />
+        </button>
+      </header>
+      <div className="px-6">
+        <h1 className="text-amber-900 text-xl mb-3">{t('help.title')}</h1>
+        <p className="text-left text-base text-amber-900/90 leading-relaxed">
+          {t('help.intro')}
+        </p>
+        <h2 className="text-amber-900 text-lg mt-3">{t('help.h_1')}</h2>
+        <p className="text-left text-base text-amber-900/90 leading-relaxed">
+          {t('help.text_1')}
+        </p>
+        <h2 className="text-amber-900 text-lg mt-3">{t('help.h_2')}</h2>
+        <p className="text-left text-base text-amber-900/90 leading-relaxed">
+          {t('help.text_2')}
+        </p>
+        <h2 className="text-amber-900 text-lg mt-3">{t('help.h_3')}</h2>
+        <p className="text-left text-base text-amber-900/90 leading-relaxed">
+          {t('help.text_3')}
+        </p>
+        <h2 className="text-amber-900 text-lg mt-3">{t('help.h_4')}</h2>
+        <p className="text-left text-base text-amber-900/90 leading-relaxed">
+          {t('help.text_4')}
+        </p>
+        <h2 className="mb-4 text-center text-balance text-amber-900 text-lg mt-3">{t('help.final')}</h2>
+      </div> 
+    </div>
+  );
+}
+
+
+{/* Spend screen */}
 
 function SpendScreen({
   beerCredit,
@@ -581,23 +694,34 @@ function SpendScreen({
   onBack: () => void;
   handleSpend: () => void;
 }) {
+  const { t } = useTranslation('app');
   return (
     <div className="h-full flex flex-col overflow-y-auto">
       <header className="flex items-center px-5 pt-5 pb-4">
-        <button onClick={onBack} className="w-12 h-12 rounded-full bg-white/90 backdrop-blur-sm shadow-lg flex items-center justify-center hover:bg-white transition-all active:scale-95" aria-label="Back">
+        <button onClick={onBack} className="w-12 h-12 rounded-full bg-white/90 backdrop-blur-sm shadow-lg flex items-center justify-center hover:bg-white transition-all active:scale-95" aria-label={t('aria.back')}>
           <ArrowLeft className="w-6 h-6 text-amber-900" />
         </button>
       </header>
+
+
       <div className="px-6">
-        <h1 className="text-3xl font-bold text-amber-900 mb-8 text-center">It's beer time!</h1>
+        
+        <h1 className="text-3xl font-bold text-amber-900 mb-8 text-center">{t('spend.title')}</h1>
         <section className="mb-12">
-          <h2 className="text-xl text-amber-900/80 mb-1">Your credit</h2>
-          <p className="text-6xl font-bold text-amber-950 tracking-tight">{beerCredit}</p>
+
+    {/* Spend screen Balance */}          
+ 
+          <div className="flex items-center gap-3 mb-1">
+            <div className="flex-1 h-px bg-amber-900/30" />
+            <h2 className="text-amber-900/80 text-center">{t('spend.your_credit')}</h2>
+            <div className="flex-1 h-px bg-amber-900/30" />
+          </div>
+          <p className="text-6xl font-bold text-center text-amber-950 tracking-tight">{beerCredit}</p>
         </section>
         <section className="mb-6">
           <div className="flex items-center gap-3 mb-0">
             <div className="flex-1 h-px bg-amber-900/30" />
-            <h2 className="text-amber-900/80 text-center">How much will you spend?</h2>
+            <h2 className="text-amber-900/80 text-center">{t('spend.how_much')}</h2>
             <div className="flex-1 h-px bg-amber-900/30" />
           </div>
           <div className="mb-4">
@@ -614,11 +738,11 @@ function SpendScreen({
               className="w-full text-8xl font-bold text-amber-950 tracking-tight text-center bg-transparent border-none outline-none"
             />
           </div>
-          <button onClick={handleSpend} className="w-full bg-amber-600 hover:bg-amber-700 text-white text-xl font-semibold py-4 rounded-xl shadow-lg transition-all active:scale-95">Let's do it!</button>
+          <button onClick={handleSpend} className="w-full bg-amber-600 hover:bg-amber-700 text-white text-xl font-semibold py-4 rounded-xl shadow-lg transition-all active:scale-95">{t('spend.confirm_button')}</button>
         </section>
         {recentSpends.length > 0 ? (
           <section>
-            <h2 className="text-base text-amber-900/80 mb-3">You've recently spent:</h2>
+            <h2 className="text-base text-amber-900/80 mb-3">{t('spend.recently_spent')}</h2>
             <div className="space-y-2">
               {recentSpends.slice().reverse().map((spend, idx) => (
                 <div key={idx} className="flex justify-between text-sm text-amber-900/70">
