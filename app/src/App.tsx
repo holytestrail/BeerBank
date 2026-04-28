@@ -345,7 +345,7 @@ function InstallScreen({ installState, onInstall }: {
               <Checkbox
                 checked={consentChecked}
                 onCheckedChange={(checked) => setConsentChecked(checked === true)}
-                className="mt-0.5 border-amber-800/50 data-[state=checked]:bg-amber-800 data-[state=checked]:text-amber-100"
+                className="mt-0.5 border-black bg-white text-black"
               />
               <span className="text-sm leading-relaxed text-amber-900">
                 {t('install.consent')}
