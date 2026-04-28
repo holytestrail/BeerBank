@@ -30,7 +30,7 @@ export default function AgeGate({ onVerify }: AgeGateProps) {
           <Checkbox
             checked={isChecked}
             onCheckedChange={(checked) => setIsChecked(checked === true)}
-            className="mt-0.5 border-white data-[state=checked]:bg-white data-[state=checked]:text-black"
+            className="mt-0.5 border-black bg-white text-black"
           />
           <span className="text-sm text-foreground leading-relaxed">
             <Trans
