@@ -1,4 +1,4 @@
-﻿import { Settings, User, Beer, ArrowLeft, CircleQuestionMark, Dumbbell, PlusCircle, Ban,  } from 'lucide-react';
+﻿import { Settings, User, Beer, ArrowLeft, CircleQuestionMark  } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import WelcomePage from './pages/WelcomePage.jsx';
 import { Checkbox } from '@/components/ui/checkbox';
@@ -163,7 +163,7 @@ export default function App() {
     const newBalance = beerCredit + toAdd * appliedConversionRate;
 
     setTotalExercises(toInt(newTotal < 0 ? 0 : newTotal));
-    setBeerCredit(Math.round(newBalance * 100) / 100);
+    setBeerCredit(toInt(newBalance));
     setRecentAdds((prev) => [toAdd, ...prev].slice(0, 5));
     setCurrentInput(0);
 
@@ -174,23 +174,21 @@ export default function App() {
 
   const handleSpend = () => {
     const parsed = Number(spendAmount);
-/*  Skip check  
     if (!isNaturalNumber(parsed)) {
       showToast(t('messages.msg_04'));
       return;
     }
-*/
 
     if (parsed > beerCredit) {
       showToast(t('messages.msg_03'));
       return;
     }
 
-    const newBalance = Math.round((beerCredit - parsed) * 100) / 100;
+    const newBalance = toInt(beerCredit - parsed);
     setBeerCredit(newBalance);
 
     const now = new Date().toISOString().split('T')[0];
-    setRecentSpends((prev) => [{ date: now, amount: Math.round(parsed * 100) / 100 }, ...prev].slice(0, 5));
+    setRecentSpends((prev) => [{ date: now, amount: toInt(parsed) }, ...prev].slice(0, 5));
     setSpendAmount('');
     showToast(randomSpendMessage());
   };
@@ -200,13 +198,11 @@ const applyRate = () => {
   const price = Number(beerPriceInput);
   const exCount = Number(exForBeerInput);
 
-/* Commented: Checked on input
   if (beerPriceInput.trim() === '' || !isNaturalNumber(price) ||
       exForBeerInput.trim() === '' || !isNaturalNumber(exCount)) {
     showToast(t('messages.msg_04'));
     return;
   }
-*/
 
   const conversionRate = Math.max(0.01, Math.round((price / exCount) * 100) / 100);
   setAppliedConversionRate(conversionRate);
@@ -438,42 +434,22 @@ function MainScreen({
 
 {/* Beer credit */}
 
-<section className="px-6 mt-2">
-  <div className="flex items-center gap-3 mb-1">
-    <div className="flex-1 h-px bg-amber-900/30" />
-    <h2 className="text-amber-900/80 text-center">{t('main.beer_credit')}</h2>
-    <div className="flex-1 h-px bg-amber-900/30" />
-  </div>
-  <div className="flex items-center gap-3">
-    <div className="flex-1 min-w-0">
-      <p
-        className={`text-center font-bold text-amber-950 tracking-tight pb-2 ${
-          String(beerCredit).length >= 8
-            ? 'text-4xl'
-            : String(beerCredit).length >= 7
-            ? 'text-5xl'
-            : String(beerCredit).length >= 6
-            ? 'text-6xl'
-            : String(beerCredit).length >= 5
-            ? 'text-7xl'
-            : String(beerCredit).length >= 4
-            ? 'text-7xl'
-            : 'text-8xl'
-        }`}
-      >
-        {beerCredit}
-      </p>
-    </div>
-    <button
-      onClick={() => onNavigate('spend')}
-      className="bg-white/90 backdrop-blur-sm rounded-2xl shadow-lg px-5 py-4 hover:bg-white transition-all active:scale-95 min-w-[110px] flex-shrink-0"
-      aria-label={t('aria.spend')}
-    >
-      <Beer className="w-9 h-9 text-amber-600 mx-auto mt-1" />
-      <span className="block text-lg font-medium text-amber-900">{t('main.beer_time_button')}</span>
-    </button>
-  </div>
-</section>
+      <section className="px-6 mt-2">
+        <div className="flex items-center gap-3 mb-1">
+          <div className="flex-1 h-px bg-amber-900/30" />
+           <h2 className="text-amber-900/80 text-center">{t('main.beer_credit')}</h2>
+          <div className="flex-1 h-px bg-amber-900/30" />
+        </div>
+        <div className="flex items-center gap-3">
+          <div className="flex-1">
+            <p className="text-8xl text-center font-bold text-amber-950 tracking-tight pb-2">{beerCredit}</p>
+          </div>
+          <button onClick={() => onNavigate('spend')} className="bg-white/90 backdrop-blur-sm rounded-2xl shadow-lg px-5 py-4 hover:bg-white transition-all active:scale-95 min-w-[110px]" aria-label={t('aria.spend')}>
+            <Beer className="w-9 h-9 text-amber-600 mx-auto mt-1" />
+            <span className="block text-lg font-medium text-amber-900">{t('main.beer_time_button')}</span>
+          </button>
+        </div>
+      </section>
 
 
 {/* Total exercises */}
@@ -570,14 +546,14 @@ function SettingsScreen({
 {/* Set conversion rate */}
 
         <section className="mb-8">
-          <h2 className="text-lg text-amber-900 mb-2">{t('settings.conversion_title')}: {appliedConversionRate}</h2>
-          {/* <p className="text-sm text-amber-900/70 mb-1">{t('settings.conversion_final_rate_1')}<b>{appliedConversionRate}</b>{t('settings.conversion_final_rate_2')}</p> */}
+          <h2 className="text-lg text-amber-900 mb-2">{t('settings.conversion_title')}</h2>
+          <p className="text-sm text-amber-900/70 mb-1">{t('settings.conversion_final_rate_1')}<b>{appliedConversionRate}</b>{t('settings.conversion_final_rate_2')}</p>
           <p className="text-sm text-amber-900/70 mb-1">{t('settings.conversion_beer_price')}&ensp;
            <input
               type="text"
-              inputMode="decimal"
+              inputMode="numeric"
               value={beerPriceInput}
-              onChange={(e) => setBeerPriceInput(e.target.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1'))}
+              onChange={(e) => setBeerPriceInput(onlyDigits(e.target.value))}
               onFocus={() => beerPriceInput === '1' && setBeerPriceInput('')}
               placeholder="1"
               className="inline-block w-20 px-1 bg-amber-200/60 border border-amber-400/50 rounded text-amber-950 text-center"
@@ -666,64 +642,36 @@ function ProfileScreen({ onBack }: { onBack: () => void }) {
 
 function HelpScreen({ onBack }: { onBack: () => void }) {
   const { t } = useTranslation('app');
-
-  const steps = [
-    { icon: Settings, title: t('help.h_setup'), description: t('help.text_setup'), image: null },
-    { icon: Dumbbell, title: t('help.h_1'), description: t('help.text_1'), image: null },
-    { icon: PlusCircle, title: t('help.h_2'), description: t('help.text_2'), image: "/beerbank_step2.png" },
-    { icon: Beer, title: t('help.h_3'), description: t('help.text_3'), image: "/beerbank_step3.png" },
-    { icon: Ban, title: t('help.h_4'), description: t('help.text_4'), image: null },
-  ];
-
   return (
-    <div className="h-full flex flex-col overflow-y-auto bg-amber-750">
+    <div className="h-full flex flex-col overflow-y-auto">
       <header className="flex items-center px-5 pt-5 pb-4">
-        <button
-          onClick={onBack}
-          className="w-12 h-12 rounded-full bg-white/90 backdrop-blur-sm shadow-lg flex items-center justify-center hover:bg-white transition-all active:scale-95"
-          aria-label={t('aria.back')}
-        >
+        <button onClick={onBack} className="w-12 h-12 rounded-full bg-white/90 backdrop-blur-sm shadow-lg flex items-center justify-center hover:bg-white transition-all active:scale-95" aria-label={t('aria.back')}>
           <ArrowLeft className="w-6 h-6 text-amber-900" />
         </button>
       </header>
-
-      <div className="px-6 pb-8">
-        <h1 className="text-amber-900 text-xl font-bold mb-6 text-center text-balance">
-          {t('help.title')}
-        </h1>
-
-        <div className="space-y-4">
-          {steps.map((step, index) => (
-            <div
-              key={index}
-              className="bg-white rounded-xl p-5 border border-amber-200 shadow-sm"
-            >
-              <div className="flex items-center gap-4 mb-2">
-                <div className="shrink-0 w-12 h-12 rounded-full bg-amber-500 flex items-center justify-center">
-                  <step.icon className="w-6 h-6 text-white" />
-                </div>
-                <h3 className="font-semibold text-amber-900 text-balance">{step.title}</h3>
-              </div>
-              <p className="text-sm text-amber-900/70 leading-relaxed">{step.description}</p>
-
-              {step.image && (
-                <div className="mt-4 flex justify-center">
-                  <img
-                    src={step.image}
-                    alt={step.title}
-                    className="rounded-lg border border-amber-200 max-w-[300px] w-full"
-                  />
-                </div>
-              )}
-            </div>
-          ))}
-        </div>
-{/*
-#        <p className="mt-6 text-center text-balance text-amber-900/80 text-sm leading-relaxed">
-#          {t('help.final')}
-#        </p>
-*/}
-      </div>
+      <div className="px-6">
+        <h1 className="text-amber-900 text-xl mb-3">{t('help.title')}</h1>
+        <p className="text-left text-base text-amber-900/90 leading-relaxed">
+          {t('help.intro')}
+        </p>
+        <h2 className="text-amber-900 text-lg mt-3">{t('help.h_1')}</h2>
+        <p className="text-left text-base text-amber-900/90 leading-relaxed">
+          {t('help.text_1')}
+        </p>
+        <h2 className="text-amber-900 text-lg mt-3">{t('help.h_2')}</h2>
+        <p className="text-left text-base text-amber-900/90 leading-relaxed">
+          {t('help.text_2')}
+        </p>
+        <h2 className="text-amber-900 text-lg mt-3">{t('help.h_3')}</h2>
+        <p className="text-left text-base text-amber-900/90 leading-relaxed">
+          {t('help.text_3')}
+        </p>
+        <h2 className="text-amber-900 text-lg mt-3">{t('help.h_4')}</h2>
+        <p className="text-left text-base text-amber-900/90 leading-relaxed">
+          {t('help.text_4')}
+        </p>
+        <h2 className="mb-4 text-center text-balance text-amber-900 text-lg mt-3">{t('help.final')}</h2>
+      </div> 
     </div>
   );
 }
@@ -779,9 +727,9 @@ function SpendScreen({
           <div className="mb-4">
             <input
               type="text"
-              inputMode="decimal"
+              inputMode="numeric"
               value={spendAmount}
-              onChange={(e) => setSpendAmount(e.target.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1'))}
+              onChange={(e) => setSpendAmount(onlyDigits(e.target.value))}
               onFocus={(e) => {
                 e.currentTarget.select();
                 setSpendAmount('');
@@ -796,7 +744,7 @@ function SpendScreen({
           <section>
             <h2 className="text-base text-amber-900/80 mb-3">{t('spend.recently_spent')}</h2>
             <div className="space-y-2">
-              {recentSpends.slice().map((spend, idx) => (
+              {recentSpends.slice().reverse().map((spend, idx) => (
                 <div key={idx} className="flex justify-between text-sm text-amber-900/70">
                   <span>{spend.date}</span>
                   <span>{spend.amount}</span>

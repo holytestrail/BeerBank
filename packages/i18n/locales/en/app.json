@@ -11,7 +11,7 @@
     "msg_03": "Not enough money :(",
     "msg_04": "Enter a whole number greater than 0",
     "msg_05": "Enter a whole number",
-    "msg_07": "You cannot undo more than you did."
+    "msg_07": "How can you undo more than you did?!"
   },
   "aria": {
     "profile": "Profile",
@@ -43,11 +43,11 @@
   },
   "settings": {
     "title": "Settings",
-    "conversion_title": "Conversion rate",
+    "conversion_title": "Push-ups to money conversion rate",
     "conversion_final_rate_1": "You get ",
     "conversion_final_rate_2": " money for each exercise. To change the rate, enter:",
     "conversion_beer_price": "How much does one beer cost?",
-    "conversion_ex_for_beer": "How many exercises will you do for one beer?",
+    "conversion_ex_for_beer": "How many push-ups will you do for a beer?",
     "apply_rate": "Apply new rate",
     "correction_title": "Beer credit correction",
     "correction_current": "Current beer credit:",
@@ -69,16 +69,18 @@
     "recently_spent": "You've recently spent:"
   },
   "help": {
-    "title": "How BeerBank helps you get (a little) stronger",
+    "title": "BeerBank helps you stay fit: Earn the right to drink beer by doing push-ups",
     "intro": "Gamify your fitness: no hard workouts, just do random exercises and exchange them for beer!",
+    "h_setup": "Begin with a quick setup",
+    "text_setup": "Open Settings > Exchange rate. Enter how much one beer usually costs and how many push-ups you will do for one beer. You're all set!",
     "h_1": "1. Do a few exercises",
     "text_1": "When you have a moment, do a few push-ups or squats, whatever works. Even 3 or 5 will do.",
     "h_2": "2. Log them in BeerBank",
-    "text_2": "On the main screen, enter the number of exercises and tap *Add*. Your Beer Credit will grow.",
-    "h_3": "3. When you buy a beer, write off the money you spent",
-    "text_3": "Not enough credit? Skip that beer! Next time, do more push-ups beforehand, you lazy butt!",
-    "h_4": "4. Don't forget to set your conversion rate!",
-    "text_4": "Find it in Settings, it's easy.",
+    "text_2": "On the main screen, enter the number of exercises and tap *Add*. Your Beer Credit will grow accordingly.",
+    "h_3": "3. Write off the money",
+    "text_3": "When you buy a beer, tap «Beer time!» and write off the money you spent.",
+    "h_4": "4. No credit? No beer!",
+    "text_4": "Be honest: Not enough credit? Skip that beer! Next time, do more push-ups beforehand, you lazy butt!",
     "final": "Doing only 3 push-ups is better than doing nothing at all!"
   }
 }
