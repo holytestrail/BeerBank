@@ -621,7 +621,7 @@ function SettingsScreen({
           <h2 className="text-lg text-amber-900 mb-2">{t('settings.language_title')}</h2>         
           <div className="relative inline-block">
             <select
-              value={i18n.language}
+              value={i18n.language.split('-')[0]}
               onChange={(e) => i18n.changeLanguage(e.target.value)}
               className="appearance-none bg-white/80 backdrop-blur-sm rounded-lg px-6 py-2.5 pr-10 font-semibold text-amber-900 text-sm shadow-md hover:bg-white transition-all cursor-pointer outline-none"
             >
