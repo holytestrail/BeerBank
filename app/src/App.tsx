@@ -199,6 +199,11 @@ export default function App() {
 const applyRate = () => {
   const price = Number(beerPriceInput);
   const exCount = Number(exForBeerInput);
+   if (!beerPriceInput.trim() || isNaN(price) || price <= 0 ||
+      !exForBeerInput.trim() || isNaN(exCount) || exCount <= 0) {
+    showToast(t('messages.msg_08'));
+    return;
+    }  
 
 /* Commented: Checked on input
   if (beerPriceInput.trim() === '' || !isNaturalNumber(price) ||
@@ -212,7 +217,7 @@ const applyRate = () => {
   setAppliedConversionRate(conversionRate);
   setBeerPriceInput(String(price));
   setExForBeerInput(String(exCount));
-  showToast(t('messages.msg_02'));
+  showToast(t(exCount > 150 ? 'messages.msg_09' : 'messages.msg_02'));
   };
 
 
