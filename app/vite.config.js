@@ -24,6 +24,7 @@ export default defineConfig({
         ],
       },
       manifest: {
+        id: 'com.beerbank.app',
         name: 'BeerBank',
         short_name: 'BeerBank',
         description: 'Exchange exercises for beer credits',
