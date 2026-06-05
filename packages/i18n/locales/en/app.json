@@ -71,8 +71,8 @@
     "recently_spent": "You've recently spent:"
   },
   "help": {
-    "title": "BeerBank helps you stay fit: Earn the right to drink beer by doing push-ups",
-    "intro": "Gamify your fitness: no hard workouts, just do random exercises and exchange them for beer!",
+    "title": "Love beer but hate working out?",
+    "intro": "Here's a simple trick to get yourself moving: earn your beer by doing push-ups 💪🏼➡️🍺",
     "h_setup": "Begin with a quick setup",
     "text_setup": "Open Settings > Exchange rate. Enter how much one beer usually costs and how many push-ups you will do for one beer. You're all set!",
     "h_1": "1. Do a few exercises",
@@ -80,9 +80,10 @@
     "h_2": "2. Log them in BeerBank",
     "text_2": "On the main screen, enter the number of exercises and tap *Add*. Your Beer Credit will grow accordingly.",
     "h_3": "3. Write off the money",
-    "text_3": "When you buy a beer, tap «Beer time!» and write off the money you spent.",
+    "text_3": "When you buy a beer, tap *Beer time!* and write off the money you spent.",
     "h_4": "4. No credit? No beer!",
-    "text_4": "Be honest: Not enough credit? Skip that beer! Next time, do more push-ups beforehand, you lazy butt!",
-    "final": "Doing only 3 push-ups is better than doing nothing at all!"
+    "text_4": "Be honest: Not enough credit? Skip that beer! Next time, move your butt and do more push-ups beforehand!",
+    "final":  "This is not a proper workout routine of course. But still better than nothing. The method has been scientifically validated and approved by the Alaska Academy of Giraffe Grooming and the Non-Licenced Amateur Divers Society of Sewerville.*",
+    "footnote": "*That was a joke, just in case."
   }
 }
