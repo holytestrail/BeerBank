@@ -72,6 +72,7 @@
     "recently_spent": "You've recently spent:"
   },
   "help": {
+    "first": "Start with a quick how-to!",
     "title": "Love beer but hate working out?",
     "intro": "Here's a simple trick to get yourself moving: earn your beer by doing push-ups 💪🏼➡️🍺",
     "h_setup": "Begin with a quick setup",
@@ -84,7 +85,7 @@
     "text_3": "When you buy a beer, tap *Beer time!* and write off the money you spent.",
     "h_4": "4. No credit? No beer!",
     "text_4": "Be honest: Not enough credit? Skip that beer! Next time, move your butt and do more push-ups beforehand!",
-    "final":  "This is not a proper workout routine of course. But still better than nothing. The method has been scientifically validated and approved by the Alaska Academy of Giraffe Grooming and the Non-Licenced Amateur Divers Society of Sewerville.*",
+    "final":  "This is not a proper workout of course. But still better than nothing. The method has been scientifically validated and approved by the Alaska Academy of Giraffe Grooming and the Non-Licenced Amateur Divers Society of Sewerville.*",
     "footnote": "*That was a joke, just in case."
   }
 }
