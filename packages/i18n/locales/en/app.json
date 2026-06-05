@@ -23,7 +23,8 @@
   },
   "install": {
     "preparing": "Preparing download...",
-    "consent": "By downloading the app, you confirm that you are of legal drinking age. You also give your consent to be addressed in creative ways, including, but not limited to, \"lazy butt\", \"miserable loser\", and so on, which is done not to harm you, but to make the BeerBank experience more enjoyable (not necessarily for you).",
+    "consent": "By downloading the app, you confirm that you are of legal drinking age",
+    "consent_address": "You also give your consent to be addressed in creative ways, including, but not limited to, \"lazy butt\", \"miserable loser\", and so on, which is done not to harm you, but to make the BeerBank experience more enjoyable (not necessarily for you)",
     "download_button": "Download BeerBank",
     "accepted_title": "✅ Downloaded!",
     "accepted_body": "Open BeerBank from your home screen.",
