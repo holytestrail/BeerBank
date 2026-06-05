@@ -174,12 +174,11 @@ export default function App() {
 
   const handleSpend = () => {
     const parsed = Number(spendAmount);
-/*  Skip check  
-    if (!isNaturalNumber(parsed)) {
-      showToast(t('messages.msg_04'));
+
+    if (!spendAmount.trim() || isNaN(parsed) || parsed <= 0) {
+      showToast(t('messages.msg_08'));
       return;
     }
-*/
 
     if (parsed > beerCredit) {
       showToast(t('messages.msg_03'));
@@ -693,9 +692,12 @@ function HelpScreen({ onBack }: { onBack: () => void }) {
       </header>
 
       <div className="px-6 pb-8">
-        <h1 className="text-amber-900 text-xl font-bold mb-6 text-center text-balance">
+        <h1 className="text-amber-900 text-xl font-bold mb-3 text-center text-balance">
           {t('help.title')}
         </h1>
+        <p className="text-amber-900/70 text-l mb-6 text-center text-balance">
+          {t('help.intro')}
+        </p>
 
         <div className="space-y-4">
           {steps.map((step, index) => (
@@ -723,11 +725,12 @@ function HelpScreen({ onBack }: { onBack: () => void }) {
             </div>
           ))}
         </div>
-{/*
-#        <p className="mt-6 text-center text-balance text-amber-900/80 text-sm leading-relaxed">
-#          {t('help.final')}
-#        </p>
-*/}
+        <p className="mt-6 text-left text-balance text-amber-900/80 text-sm leading-relaxed">
+          {t('help.final')}
+        </p>
+        <p className="mt-6 text-left text-balance text-amber-900/80 text-sm leading-relaxed">
+          {t('help.footnote')}
+        </p>
       </div>
     </div>
   );
