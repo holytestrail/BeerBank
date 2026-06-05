@@ -1,17 +1,98 @@
-﻿import { Settings, User, Beer, ArrowLeft, CircleQuestionMark, Dumbbell, PlusCircle, Ban,  } from 'lucide-react';
-import { useEffect, useState } from 'react';
+﻿/// <reference types="vite/client" />
+import { Settings, Beer, ArrowLeft, CircleQuestionMark, Dumbbell, PlusCircle, Ban,  } from 'lucide-react';
+import { useEffect, useState, useRef } from 'react';
 import WelcomePage from './pages/WelcomePage.jsx';
 import { Checkbox } from '@/components/ui/checkbox';
-import { Analytics } from "@vercel/analytics/next"
 import { I18nProvider } from "./components/I18nProvider";
 import { useTranslation } from 'react-i18next';
 
+function useFirstLaunchTip(key = 'help.first.shown') {
+  const [show, setShow] = useState(false);
+  useEffect(() => {
+    if (!localStorage.getItem(key)) setShow(true);
+  }, [key]);
+  const dismiss = () => { localStorage.setItem(key, '1'); setShow(false); };
+  return { show, dismiss };
+}
 
-type Screen = 'main' | 'settings' | 'profile' | 'spend';
+
+// components/HelpTip.tsx
+
+interface HelpTipProps {
+  message: string;
+  onDismiss: () => void;
+  /** Pass a ref to the help button so the arrow can point at it */
+  targetRef: React.RefObject<HTMLButtonElement | null>;
+}
+
+export function HelpTip({ message, onDismiss, targetRef }: HelpTipProps) {
+  const tipRef = useRef<HTMLDivElement>(null);
+
+  // Position the help tip
+  useEffect(() => {
+    if (!targetRef.current || !tipRef.current) return;
+    const rect = targetRef.current.getBoundingClientRect();
+    tipRef.current.style.top = `${rect.bottom + 12}px`;
+    }, [targetRef]);
+
+  return (
+    // Full-screen backdrop — tap anywhere to dismiss
+    <div
+      className="fixed inset-0 z-50 bg-black/60"
+      onClick={onDismiss}
+    >
+      {/* Spotlight ring around the help button */}
+      <SpotlightRing targetRef={targetRef} />
+
+      {/* Callout bubble */}
+      <div
+        ref={tipRef}
+        className="fixed left-1/2 -translate-x-1/2 bg-amber-50 text-amber-900 text-xl
+             px-4 py-2.5 rounded-2xl shadow-2xl max-w-[200px] text-center
+             pointer-events-none select-none"
+      >
+        {/* Arrow pointing up */}
+        <span
+          className="absolute -top-8 -left-10
+             border-[18px] border-transparent border-b-amber-50 
+             rotate-[-45deg]"
+        />
+        {message}
+      </div>
+    </div>
+  );
+}
+
+// Animated ring around the target button
+function SpotlightRing({ targetRef }: { targetRef: React.RefObject<HTMLButtonElement | null> }) {
+  const ringRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!targetRef.current || !ringRef.current) return;
+    const rect = targetRef.current.getBoundingClientRect();
+    const ring = ringRef.current;
+    const size = Math.max(rect.width, rect.height) + 16;
+    ring.style.width = `${size}px`;
+    ring.style.height = `${size}px`;
+    ring.style.top = `${rect.top + rect.height / 2 - size / 2}px`;
+    ring.style.left = `${rect.left + rect.width / 2 - size / 2}px`;
+  }, [targetRef]);
+
+  return (
+    <div
+      ref={ringRef}
+      className="fixed rounded-full border-2 border-amber-100
+                 animate-ping pointer-events-none"
+      style={{ position: 'fixed' }}
+    />
+  );
+}
+
+
+type Screen = 'main' | 'settings' | 'profile' | 'spend' | 'help';
 type SpendEvent = { date: string; amount: number };
 type InstallState = 'waiting' | 'ready' | 'accepted' | 'dismissed' | 'ios' | 'standalone' | 'unsupported';
 
-const isNaturalNumber = (value: number) => Number.isInteger(value) && value > 0;
 const isWholeNumber = (value: number) => Number.isInteger(value) && value >= 0;
 const formatSigned = (value: number) => (value >= 0 ? `+${value}` : `${value}`);
 const toInt = (value: number) => Math.round(value);
@@ -429,16 +510,22 @@ function MainScreen({
   onNavigate: (screen: Screen) => void;
 }) {
   const { t } = useTranslation('app');
+  const helpButtonRef = useRef<HTMLButtonElement>(null);
+  const { show, dismiss } = useFirstLaunchTip(); 
   return (
+    <>
     <div className="h-full flex flex-col">
       <header className="flex items-center justify-between px-5 pt-5 pb-4">
-        <button onClick={() => onNavigate('help')} className="w-12 h-12 rounded-full bg-white/90 backdrop-blur-sm shadow-lg flex items-center justify-center hover:bg-white transition-all active:scale-95" aria-label={t('aria.help')}>
+        <button ref={helpButtonRef} onClick={() => onNavigate('help')} className="w-12 h-12 rounded-full bg-white/90 backdrop-blur-sm shadow-lg flex items-center justify-center hover:bg-white transition-all active:scale-95" aria-label={t('aria.help')}>
           <CircleQuestionMark className="w-6 h-6 text-amber-900" />
         </button>
         <button onClick={() => onNavigate('settings')} className="w-12 h-12 rounded-full bg-white/90 backdrop-blur-sm shadow-lg flex items-center justify-center hover:bg-white transition-all active:scale-95" aria-label={t('aria.settings')}>
           <Settings className="w-6 h-6 text-amber-900" />
         </button>
       </header>
+
+    
+
 
 {/* Beer credit */}
 
@@ -524,14 +611,21 @@ function MainScreen({
         ) : null}
       </section>
     </div>
+
+    {show && (
+      <HelpTip
+        message={t('help.first')}
+        onDismiss={dismiss}
+        targetRef={helpButtonRef}
+      />
+    )}
+  </>  
   );
 }
 
 // Settings screen
 
 function SettingsScreen({
-  conversionInput,
-  setConversionInput,
   appliedConversionRate,
   beerPriceInput,  
   setBeerPriceInput, 
@@ -725,7 +819,7 @@ function HelpScreen({ onBack }: { onBack: () => void }) {
             </div>
           ))}
         </div>
-        <p className="mt-6 text-left text-balance text-amber-900/80 text-sm leading-relaxed">
+        <p className="mt-6 text-center text-balance text-amber-900/80 text-l leading-relaxed">
           {t('help.final')}
         </p>
         <p className="mt-6 text-left text-balance text-amber-900/80 text-sm leading-relaxed">
