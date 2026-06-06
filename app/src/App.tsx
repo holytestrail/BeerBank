@@ -331,7 +331,7 @@ if (!hasWelcomed) {
 
   return (
     <I18nProvider>
-    <div className="relative h-screen w-full max-w-[412px] mx-auto overflow-hidden bg-gradient-to-b from-amber-400 via-amber-500 to-amber-600">
+    <div className="relative h-[100dvh] w-full max-w-[640px] mx-auto overflow-hidden bg-gradient-to-b from-amber-400 via-amber-500 to-amber-600">
       <div className="absolute inset-0 bg-white/20 backdrop-blur-sm"></div>
       <div className="absolute top-24 left-8 w-20 h-20 rounded-full bg-white/25 blur-lg"></div>
       <div className="absolute top-16 left-28 w-12 h-12 rounded-full bg-white/20 blur-md"></div>
@@ -349,7 +349,7 @@ if (!hasWelcomed) {
         {toast}
       </div>
 
-      <div className="relative z-10 h-full">
+      <div className="relative z-10 h-full overflow-y-auto">
         {currentScreen === 'main' && (
           <MainScreen
             beerCredit={beerCredit}
@@ -412,7 +412,7 @@ function InstallScreen({ installState, onInstall }: {
   const { t } = useTranslation('app');
   const [consentChecked, setConsentChecked] = useState(false);
   return (
-    <div className="relative h-screen w-full max-w-[412px] mx-auto overflow-hidden bg-gradient-to-b from-amber-400 via-amber-500 to-amber-600 flex flex-col items-center justify-center px-8 text-center">
+    <div className="relative h-[100dvh] w-full max-w-[412px] mx-auto overflow-y-auto bg-gradient-to-b from-amber-400 via-amber-500 to-amber-600 flex flex-col items-center justify-center px-8 text-center">
       {/* Background bubbles */}
       <div className="absolute inset-0 bg-white/20 backdrop-blur-sm"></div>
       <div className="absolute top-24 left-8 w-20 h-20 rounded-full bg-white/25 blur-lg"></div>
@@ -607,7 +607,7 @@ function MainScreen({
           </div>
         </div>
         {recentAdds.length > 0 ? (
-          <div className="mt-2 px-2 text-base text-amber-900/60 font-medium">{t('main.last_added')} {recentAdds.slice().reverse().map(formatSigned).join(', ')}</div>
+          <div className="mt-2 mb-4 px-2 text-base text-amber-900/60 font-medium">{t('main.last_added')} {recentAdds.slice().reverse().map(formatSigned).join(', ')}</div>
         ) : null}
       </section>
     </div>
@@ -656,7 +656,7 @@ function SettingsScreen({
 }) {
   const { t } = useTranslation('app');
   return (
-    <div className="h-full flex flex-col overflow-y-auto">
+    <div className="h-full flex flex-col">
       <header className="flex items-center px-5 pt-5 pb-4">
         <button onClick={onBack} className="w-12 h-12 rounded-full bg-white/90 backdrop-blur-sm shadow-lg flex items-center justify-center hover:bg-white transition-all active:scale-95" aria-label={t('aria.back')}>
           <ArrowLeft className="w-6 h-6 text-amber-900" />
@@ -739,7 +739,7 @@ function SettingsScreen({
 function ProfileScreen({ onBack }: { onBack: () => void }) {
   const { t } = useTranslation('app');
   return (
-    <div className="h-full flex flex-col overflow-y-auto">
+    <div className="h-full flex flex-col">
       <header className="flex items-center px-5 pt-5 pb-4">
         <button onClick={onBack} className="w-12 h-12 rounded-full bg-white/90 backdrop-blur-sm shadow-lg flex items-center justify-center hover:bg-white transition-all active:scale-95" aria-label={t('aria.back')}>
           <ArrowLeft className="w-6 h-6 text-amber-900" />
@@ -774,7 +774,7 @@ function HelpScreen({ onBack }: { onBack: () => void }) {
   ];
 
   return (
-    <div className="h-full flex flex-col overflow-y-auto bg-amber-750">
+    <div className="h-full flex flex-col bg-amber-750">
       <header className="flex items-center px-5 pt-5 pb-4">
         <button
           onClick={onBack}
@@ -850,7 +850,7 @@ function SpendScreen({
 }) {
   const { t } = useTranslation('app');
   return (
-    <div className="h-full flex flex-col overflow-y-auto">
+    <div className="h-full flex flex-col">
       <header className="flex items-center px-5 pt-5 pb-4">
         <button onClick={onBack} className="w-12 h-12 rounded-full bg-white/90 backdrop-blur-sm shadow-lg flex items-center justify-center hover:bg-white transition-all active:scale-95" aria-label={t('aria.back')}>
           <ArrowLeft className="w-6 h-6 text-amber-900" />
@@ -895,7 +895,7 @@ function SpendScreen({
           <button onClick={handleSpend} className="w-full bg-amber-600 hover:bg-amber-700 text-white text-xl font-semibold py-4 rounded-xl shadow-lg transition-all active:scale-95">{t('spend.confirm_button')}</button>
         </section>
         {recentSpends.length > 0 ? (
-          <section>
+          <section className="mb-4">
             <h2 className="text-base text-amber-900/80 mb-3">{t('spend.recently_spent')}</h2>
             <div className="space-y-2">
               {recentSpends.slice().map((spend, idx) => (
