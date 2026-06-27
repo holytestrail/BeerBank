@@ -1,2 +1,4 @@
 .obsidian
 .vercel
+*.keystore
+*.jks

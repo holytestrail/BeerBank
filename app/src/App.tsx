@@ -5,6 +5,8 @@ import WelcomePage from './pages/WelcomePage.jsx';
 import { Checkbox } from '@/components/ui/checkbox';
 import { I18nProvider } from "./components/I18nProvider";
 import { useTranslation } from 'react-i18next';
+import { Capacitor } from '@capacitor/core';
+import { App as CapApp } from '@capacitor/app';
 
 function useFirstLaunchTip(key = 'help.first.shown') {
   const [show, setShow] = useState(false);
@@ -119,6 +121,7 @@ export default function App() {
   const randomSpendMessage = () => t(`messages.spend_${Math.floor(Math.random() * 3) + 1}`);
   const [installState, setInstallState] = useState<InstallState>(() => {
     if (typeof window === 'undefined') return 'waiting';
+    if (Capacitor.isNativePlatform()) return 'standalone'; // нативное приложение
     if (window.matchMedia('(display-mode: standalone)').matches) return 'standalone';
     const isIos = /iphone|ipad|ipod/.test(navigator.userAgent.toLowerCase());
     if (isIos) return 'ios';
@@ -177,6 +180,7 @@ export default function App() {
 
   // PWA install prompt listener
   useEffect(() => {
+    if (Capacitor.isNativePlatform()) return; // в Android-приложении не нужно
     if (installState !== 'waiting') return;
     const handler = (e: Event) => {
       e.preventDefault();
@@ -193,6 +197,19 @@ export default function App() {
       clearTimeout(timeout);
     };
   }, [installState]);
+
+  useEffect(() => {
+  if (!Capacitor.isNativePlatform()) return;
+  let handle: any;
+  CapApp.addListener('backButton', () => {
+    if (currentScreen !== 'main') {
+      setCurrentScreen('main');
+    } else {
+      CapApp.exitApp();
+    }
+  }).then(h => { handle = h; });
+  return () => { handle?.remove(); };
+}, [currentScreen]);
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
