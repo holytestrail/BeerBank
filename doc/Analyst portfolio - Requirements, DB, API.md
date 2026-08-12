@@ -1,3 +1,8 @@
+---
+layout: page
+title: "Analyst Portfolio"
+---
+
 *By [Pavel Linitsky](https://www.linkedin.com/in/linitsky/)  ||*  *[Live app landing page](https://getbeerbank.vercel.app/)*
 
 In this app-building project, I practiced: 
